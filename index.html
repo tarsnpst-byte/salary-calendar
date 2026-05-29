@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Seasonal Salary Calendar</title>
-
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ปฏิทินเงินเดือน">
@@ -13,10 +12,11 @@
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
     <link rel="apple-touch-icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
-
         :root {
             --bg-body: #f3f4f6;
             --text-main: #374151;
@@ -37,9 +37,9 @@
             --bg-header: #111827;
             --border-cell: #374151;
             --modal-bg: #1f2937;
-            --tag-work-bg: rgba(34, 197, 94, 0.2);
+            --tag-work-bg: rgba(34, 197, 94, .2);
             --tag-work-text: #4ade80;
-            --tag-late-bg: rgba(239, 68, 68, 0.2);
+            --tag-late-bg: rgba(239, 68, 68, .2);
             --tag-late-text: #f87171;
         }
 
@@ -52,17 +52,17 @@
             --primary-color: var(--custom-primary, #0284c7);
             --border-color: #d1d5db;
             --border-cell: #e5e7eb;
-            --bg-weekend: rgba(0, 0, 0, 0.03);
-            --bg-outmonth: rgba(0, 0, 0, 0.05);
+            --bg-weekend: rgba(0, 0, 0, .03);
+            --bg-outmonth: rgba(0, 0, 0, .05);
         }
 
-        /* 12 Months Theme Colors */
+        /* 12 Month themes */
         [data-theme="light"][data-month="1"] {
             --primary-color: #0284c7;
             --border-color: #bae6fd;
             --bg-weekend: #f0f9ff;
             --bg-hover: #e0f2fe;
-            --bg-outmonth: #f8fafc;
+            --bg-outmonth: #f8fafc
         }
 
         [data-theme="dark"][data-month="1"] {
@@ -70,7 +70,7 @@
             --border-color: #0369a1;
             --bg-weekend: #0f172a;
             --bg-hover: #1e293b;
-            --bg-outmonth: #020617;
+            --bg-outmonth: #020617
         }
 
         [data-theme="light"][data-month="2"] {
@@ -78,7 +78,7 @@
             --border-color: #fca5a5;
             --bg-weekend: #fef2f2;
             --bg-hover: #fee2e2;
-            --bg-outmonth: #fef2f2;
+            --bg-outmonth: #fef2f2
         }
 
         [data-theme="dark"][data-month="2"] {
@@ -86,7 +86,7 @@
             --border-color: #991b1b;
             --bg-weekend: #2a0a0a;
             --bg-hover: #450a0a;
-            --bg-outmonth: #000000;
+            --bg-outmonth: #000
         }
 
         [data-theme="light"][data-month="3"] {
@@ -94,7 +94,7 @@
             --border-color: #fdba74;
             --bg-weekend: #fff7ed;
             --bg-hover: #ffedd5;
-            --bg-outmonth: #fff7ed;
+            --bg-outmonth: #fff7ed
         }
 
         [data-theme="dark"][data-month="3"] {
@@ -102,7 +102,7 @@
             --border-color: #9a3412;
             --bg-weekend: #2a1505;
             --bg-hover: #431407;
-            --bg-outmonth: #000000;
+            --bg-outmonth: #000
         }
 
         [data-theme="light"][data-month="4"] {
@@ -110,7 +110,7 @@
             --border-color: #67e8f9;
             --bg-weekend: #ecfeff;
             --bg-hover: #cffafe;
-            --bg-outmonth: #f8fafc;
+            --bg-outmonth: #f8fafc
         }
 
         [data-theme="dark"][data-month="4"] {
@@ -118,7 +118,7 @@
             --border-color: #0891b2;
             --bg-weekend: #082f49;
             --bg-hover: #164e63;
-            --bg-outmonth: #000000;
+            --bg-outmonth: #000
         }
 
         [data-theme="light"][data-month="5"] {
@@ -126,7 +126,7 @@
             --border-color: #6ee7b7;
             --bg-weekend: #ecfdf5;
             --bg-hover: #d1fae5;
-            --bg-outmonth: #f0fdf4;
+            --bg-outmonth: #f0fdf4
         }
 
         [data-theme="dark"][data-month="5"] {
@@ -134,7 +134,7 @@
             --border-color: #059669;
             --bg-weekend: #064e3b;
             --bg-hover: #065f46;
-            --bg-outmonth: #000000;
+            --bg-outmonth: #000
         }
 
         [data-theme="light"][data-month="6"] {
@@ -142,7 +142,7 @@
             --border-color: #a5b4fc;
             --bg-weekend: #eef2ff;
             --bg-hover: #e0e7ff;
-            --bg-outmonth: #f8fafc;
+            --bg-outmonth: #f8fafc
         }
 
         [data-theme="dark"][data-month="6"] {
@@ -150,7 +150,7 @@
             --border-color: #4338ca;
             --bg-weekend: #1e1b4b;
             --bg-hover: #312e81;
-            --bg-outmonth: #000000;
+            --bg-outmonth: #000
         }
 
         [data-theme="light"][data-month="7"] {
@@ -158,7 +158,7 @@
             --border-color: #5eead4;
             --bg-weekend: #f0fdfa;
             --bg-hover: #ccfbf1;
-            --bg-outmonth: #f8fafc;
+            --bg-outmonth: #f8fafc
         }
 
         [data-theme="dark"][data-month="7"] {
@@ -166,7 +166,7 @@
             --border-color: #0f766e;
             --bg-weekend: #042f2e;
             --bg-hover: #134e4a;
-            --bg-outmonth: #000000;
+            --bg-outmonth: #000
         }
 
         [data-theme="light"][data-month="8"] {
@@ -174,7 +174,7 @@
             --border-color: #86efac;
             --bg-weekend: #f0fdf4;
             --bg-hover: #dcfce7;
-            --bg-outmonth: #f8fafc;
+            --bg-outmonth: #f8fafc
         }
 
         [data-theme="dark"][data-month="8"] {
@@ -182,7 +182,7 @@
             --border-color: #15803d;
             --bg-weekend: #052e16;
             --bg-hover: #14532d;
-            --bg-outmonth: #000000;
+            --bg-outmonth: #000
         }
 
         [data-theme="light"][data-month="9"] {
@@ -190,7 +190,7 @@
             --border-color: #fcd34d;
             --bg-weekend: #fffbeb;
             --bg-hover: #fef3c7;
-            --bg-outmonth: #fffbeb;
+            --bg-outmonth: #fffbeb
         }
 
         [data-theme="dark"][data-month="9"] {
@@ -198,7 +198,7 @@
             --border-color: #b45309;
             --bg-weekend: #451a03;
             --bg-hover: #78350f;
-            --bg-outmonth: #000000;
+            --bg-outmonth: #000
         }
 
         [data-theme="light"][data-month="10"] {
@@ -206,7 +206,7 @@
             --border-color: #d8b4fe;
             --bg-weekend: #faf5ff;
             --bg-hover: #f3e8ff;
-            --bg-outmonth: #faf5ff;
+            --bg-outmonth: #faf5ff
         }
 
         [data-theme="dark"][data-month="10"] {
@@ -214,7 +214,7 @@
             --border-color: #7e22ce;
             --bg-weekend: #2e1065;
             --bg-hover: #3b0764;
-            --bg-outmonth: #000000;
+            --bg-outmonth: #000
         }
 
         [data-theme="light"][data-month="11"] {
@@ -222,7 +222,7 @@
             --border-color: #a5b4fc;
             --bg-weekend: #eef2ff;
             --bg-hover: #e0e7ff;
-            --bg-outmonth: #f8fafc;
+            --bg-outmonth: #f8fafc
         }
 
         [data-theme="dark"][data-month="11"] {
@@ -230,7 +230,7 @@
             --border-color: #4338ca;
             --bg-weekend: #1e1b4b;
             --bg-hover: #312e81;
-            --bg-outmonth: #000000;
+            --bg-outmonth: #000
         }
 
         [data-theme="light"][data-month="12"] {
@@ -238,7 +238,7 @@
             --border-color: #fda4af;
             --bg-weekend: #fff1f2;
             --bg-hover: #ffe4e6;
-            --bg-outmonth: #fff1f2;
+            --bg-outmonth: #fff1f2
         }
 
         [data-theme="dark"][data-month="12"] {
@@ -246,14 +246,14 @@
             --border-color: #be123c;
             --bg-weekend: #4c0519;
             --bg-hover: #881337;
-            --bg-outmonth: #000000;
+            --bg-outmonth: #000
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Sarabun', sans-serif;
+            font-family: 'Sarabun', sans-serif
         }
 
         body {
@@ -261,7 +261,7 @@
             color: var(--text-main);
             padding: 20px;
             line-height: 1.5;
-            transition: all 0.5s ease;
+            transition: all .5s ease
         }
 
         .container {
@@ -270,15 +270,15 @@
             display: flex;
             gap: 24px;
             flex-wrap: wrap;
-            align-items: flex-start;
+            align-items: flex-start
         }
 
-        /* สไตล์หน้า Login Screen */
+        /* Login */
         .login-screen {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 80vh;
+            min-height: 80vh
         }
 
         .login-card {
@@ -288,8 +288,8 @@
             background: #ffffff;
             padding: 40px 24px;
             border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e5e7eb;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .05);
+            border: 1px solid #e5e7eb
         }
 
         .login-btn {
@@ -304,33 +304,34 @@
             align-items: center;
             gap: 10px;
             margin-top: 24px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .02);
             font-size: 15px;
+            font-family: 'Sarabun', sans-serif
         }
 
         .login-btn:hover {
-            background: #f9fafb;
+            background: #f9fafb
         }
 
         .card {
             background: var(--bg-card);
             border-radius: 12px;
             padding: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1);
             border: 1px solid var(--border-color);
-            transition: all 0.5s ease;
+            transition: all .5s ease
         }
 
         .main-panel {
             flex: 2.5;
-            min-width: 320px;
+            min-width: 320px
         }
 
         .side-panel {
             flex: 1.2;
             min-width: 320px;
             position: sticky;
-            top: 24px;
+            top: 24px
         }
 
         .header {
@@ -339,7 +340,7 @@
             align-items: flex-start;
             margin-bottom: 24px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 10px
         }
 
         h1 {
@@ -349,23 +350,23 @@
             align-items: center;
             gap: 8px;
             font-weight: 700;
-            transition: color 0.5s;
+            transition: color .5s
         }
 
         .season-emoji {
             font-size: 32px;
-            animation: pop 0.5s ease-out;
+            animation: pop .5s ease-out
         }
 
         @keyframes pop {
             0% {
-                transform: scale(0.5) rotate(-10deg);
-                opacity: 0;
+                transform: scale(.5) rotate(-10deg);
+                opacity: 0
             }
 
             100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
+                transform: scale(1) rotate(0);
+                opacity: 1
             }
         }
 
@@ -373,7 +374,7 @@
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
-            align-items: center;
+            align-items: center
         }
 
         .control-box {
@@ -384,7 +385,7 @@
             padding: 8px 12px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-            transition: all 0.5s ease;
+            transition: all .5s ease
         }
 
         .control-box select,
@@ -395,14 +396,14 @@
             font-family: inherit;
             background: var(--bg-card);
             color: var(--text-main);
-            font-weight: 500;
+            font-weight: 500
         }
 
         .color-picker-wrapper {
             display: flex;
             align-items: center;
             gap: 4px;
-            font-size: 11px;
+            font-size: 11px
         }
 
         .color-picker-wrapper input[type="color"] {
@@ -411,7 +412,7 @@
             padding: 0;
             border: none;
             cursor: pointer;
-            background: none;
+            background: none
         }
 
         .calendar-wrapper {
@@ -421,7 +422,7 @@
             border-radius: 4px;
             overflow: hidden;
             background: var(--bg-card);
-            transition: border-color 0.5s;
+            transition: border-color .5s
         }
 
         .watermark-bg {
@@ -430,19 +431,19 @@
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 250px;
-            opacity: 0.5;
+            opacity: .5;
             pointer-events: none;
             user-select: none;
             z-index: 0;
             filter: grayscale(20%);
-            transition: all 0.5s ease;
+            transition: all .5s ease
         }
 
         .grid-row {
             display: grid;
             grid-template-columns: repeat(7, minmax(0, 1fr));
             position: relative;
-            z-index: 1;
+            z-index: 1
         }
 
         .day-header {
@@ -454,15 +455,15 @@
             border-right: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
             color: var(--text-main);
-            transition: all 0.5s;
+            transition: all .5s
         }
 
         .day-header.sunday {
-            color: #ef4444;
+            color: #ef4444
         }
 
         .day-header.saturday {
-            color: var(--primary-color);
+            color: var(--primary-color)
         }
 
         .day-cell {
@@ -471,43 +472,43 @@
             border-right: 1px solid var(--border-cell);
             border-bottom: 1px solid var(--border-cell);
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background .2s;
             display: flex;
             flex-direction: column;
             background: transparent;
-            overflow: hidden;
+            overflow: hidden
         }
 
         .day-cell:hover {
             background: var(--bg-hover);
-            backdrop-filter: blur(2px);
+            backdrop-filter: blur(2px)
         }
 
         .day-cell.out-month {
             background: var(--bg-outmonth);
-            opacity: 0.6;
+            opacity: .6
         }
 
         .day-cell.weekend {
-            background: var(--bg-weekend);
+            background: var(--bg-weekend)
         }
 
         .date-num {
             font-size: 16px;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 4px;
+            margin-bottom: 4px
         }
 
         .date-num.sunday {
-            color: #ef4444;
+            color: #ef4444
         }
 
         .tags-area {
             margin-top: auto;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 4px
         }
 
         .tag {
@@ -518,133 +519,133 @@
             text-align: left;
             font-weight: 600;
             line-height: 1.2;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
             display: flex;
             align-items: center;
             gap: 4px;
-            overflow: hidden;
+            overflow: hidden
         }
 
         .tag span {
             font-size: 13px;
-            flex-shrink: 0;
+            flex-shrink: 0
         }
 
         .tag-text {
             white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis;
+            text-overflow: ellipsis
         }
 
         .day-cell.special-holiday {
             background: #e9d5ff !important;
-            border: 2px solid #a855f7 !important;
+            border: 2px solid #a855f7 !important
         }
 
         [data-theme="dark"] .day-cell.special-holiday {
-            background: #581c87 !important;
+            background: #581c87 !important
         }
 
         .tag-work {
             color: var(--tag-work-text);
             border-color: var(--tag-work-text);
-            background: var(--tag-work-bg);
+            background: var(--tag-work-bg)
         }
 
         .tag-night {
             color: #4338ca;
             border-color: #6366f1;
-            background: #eef2ff;
+            background: #eef2ff
         }
 
         .tag-late {
             color: var(--tag-late-text);
             border-color: var(--tag-late-text);
-            background: var(--tag-late-bg);
+            background: var(--tag-late-bg)
         }
 
         .tag-ot {
             color: #b45309;
             border-color: #f59e0b;
             background: var(--bg-card);
-            justify-content: center;
+            justify-content: center
         }
 
         .tag-absent {
             background: #fee2e2;
             color: #991b1b;
             border-color: #ef4444;
-            justify-content: center;
+            justify-content: center
         }
 
         .tag-personal {
             background: #fef3c7;
             color: #b45309;
             border-color: #f59e0b;
-            justify-content: center;
+            justify-content: center
         }
 
         .tag-sick {
             background: #e0f2fe;
             color: #0369a1;
             border-color: #38bdf8;
-            justify-content: center;
+            justify-content: center
         }
 
         .tag-vacation {
             background: #ecfdf5;
             color: #047857;
             border-color: #10b981;
-            justify-content: center;
+            justify-content: center
         }
 
         .tag-apt {
             background: #fff7ed;
             color: #d97706;
             border-color: #fcd34d;
-            justify-content: flex-start;
+            justify-content: flex-start
         }
 
         [data-theme="dark"] .tag-night {
             color: #818cf8;
             border-color: #6366f1;
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, .2)
         }
 
         [data-theme="dark"] .tag-ot {
             color: #fbbf24;
-            background: rgba(245, 158, 11, 0.15);
-            border-color: #fbbf24;
+            background: rgba(245, 158, 11, .15);
+            border-color: #fbbf24
         }
 
         [data-theme="dark"] .tag-absent {
-            background: rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, .2);
             color: #f87171;
-            border-color: #ef4444;
+            border-color: #ef4444
         }
 
         [data-theme="dark"] .tag-personal {
-            background: rgba(245, 158, 11, 0.2);
+            background: rgba(245, 158, 11, .2);
             color: #fbbf24;
-            border-color: #f59e0b;
+            border-color: #f59e0b
         }
 
         [data-theme="dark"] .tag-sick {
-            background: rgba(14, 165, 233, 0.2);
+            background: rgba(14, 165, 233, .2);
             color: #38bdf8;
-            border-color: #0ea5e9;
+            border-color: #0ea5e9
         }
 
         [data-theme="dark"] .tag-vacation {
-            background: rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, .2);
             color: #34d399;
-            border-color: #10b981;
+            border-color: #10b981
         }
 
         [data-theme="dark"] .tag-apt {
-            background: rgba(245, 158, 11, 0.15);
+            background: rgba(245, 158, 11, .15);
             color: #fbbf24;
-            border-color: #f59e0b;
+            border-color: #f59e0b
         }
 
         .summary-title {
@@ -652,7 +653,7 @@
             font-weight: 700;
             margin-bottom: 12px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 6px;
+            padding-bottom: 6px
         }
 
         .sum-list {
@@ -661,7 +662,7 @@
             gap: 8px;
             font-size: 13px;
             font-weight: 500;
-            margin-bottom: 16px;
+            margin-bottom: 16px
         }
 
         .sum-row {
@@ -672,7 +673,7 @@
             padding: 6px 10px;
             border-radius: 6px;
             border: 1px solid var(--border-cell);
-            transition: all 0.5s;
+            transition: all .5s
         }
 
         .sum-row input[type="number"] {
@@ -684,26 +685,26 @@
             background: var(--bg-card);
             color: var(--text-main);
             font-weight: bold;
-            transition: opacity 0.3s;
+            transition: opacity .3s
         }
 
         .sum-row input[type="number"]:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
+            opacity: .4;
+            cursor: not-allowed
         }
 
         .sum-row input[type="checkbox"] {
             width: 16px;
             height: 16px;
             cursor: pointer;
-            accent-color: var(--primary-color);
+            accent-color: var(--primary-color)
         }
 
         .sum-label {
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 6px
         }
 
         .total-box {
@@ -712,7 +713,7 @@
             border-radius: 8px;
             padding: 14px;
             text-align: center;
-            transition: all 0.5s;
+            transition: all .5s
         }
 
         .total-box span {
@@ -720,12 +721,12 @@
             font-size: 13px;
             color: var(--primary-color);
             font-weight: 600;
-            margin-bottom: 2px;
+            margin-bottom: 2px
         }
 
         .total-box strong {
             font-size: 26px;
-            color: var(--text-main);
+            color: var(--text-main)
         }
 
         .leave-stats-box {
@@ -734,7 +735,7 @@
             border-radius: 8px;
             border: 1px dashed var(--border-color);
             margin-bottom: 16px;
-            font-size: 12px;
+            font-size: 12px
         }
 
         .leave-stat-row {
@@ -742,7 +743,7 @@
             justify-content: space-between;
             margin-bottom: 6px;
             border-bottom: 1px solid var(--border-cell);
-            padding-bottom: 4px;
+            padding-bottom: 4px
         }
 
         .modal-overlay {
@@ -751,12 +752,12 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, .6);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px)
         }
 
         .modal-content {
@@ -765,23 +766,23 @@
             padding: 24px;
             width: 100%;
             max-width: 420px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, .3);
             border: 1px solid var(--border-color);
             max-height: 95vh;
-            overflow-y: auto;
+            overflow-y: auto
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 20px
         }
 
         .modal-header h3 {
             font-size: 18px;
             color: var(--text-main);
-            margin: 0;
+            margin: 0
         }
 
         .badge {
@@ -789,17 +790,17 @@
             border-radius: 4px;
             font-size: 12px;
             font-weight: bold;
-            display: none;
+            display: none
         }
 
         .badge-green {
             background: #dcfce7;
-            color: #166534;
+            color: #166534
         }
 
         .badge-red {
             background: #fee2e2;
-            color: #991b1b;
+            color: #991b1b
         }
 
         .option-card {
@@ -811,57 +812,56 @@
             border: 2px solid;
             cursor: pointer;
             margin-bottom: 10px;
-            transition: all 0.2s;
-            background: var(--bg-card);
+            transition: all .2s;
+            background: var(--bg-card)
         }
 
         .option-card:hover {
-            filter: brightness(0.95);
+            filter: brightness(.95)
         }
 
-        .option-card input[type="radio"],
-        .option-card input[type="checkbox"] {
+        .option-card input[type="radio"] {
             width: 20px;
             height: 20px;
-            cursor: pointer;
+            cursor: pointer
         }
 
         .option-card strong {
             font-size: 15px;
             display: block;
-            line-height: 1.2;
+            line-height: 1.2
         }
 
         .option-card span {
             font-size: 11px;
-            opacity: 0.8;
+            opacity: .8
         }
 
         .opt-morning {
-            border-color: #86efac;
+            border-color: #86efac
         }
 
         .opt-night {
-            border-color: #a5b4fc;
+            border-color: #a5b4fc
         }
 
         .opt-leave {
-            border-color: #fca5a5;
+            border-color: #fca5a5
         }
 
         .opt-morning.active {
             background: #f0fdf4;
-            border-width: 3px;
+            border-width: 3px
         }
 
         .opt-night.active {
             background: #eef2ff;
-            border-width: 3px;
+            border-width: 3px
         }
 
         .opt-leave.active {
             background: #fef2f2;
-            border-width: 3px;
+            border-width: 3px
         }
 
         .time-box {
@@ -870,30 +870,30 @@
             border-radius: 8px;
             border: 1px solid var(--border-color);
             margin-top: 12px;
-            margin-bottom: 12px;
+            margin-bottom: 12px
         }
 
         .time-title {
             font-size: 14px;
             font-weight: 700;
             margin-bottom: 12px;
-            color: var(--text-main);
+            color: var(--text-main)
         }
 
         .time-row {
             display: flex;
-            gap: 12px;
+            gap: 12px
         }
 
         .time-col {
-            flex: 1;
+            flex: 1
         }
 
         .time-col label {
             font-size: 11px;
-            opacity: 0.8;
+            opacity: .8;
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 4px
         }
 
         .time-col input {
@@ -903,7 +903,7 @@
             padding: 6px;
             background: var(--bg-card);
             color: var(--text-main);
-            font-family: inherit;
+            font-family: inherit
         }
 
         .btn-row {
@@ -914,7 +914,7 @@
             bottom: 0;
             background: var(--modal-bg);
             padding-top: 10px;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color)
         }
 
         .btn {
@@ -925,25 +925,25 @@
             font-family: inherit;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
-            font-size: 15px;
+            transition: opacity .2s;
+            font-size: 15px
         }
 
         .btn-cancel {
             background: var(--border-color);
-            color: var(--text-main);
+            color: var(--text-main)
         }
 
         .btn-save {
             background: var(--primary-color);
-            color: white;
+            color: white
         }
 
         .radio-leave-group {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            margin-top: 8px;
+            margin-top: 8px
         }
 
         .radio-leave-group label {
@@ -951,18 +951,33 @@
             align-items: center;
             gap: 8px;
             font-size: 13px;
-            cursor: pointer;
+            cursor: pointer
         }
 
-        /* 📱 Mobile Responsive Styles */
-        @media (max-width: 768px) {
+        .btn-logout {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #ef4444;
+            background: transparent;
+            color: #ef4444;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Sarabun', sans-serif
+        }
+
+        .btn-logout:hover {
+            background: #fef2f2
+        }
+
+        @media(max-width:768px) {
             body {
-                padding: 10px;
+                padding: 10px
             }
 
             .container {
                 flex-direction: column;
-                gap: 16px;
+                gap: 16px
             }
 
             .main-panel,
@@ -970,46 +985,46 @@
                 width: 100%;
                 min-width: 100%;
                 flex: none;
-                position: static;
+                position: static
             }
 
             .header {
                 flex-direction: column;
                 align-items: stretch;
-                gap: 12px;
+                gap: 12px
             }
 
             .controls-row {
-                justify-content: space-between;
+                justify-content: space-between
             }
 
             h1 {
                 font-size: 22px;
-                justify-content: center;
+                justify-content: center
             }
 
             .calendar-wrapper {
                 overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+                -webkit-overflow-scrolling: touch
             }
 
             .grid-row {
-                min-width: 600px;
+                min-width: 600px
             }
 
             .day-cell {
-                min-height: 100px;
+                min-height: 100px
             }
 
             .modal-content {
                 width: 95%;
-                padding: 16px;
+                padding: 16px
             }
 
             .time-row,
             .btn-row {
                 flex-direction: column;
-                gap: 8px;
+                gap: 8px
             }
         }
     </style>
@@ -1017,11 +1032,12 @@
 
 <body>
 
+    <!-- LOGIN SCREEN -->
     <div id="loginSection" class="login-screen">
         <div class="login-card">
-            <h2 style="font-size: 22px; margin-bottom: 8px;">📊 Smart Salary Calendar</h2>
-            <p style="font-size: 13px; color: #6b7280;">กรุณาเข้าสู่ระบบเพื่อเชื่อมต่อข้อมูลปฏิทินของคุณออนไลน์</p>
-            <button class="login-btn" onclick="loginWithGoogle()">
+            <h2 style="font-size:22px;margin-bottom:8px;">📊 Smart Salary Calendar</h2>
+            <p style="font-size:13px;color:#6b7280;">กรุณาเข้าสู่ระบบเพื่อเชื่อมต่อข้อมูลปฏิทินของคุณออนไลน์</p>
+            <button id="loginBtn" class="login-btn">
                 <svg width="18" height="18" viewBox="0 0 18 18">
                     <path
                         d="M17.64 9.2c0-.63-.06-1.25-.16-1.84H9v3.47h4.84c-.21 1.12-.84 2.07-1.79 2.7l2.78 2.16c1.63-1.51 2.57-3.73 2.57-6.49z"
@@ -1041,55 +1057,55 @@
         </div>
     </div>
 
-    <div class="container" id="appContainer" style="display: none;">
+    <!-- MAIN APP -->
+    <div class="container" id="appContainer" style="display:none;">
         <div class="card main-panel">
             <div class="header">
                 <div>
                     <h1>ปฏิทินเงินเดือน <span class="season-emoji" id="seasonEmoji">✨</span></h1>
-                    <p class="subtitle" style="opacity: 0.7;">คลิกที่วันที่เพื่อลงเวลา <span id="seasonText"
-                            style="color: var(--primary-color); font-weight: bold; margin-left: 8px;"></span></p>
+                    <p class="subtitle" style="opacity:.7;">คลิกที่วันที่เพื่อลงเวลา <span id="seasonText"
+                            style="color:var(--primary-color);font-weight:bold;margin-left:8px;"></span></p>
                 </div>
                 <div class="controls-row">
                     <div class="control-box">
                         <label>รอบเดือน:</label>
-                        <input type="month" id="currentMonth" onchange="initCalendar()">
+                        <input type="month" id="currentMonth">
                     </div>
                     <div class="control-box">
                         <label>โหมดแสง:</label>
-                        <select id="themeSelect" onchange="changeTheme()">
+                        <select id="themeSelect">
                             <option value="light">☀️ สว่าง (Auto)</option>
                             <option value="dark">🌙 มืด (Auto)</option>
                             <option value="custom">🎨 กำหนดสีเอง</option>
                         </select>
                     </div>
-                    <div class="control-box" id="customColorBox" style="display: none;">
-                        <label class="color-picker-wrapper">พื้นหลัง <input type="color" id="colorBg" value="#f3f4f6"
-                                onchange="applyCustomColors()"></label>
-                        <label class="color-picker-wrapper">ปฏิทิน <input type="color" id="colorCard" value="#ffffff"
-                                onchange="applyCustomColors()"></label>
-                        <label class="color-picker-wrapper">สีหลัก <input type="color" id="colorPrimary" value="#0284c7"
-                                onchange="applyCustomColors()"></label>
-                        <label class="color-picker-wrapper">อักษร <input type="color" id="colorText" value="#374151"
-                                onchange="applyCustomColors()"></label>
+                    <div class="control-box" id="customColorBox" style="display:none;">
+                        <label class="color-picker-wrapper">พื้นหลัง <input type="color" id="colorBg"
+                                value="#f3f4f6"></label>
+                        <label class="color-picker-wrapper">ปฏิทิน <input type="color" id="colorCard"
+                                value="#ffffff"></label>
+                        <label class="color-picker-wrapper">สีหลัก <input type="color" id="colorPrimary"
+                                value="#0284c7"></label>
+                        <label class="color-picker-wrapper">อักษร <input type="color" id="colorText"
+                                value="#374151"></label>
                     </div>
-                    <button onclick="logout()"
-                        style="padding:8px 12px; border-radius:8px; border:1px solid #ef4444; background:transparent; color:#ef4444; font-weight:bold; cursor:pointer; font-size:12px;">ออกจากระบบ</button>
+                    <button id="logoutBtn" class="btn-logout">ออกจากระบบ</button>
                 </div>
             </div>
 
             <div class="calendar-wrapper">
                 <div class="watermark-bg" id="watermarkBg">🏙️</div>
-                <div class="grid-row day-header">
-                    <div class="sunday">อาทิตย์</div>
-                    <div>จันทร์</div>
-                    <div>อังคาร</div>
-                    <div>พุธ</div>
-                    <div>พฤหัสบดี</div>
-                    <div>ศุกร์</div>
-                    <div class="saturday">เสาร์</div>
+                <div class="grid-row">
+                    <div class="day-header sunday">อาทิตย์</div>
+                    <div class="day-header">จันทร์</div>
+                    <div class="day-header">อังคาร</div>
+                    <div class="day-header">พุธ</div>
+                    <div class="day-header">พฤหัสบดี</div>
+                    <div class="day-header">ศุกร์</div>
+                    <div class="day-header saturday">เสาร์</div>
                 </div>
-                <div id="calendarDays" class="grid-row" style="display: grid; grid-template-columns: repeat(7, 1fr);">
-                </div>
+                <div id="calendarDays"
+                    style="display:grid;grid-template-columns:repeat(7,1fr);position:relative;z-index:1;"></div>
             </div>
         </div>
 
@@ -1108,22 +1124,20 @@
                     <span style="color:#047857;">🏖️ ลาพักร้อน (ใช้สิทธิ์แล้ว)</span>
                     <strong id="statVacation">0 วัน</strong>
                 </div>
-
-                <div style="margin-top:10px; padding-top:10px; border-top:1px dashed var(--border-color);">
-                    <div class="sum-row" style="margin-bottom:4px; border:none; padding:2px 0; background:transparent;">
+                <div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border-color);">
+                    <div class="sum-row" style="margin-bottom:4px;border:none;padding:2px 0;background:transparent;">
                         <span class="sum-label" style="font-size:11px;">+ พักร้อนยกยอด:</span>
-                        <input type="number" id="vacationCarryOver" value="0" onchange="syncSidebar()"
-                            style="width:50px;">
+                        <input type="number" id="vacationCarryOver" value="0" style="width:50px;">
                     </div>
-                    <div class="sum-row" style="margin-bottom:4px; border:none; padding:2px 0; background:transparent;">
+                    <div class="sum-row" style="margin-bottom:4px;border:none;padding:2px 0;background:transparent;">
                         <span class="sum-label" style="font-size:11px;">+ พักร้อนได้สิทธิ์:</span>
-                        <input type="number" id="vacationQuota" value="6" onchange="syncSidebar()" style="width:50px;">
+                        <input type="number" id="vacationQuota" value="6" style="width:50px;">
                     </div>
-                    <div class="sum-row" style="border:none; padding:2px 0; background:transparent;">
-                        <span class="sum-label" style="font-size:11px; color:#10b981;">💰 แปลงพักร้อนเป็นเงิน:</span>
-                        <div style="display:flex; align-items:center; gap:4px;">
-                            <input type="number" id="vacationCashOutDays" value="0" onchange="syncSidebar()"
-                                style="width:40px; border-color:#10b981;">
+                    <div class="sum-row" style="border:none;padding:2px 0;background:transparent;">
+                        <span class="sum-label" style="font-size:11px;color:#10b981;">💰 แปลงพักร้อนเป็นเงิน:</span>
+                        <div style="display:flex;align-items:center;gap:4px;">
+                            <input type="number" id="vacationCashOutDays" value="0"
+                                style="width:40px;border-color:#10b981;">
                             <span style="font-size:11px;">วัน</span>
                         </div>
                     </div>
@@ -1131,13 +1145,12 @@
             </div>
 
             <h2 class="summary-title">📊 สรุปยอดเงิน (13 รายการ)</h2>
-            <div style="font-size:11px; font-weight:bold; opacity:0.6; margin-bottom:12px;">รอบคำนวณ: วันที่ 25 - 24
-            </div>
+            <div style="font-size:11px;font-weight:bold;opacity:.6;margin-bottom:12px;">รอบคำนวณ: วันที่ 25 - 24</div>
 
             <div class="sum-list">
                 <div class="sum-row">
                     <span>1. เงินเดือนปกติ</span>
-                    <input type="number" id="baseSalary" value="23000" onchange="syncSidebar()" style="width:90px;">
+                    <input type="number" id="baseSalary" value="23000" style="width:90px;">
                 </div>
                 <div class="sum-row" style="color:var(--primary-color);">
                     <span>2. OT ปกติ (x1.5)</span>
@@ -1153,9 +1166,9 @@
                 </div>
                 <div class="sum-row" style="color:#10b981;">
                     <span>5. ค่าเดินทาง (เข้างาน)</span>
-                    <div style="display:flex; align-items:center; gap:8px;">
+                    <div style="display:flex;align-items:center;gap:8px;">
                         <span id="showTravel" style="font-weight:bold;">0 ฿</span>
-                        <input type="checkbox" id="hasTravel" checked onchange="syncSidebar()">
+                        <input type="checkbox" id="hasTravel" checked>
                     </div>
                 </div>
                 <div class="sum-row" style="color:#4338ca;">
@@ -1164,45 +1177,41 @@
                 </div>
                 <div class="sum-row">
                     <span>7. ค่าภาษา</span>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <input type="number" id="languageAllowance" value="2000" onchange="syncSidebar()"
-                            style="width:70px;">
-                        <input type="checkbox" id="hasLanguage" checked onchange="syncSidebar()">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <input type="number" id="languageAllowance" value="2000" style="width:70px;">
+                        <input type="checkbox" id="hasLanguage" checked>
                     </div>
                 </div>
                 <div class="sum-row">
                     <span>8. รายรับอื่นๆ</span>
-                    <input type="number" id="otherIncome" value="0" onchange="syncSidebar()" style="width:90px;">
+                    <input type="number" id="otherIncome" value="0" style="width:90px;">
                 </div>
                 <div class="sum-row" style="color:#047857;">
                     <span>9. คืนเงินพักร้อน (+)</span>
                     <span id="showVacationCash" style="font-weight:bold;">0 ฿</span>
                 </div>
-
                 <div class="sum-row"
-                    style="color:#b91c1c; flex-direction:column; align-items:stretch; gap:6px; padding-top:12px; margin-top:8px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                    style="color:#b91c1c;flex-direction:column;align-items:stretch;gap:6px;padding-top:12px;margin-top:8px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span>10. หัก ประกันสังคม (-)</span>
-                        <input type="number" id="socialSecurity" value="825" onchange="syncSidebar()"
-                            style="width:70px;">
+                        <input type="number" id="socialSecurity" value="825" style="width:70px;">
                     </div>
-                    <div style="display:flex; justify-content:space-between; margin-top:4px;">
+                    <div style="display:flex;justify-content:space-between;margin-top:4px;">
                         <span>11. หัก มาสาย (Auto)</span>
                         <span id="showAutoLate" style="font-weight:bold;">0 ฿</span>
                     </div>
-                    <div style="display:flex; justify-content:space-between; margin-top:4px;">
+                    <div style="display:flex;justify-content:space-between;margin-top:4px;">
                         <span id="labelAbsentDeduct" style="font-size:12px;">12. หัก ขาดงาน/ลากิจเกิน (0 วัน)</span>
                         <span id="showAbsentDeduct" style="font-weight:bold;">0 ฿</span>
                     </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
                         <span>+ 13. หัก ภาษี (กรอกเพิ่ม)</span>
-                        <input type="number" id="taxDeduction" value="0" onchange="syncSidebar()" style="width:70px;">
+                        <input type="number" id="taxDeduction" value="0" style="width:70px;">
                     </div>
                     <div
-                        style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:8px; border-top:1px solid var(--border-cell);">
-                        <span style="font-weight:bold; color:#991b1b;">🔴 รวมหักทั้งหมด:</span>
-                        <span id="showTotalDeduction" style="font-size:16px; font-weight:bold; color:#991b1b;">0
-                            ฿</span>
+                        style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--border-cell);">
+                        <span style="font-weight:bold;color:#991b1b;">🔴 รวมหักทั้งหมด:</span>
+                        <span id="showTotalDeduction" style="font-size:16px;font-weight:bold;color:#991b1b;">0 ฿</span>
                     </div>
                 </div>
             </div>
@@ -1214,31 +1223,32 @@
         </div>
     </div>
 
+    <!-- MODAL -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitle">ลงเวลา / แจ้งสถานะ</h3>
                 <span id="lateBadge" class="badge badge-red">🔴 <span id="lateTextDisplay"
-                        style="font-weight:normal; margin-left:4px;"></span></span>
+                        style="font-weight:normal;margin-left:4px;"></span></span>
                 <span id="onTimeBadge" class="badge badge-green">🟢 ตรงเวลา</span>
             </div>
 
             <label class="option-card opt-morning" id="cardMorning">
-                <input type="radio" name="dayStatusOpt" value="morning" onchange="toggleDayStatus(true)">
+                <input type="radio" name="dayStatusOpt" value="morning">
                 <div>
                     <strong style="color:#166534;">☀️ เข้างานกะเช้า</strong>
                     <span style="color:#166534;">รับค่าเดินทาง 35 บ.</span>
                 </div>
             </label>
             <label class="option-card opt-night" id="cardNight">
-                <input type="radio" name="dayStatusOpt" value="night" onchange="toggleDayStatus(true)">
+                <input type="radio" name="dayStatusOpt" value="night">
                 <div>
                     <strong style="color:#4338ca;">🌙 เข้างานกะดึก</strong>
                     <span style="color:#4338ca;">รับค่าเดินทาง 35 บ. + ค่ากะ 50 บ.</span>
                 </div>
             </label>
             <label class="option-card opt-leave" id="cardLeave">
-                <input type="radio" name="dayStatusOpt" value="leave" onchange="toggleDayStatus(true)">
+                <input type="radio" name="dayStatusOpt" value="leave">
                 <div>
                     <strong style="color:#b91c1c;">❌ หยุดงาน / ลางาน</strong>
                     <span style="color:#b91c1c;">ขาดงาน, ลากิจ, ลาป่วย, พักร้อน</span>
@@ -1246,10 +1256,10 @@
             </label>
 
             <div id="workFields" style="display:none;">
-                <div class="form-group" style="margin-bottom:12px; margin-top:16px;">
-                    <label style="font-size:13px; font-weight:bold;">ประเภทวัน (สำหรับคิด OT):</label>
-                    <select id="dayType" onchange="updateCalculations()"
-                        style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-color); margin-top:4px;">
+                <div class="form-group" style="margin-bottom:12px;margin-top:16px;">
+                    <label style="font-size:13px;font-weight:bold;">ประเภทวัน (สำหรับคิด OT):</label>
+                    <select id="dayType"
+                        style="width:100%;padding:8px;border-radius:6px;border:1px solid var(--border-color);margin-top:4px;background:var(--bg-card);color:var(--text-main);font-family:inherit;">
                         <option value="normal">💼 วันธรรมดาปกติ (OT x1.5)</option>
                         <option value="weekend">🏝️ วันเสาร์-อาทิตย์ (ทำงานได้ x1, OT x3)</option>
                         <option value="special">🎊 วันหยุดพิเศษ/นักขัตฤกษ์ (ทำงานได้ x2, OT x3)</option>
@@ -1261,44 +1271,44 @@
                     <div class="time-row">
                         <div class="time-col">
                             <label id="lblTimeIn">เข้างาน</label>
-                            <input type="time" id="timeIn" value="08:00" onchange="updateCalculations()">
+                            <input type="time" id="timeIn" value="08:00">
                         </div>
                         <div class="time-col">
                             <label>เลิกงาน</label>
-                            <input type="time" id="timeOut" value="18:00" onchange="updateCalculations()">
+                            <input type="time" id="timeOut" value="18:00">
                         </div>
                     </div>
-                    <div style="font-size:11px; text-align:center; opacity:0.7; margin-top:8px;" id="normalHoursText">
+                    <div style="font-size:11px;text-align:center;opacity:.7;margin-top:8px;" id="normalHoursText">
                         ทำงานสุทธิ: 0 ชม.</div>
                 </div>
 
                 <label
-                    style="display:flex; align-items:center; gap:8px; margin-bottom:12px; padding:8px 12px; background:var(--bg-header); border:1px solid var(--border-color); border-radius:8px; cursor:pointer;">
-                    <input type="checkbox" id="otCheckbox" onchange="toggleOtFields()" style="width:16px; height:16px;">
+                    style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:8px 12px;background:var(--bg-header);border:1px solid var(--border-color);border-radius:8px;cursor:pointer;">
+                    <input type="checkbox" id="otCheckbox" style="width:16px;height:16px;">
                     <div><strong style="font-size:14px;">ทำล่วงเวลา (OT) ในวันนี้</strong></div>
                 </label>
 
-                <div class="time-box" id="otFieldsBox" style="display:none; border-color:#f59e0b;">
+                <div class="time-box" id="otFieldsBox" style="display:none;border-color:#f59e0b;">
                     <div class="time-title" style="color:#b45309;">⏱️ ระบุเวลา OT</div>
                     <div class="time-row">
                         <div class="time-col">
                             <label style="color:#b45309;">เริ่ม OT</label>
-                            <input type="time" id="otStart" value="18:30" onchange="updateCalculations()">
+                            <input type="time" id="otStart" value="18:30">
                         </div>
                         <div class="time-col">
                             <label style="color:#b45309;">จบ OT</label>
-                            <input type="time" id="otEnd" value="21:30" onchange="updateCalculations()">
+                            <input type="time" id="otEnd" value="21:30">
                         </div>
                     </div>
-                    <div style="font-size:13px; font-weight:bold; text-align:center; color:#b45309; margin-top:8px;"
+                    <div style="font-size:13px;font-weight:bold;text-align:center;color:#b45309;margin-top:8px;"
                         id="otHoursText">รวม OT: 0 ชั่วโมง</div>
                 </div>
             </div>
 
             <div id="leaveFieldsBox"
-                style="display:none; background:#fef2f2; padding:16px; border-radius:8px; border:1px dashed #fca5a5; margin-top:16px;">
+                style="display:none;background:#fef2f2;padding:16px;border-radius:8px;border:1px dashed #fca5a5;margin-top:16px;">
                 <strong
-                    style="color:#991b1b; display:block; margin-bottom:8px; font-size:14px;">เลือกประเภทการหยุด:</strong>
+                    style="color:#991b1b;display:block;margin-bottom:8px;font-size:14px;">เลือกประเภทการหยุด:</strong>
                 <div class="radio-leave-group">
                     <label style="color:#991b1b;"><input type="radio" name="leaveTypeOpt" value="absent" checked> ❌
                         ขาดงาน (หักเงิน 100%)</label>
@@ -1311,43 +1321,39 @@
                 </div>
             </div>
 
-            <hr style="border:0; border-top:1px solid var(--border-color); margin:16px 0;">
+            <hr style="border:0;border-top:1px solid var(--border-color);margin:16px 0;">
 
             <div id="holidaySection"
-                style="padding:10px; background:#f3e8ff; border-radius:8px; border:1px solid #d8b4fe; margin-bottom:12px;">
-                <label class="check-group"
-                    style="background:transparent; border:none; margin-bottom:5px; padding:0; display: flex; align-items: center; cursor: pointer;">
-                    <input type="checkbox" id="chkSpecial" onchange="toggleSpecialHolidayUI()">
-                    <div style="margin-left:10px;">
-                        <strong style="color:#6b21a8;">🎉 ตั้งเป็นวันหยุดพิเศษ</strong>
-                    </div>
+                style="padding:10px;background:#f3e8ff;border-radius:8px;border:1px solid #d8b4fe;margin-bottom:12px;">
+                <label style="display:flex;align-items:center;cursor:pointer;gap:0;">
+                    <input type="checkbox" id="chkSpecial">
+                    <div style="margin-left:10px;"><strong style="color:#6b21a8;">🎉 ตั้งเป็นวันหยุดพิเศษ</strong></div>
                 </label>
                 <input type="text" id="holidayName" placeholder="ชื่อเทศกาล (เช่น วันปีใหม่)"
-                    style="display:none; width:100%; padding:6px; border:1px solid #a855f7; border-radius:4px; margin-top:8px; font-size:13px;">
+                    style="display:none;width:100%;padding:6px;border:1px solid #a855f7;border-radius:4px;margin-top:8px;font-size:13px;font-family:inherit;">
             </div>
 
             <div id="appointmentSection"
-                style="padding:10px; background:#fffbeb; border-radius:8px; border:1px solid #fde68a;">
-                <label class="check-group"
-                    style="background:transparent; border:none; margin-bottom:5px; padding:0; display: flex; align-items: center; cursor: pointer;">
-                    <input type="checkbox" id="chkAppointment" onchange="toggleAppointmentUI()">
-                    <strong style="color:#d97706; margin-left:10px;">📌 บันทึกวันนัดหมาย / โน้ต</strong>
+                style="padding:10px;background:#fffbeb;border-radius:8px;border:1px solid #fde68a;">
+                <label style="display:flex;align-items:center;cursor:pointer;gap:0;">
+                    <input type="checkbox" id="chkAppointment">
+                    <strong style="color:#d97706;margin-left:10px;">📌 บันทึกวันนัดหมาย / โน้ต</strong>
                 </label>
-                <div id="aptFields" style="display:none; margin-top:8px;">
-                    <div style="display:flex; gap:8px; margin-bottom:8px;">
+                <div id="aptFields" style="display:none;margin-top:8px;">
+                    <div style="display:flex;gap:8px;margin-bottom:8px;">
                         <input type="text" id="aptIcon" placeholder="🏥"
-                            style="width:25%; padding:6px; border:1px solid #fcd34d; border-radius:4px; text-align:center;">
+                            style="width:25%;padding:6px;border:1px solid #fcd34d;border-radius:4px;text-align:center;font-family:inherit;">
                         <input type="text" id="aptTitle" placeholder="หัวข้อสั้นๆ"
-                            style="flex:1; padding:6px; border:1px solid #fcd34d; border-radius:4px;">
+                            style="flex:1;padding:6px;border:1px solid #fcd34d;border-radius:4px;font-family:inherit;">
                     </div>
                     <textarea id="aptDesc" placeholder="รายละเอียดเพิ่มเติม..." rows="3"
-                        style="width:100%; padding:6px; border:1px solid #fcd34d; border-radius:4px; resize:none; font-size:13px;"></textarea>
+                        style="width:100%;padding:6px;border:1px solid #fcd34d;border-radius:4px;resize:none;font-size:13px;font-family:inherit;"></textarea>
                 </div>
             </div>
 
             <div class="btn-row">
-                <button class="btn btn-cancel" onclick="closeModal()">ยกเลิก</button>
-                <button class="btn btn-save" onclick="saveDayData()">บันทึกข้อมูล</button>
+                <button class="btn btn-cancel" id="btnModalCancel">ยกเลิก</button>
+                <button class="btn btn-save" id="btnModalSave">บันทึกข้อมูล</button>
             </div>
         </div>
     </div>
@@ -1358,7 +1364,6 @@
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 
-        // Firebase Config ของคุณ
         const firebaseConfig = {
             apiKey: "AIzaSyD-Zk6GPdlNeqI7MpkAtjyVLXCJWblzTkw",
             authDomain: "mysalarycalendar.firebaseapp.com",
@@ -1379,11 +1384,11 @@
         let attendanceData = {};
         let specialHolidays = {};
         let appointments = {};
+        let selectedDateStr = '';
+        let activeWorkIcon = "💼";
 
         const STANDARD_MORNING_START = "08:00";
         const STANDARD_NIGHT_START = "20:00";
-        let activeWorkIcon = "💼";
-        let selectedDateStr = '';
 
         const monthlyGimmicks = {
             1: { emoji: "⛄", sig: "ฤดูหนาว (Winter)", workIcon: "🧣", waterMark: "❄️" },
@@ -1400,177 +1405,261 @@
             12: { emoji: "🎄", sig: "คริสต์มาส (Christmas)", workIcon: "🎅", waterMark: "🎁" }
         };
 
-        // ระบบ Login
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('appContainer').style.display = 'flex';
-                listenToCloudData();
-            } else {
-                currentUser = null;
-                document.getElementById('loginSection').style.display = 'flex';
-                document.getElementById('appContainer').style.display = 'none';
+        // ── HELPERS ──────────────────────────────────────────────────────────
+        function $(id) { return document.getElementById(id); }
+
+        function calcMinutesDiff(startStr, endStr) {
+            if (!startStr || !endStr) return 0;
+            let [sh, sm] = startStr.split(':').map(Number);
+            let [eh, em] = endStr.split(':').map(Number);
+            let s = sh * 60 + sm, e = eh * 60 + em;
+            if (e < s) e += 24 * 60;
+            return e - s;
+        }
+        function getLateMins(tIn, std) {
+            let diff = calcMinutesDiff(std, tIn);
+            return diff > 720 ? 0 : diff;
+        }
+        function getDeductMins(m) {
+            if (m <= 3) return 0;
+            if (m <= 30) return m;
+            return Math.ceil(m / 30) * 30;
+        }
+        function getActualWorkMinutes(tIn, tOut) {
+            let m = calcMinutesDiff(tIn, tOut);
+            return Math.max(0, m >= 540 ? m - 60 : m);
+        }
+        function getActiveStatus() {
+            for (let r of document.getElementsByName('dayStatusOpt')) {
+                if (r.checked) return r.value;
             }
-        });
-
-        window.loginWithGoogle = function () {
-            signInWithPopup(auth, provider).catch(err => alert("เกิดข้อผิดพลาดในการล็อกอิน: " + err.message));
-        };
-
-        window.logout = function () {
-            signOut(auth).then(() => location.reload());
-        };
-
-        // ดึงข้อมูลจาก Cloud
-        function listenToCloudData() {
-            if (!currentUser) return;
-            const userDocRef = doc(db, "salary_calendars", currentUser.uid);
-
-            onSnapshot(userDocRef, (docSnap) => {
-                if (docSnap.exists()) {
-                    const cloudData = docSnap.data();
-                    attendanceData = cloudData.attendanceData || {};
-                    specialHolidays = cloudData.specialHolidays || {};
-                    appointments = cloudData.appointments || {};
-
-                    if (cloudData.sidebarData) {
-                        const d = cloudData.sidebarData;
-                        if (d.baseSalary !== undefined) document.getElementById('baseSalary').value = d.baseSalary;
-                        if (d.hasTravel !== undefined) document.getElementById('hasTravel').checked = d.hasTravel;
-                        if (d.hasLanguage !== undefined) document.getElementById('hasLanguage').checked = d.hasLanguage;
-                        if (d.languageAllowance !== undefined) document.getElementById('languageAllowance').value = d.languageAllowance;
-                        if (d.otherIncome !== undefined) document.getElementById('otherIncome').value = d.otherIncome;
-                        if (d.socialSecurity !== undefined) document.getElementById('socialSecurity').value = d.socialSecurity;
-                        if (d.taxDeduction !== undefined) document.getElementById('taxDeduction').value = d.taxDeduction;
-                        if (d.vacationCarryOver !== undefined) document.getElementById('vacationCarryOver').value = d.vacationCarryOver;
-                        if (d.vacationQuota !== undefined) document.getElementById('vacationQuota').value = d.vacationQuota;
-                        if (d.vacationCashOutDays !== undefined) document.getElementById('vacationCashOutDays').value = d.vacationCashOutDays;
-                        if (d.themeMode !== undefined) document.getElementById('themeSelect').value = d.themeMode;
-
-                        if (d.themeMode === 'custom' && cloudData.customColors) {
-                            document.getElementById('colorBg').value = cloudData.customColors.bg || "#f3f4f6";
-                            document.getElementById('colorCard').value = cloudData.customColors.card || "#ffffff";
-                            document.getElementById('colorPrimary').value = cloudData.customColors.primary || "#0284c7";
-                            document.getElementById('colorText').value = cloudData.customColors.text || "#374151";
-                        }
-                    }
-                }
-
-                const themeMode = document.getElementById('themeSelect').value;
-                if (themeMode === 'custom') {
-                    document.getElementById('customColorBox').style.display = 'flex';
-                    window.applyCustomColors();
-                } else {
-                    document.getElementById('customColorBox').style.display = 'none';
-                    window.applySeasonalGimmick();
-                }
-                window.initCalendar();
-            });
+            return null;
         }
 
-        // เซฟข้อมูลลง Cloud
-        async function syncDataToCloud() {
-            if (!currentUser) return;
-            const userDocRef = doc(db, "salary_calendars", currentUser.uid);
-
-            const sidebarData = {
-                baseSalary: document.getElementById('baseSalary').value,
-                hasTravel: document.getElementById('hasTravel').checked,
-                hasLanguage: document.getElementById('hasLanguage').checked,
-                languageAllowance: document.getElementById('languageAllowance').value,
-                otherIncome: document.getElementById('otherIncome').value,
-                socialSecurity: document.getElementById('socialSecurity').value,
-                taxDeduction: document.getElementById('taxDeduction').value,
-                vacationCarryOver: document.getElementById('vacationCarryOver').value,
-                vacationQuota: document.getElementById('vacationQuota').value,
-                vacationCashOutDays: document.getElementById('vacationCashOutDays').value,
-                themeMode: document.getElementById('themeSelect').value
-            };
-
-            const customColors = {
-                bg: document.getElementById('colorBg').value,
-                card: document.getElementById('colorCard').value,
-                primary: document.getElementById('colorPrimary').value,
-                text: document.getElementById('colorText').value
-            };
-
-            await setDoc(userDocRef, {
-                attendanceData,
-                specialHolidays,
-                appointments,
-                sidebarData,
-                customColors
-            }, { merge: true });
-        }
-
-        window.syncSidebar = function () {
-            window.calculateSalary();
-            syncDataToCloud();
-        };
-
-        window.changeTheme = function () {
-            const theme = document.getElementById('themeSelect').value;
-            if (theme === 'custom') {
-                document.getElementById('customColorBox').style.display = 'flex';
-                window.applyCustomColors();
-            } else {
-                document.getElementById('customColorBox').style.display = 'none';
-                window.applySeasonalGimmick();
-            }
-            syncDataToCloud();
-        };
-
-        window.applyCustomColors = function () {
+        // ── THEME ─────────────────────────────────────────────────────────────
+        function applyCustomColors() {
             const root = document.documentElement;
-            root.style.setProperty('--custom-bg', document.getElementById('colorBg').value);
-            root.style.setProperty('--custom-card', document.getElementById('colorCard').value);
-            root.style.setProperty('--custom-primary', document.getElementById('colorPrimary').value);
-            root.style.setProperty('--custom-text', document.getElementById('colorText').value);
+            root.style.setProperty('--custom-bg', $('colorBg').value);
+            root.style.setProperty('--custom-card', $('colorCard').value);
+            root.style.setProperty('--custom-primary', $('colorPrimary').value);
+            root.style.setProperty('--custom-text', $('colorText').value);
             document.body.setAttribute('data-theme', 'custom');
+            const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
+            const g = monthlyGimmicks[parseInt(monthVal.split('-')[1])] || monthlyGimmicks[1];
+            activeWorkIcon = g.workIcon;
+            $('seasonEmoji').innerText = g.emoji;
+            $('seasonText').innerText = `| ${g.sig}`;
+            $('watermarkBg').innerText = g.waterMark;
+        }
 
-            const monthVal = document.getElementById('currentMonth').value || new Date().toISOString().slice(0, 7);
-            const gimmick = monthlyGimmicks[parseInt(monthVal.split('-')[1])] || monthlyGimmicks[1];
-            activeWorkIcon = gimmick.workIcon;
-            document.getElementById('seasonEmoji').innerText = gimmick.emoji;
-            document.getElementById('seasonText').innerText = `| ${gimmick.sig}`;
-            document.getElementById('watermarkBg').innerText = gimmick.waterMark;
-        };
-
-        window.applySeasonalGimmick = function () {
-            const monthVal = document.getElementById('currentMonth').value || new Date().toISOString().slice(0, 7);
+        function applySeasonalGimmick() {
+            const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const month = parseInt(monthVal.split('-')[1]);
-            const themeMode = document.getElementById('themeSelect').value;
-
-            if (themeMode === 'custom') return window.applyCustomColors();
-
+            const themeMode = $('themeSelect').value;
+            if (themeMode === 'custom') { applyCustomColors(); return; }
             document.body.setAttribute('data-theme', themeMode);
             document.body.setAttribute('data-month', month);
+            const g = monthlyGimmicks[month] || monthlyGimmicks[1];
+            activeWorkIcon = g.workIcon;
+            $('seasonEmoji').innerText = g.emoji;
+            $('seasonText').innerText = `| ${g.sig}`;
+            $('watermarkBg').innerText = g.waterMark;
+        }
 
-            const gimmick = monthlyGimmicks[month] || monthlyGimmicks[1];
-            activeWorkIcon = gimmick.workIcon;
-            document.getElementById('seasonEmoji').innerText = gimmick.emoji;
-            document.getElementById('seasonText').innerText = `| ${gimmick.sig}`;
-            document.getElementById('watermarkBg').innerText = gimmick.waterMark;
-        };
+        function changeTheme() {
+            const theme = $('themeSelect').value;
+            if (theme === 'custom') {
+                $('customColorBox').style.display = 'flex';
+                applyCustomColors();
+            } else {
+                $('customColorBox').style.display = 'none';
+                applySeasonalGimmick();
+            }
+            syncDataToCloud();
+        }
 
-        window.initCalendar = function () {
-            const monthVal = document.getElementById('currentMonth').value || new Date().toISOString().slice(0, 7);
+        // ── MODAL ─────────────────────────────────────────────────────────────
+        function toggleAppointmentUI() {
+            $('aptFields').style.display = $('chkAppointment').checked ? 'block' : 'none';
+        }
+        function toggleSpecialHolidayUI() {
+            const on = $('chkSpecial').checked;
+            $('holidayName').style.display = on ? 'block' : 'none';
+            $('dayType').value = on ? 'special' : 'normal';
+            updateCalculations();
+        }
+        function toggleOtFields() {
+            $('otFieldsBox').style.display = $('otCheckbox').checked ? 'block' : 'none';
+            updateCalculations();
+        }
+        function toggleDayStatus(isClick = false) {
+            const status = getActiveStatus();
+            $('cardMorning').classList.remove('active');
+            $('cardNight').classList.remove('active');
+            $('cardLeave').classList.remove('active');
+            $('workFields').style.display = 'none';
+            $('leaveFieldsBox').style.display = 'none';
+
+            if (status === 'morning') {
+                $('cardMorning').classList.add('active');
+                $('workFields').style.display = 'block';
+                $('lblTimeIn').innerText = 'เข้างาน (ปกติ 08:00)';
+                if (isClick) { $('otStart').value = '18:30'; $('otEnd').value = '21:30'; }
+            } else if (status === 'night') {
+                $('cardNight').classList.add('active');
+                $('workFields').style.display = 'block';
+                $('lblTimeIn').innerText = 'เข้างาน (ปกติ 20:00)';
+                if (isClick) { $('otStart').value = '06:30'; $('otEnd').value = '09:30'; }
+            } else if (status === 'leave') {
+                $('cardLeave').classList.add('active');
+                $('leaveFieldsBox').style.display = 'block';
+            }
+
+            if (['morning', 'night'].includes(status)) updateCalculations();
+            else {
+                $('lateBadge').style.display = 'none';
+                $('onTimeBadge').style.display = 'none';
+            }
+        }
+        function updateCalculations() {
+            const status = getActiveStatus();
+            if (!['morning', 'night'].includes(status)) return;
+            const tIn = $('timeIn').value, tOut = $('timeOut').value;
+            const dType = $('dayType').value;
+            const didOt = $('otCheckbox').checked;
+            const oStart = $('otStart').value, oEnd = $('otEnd').value;
+            let netHrs = getActualWorkMinutes(tIn, tOut) / 60;
+            let expOt = didOt ? calcMinutesDiff(oStart, oEnd) / 60 : 0;
+            let tHrs = netHrs + expOt;
+            let bltOt = Math.max(0, netHrs - 9);
+            const lb = $('lateBadge'), ob = $('onTimeBadge'), lt = $('lateTextDisplay');
+
+            if (dType === 'special') {
+                $('normalHoursText').innerHTML = `ทำงานวันหยุดพิเศษ: <strong style="color:#6b21a8;">เรท x2 ทั้งหมด</strong>`;
+                $('otHoursText').innerHTML = `คำนวณเงิน: <strong style="color:#6b21a8;">รวม ${tHrs.toFixed(1)} ชม. (คิดเรท x2 ทั้งหมด)</strong>`;
+                lb.style.display = 'none'; ob.style.display = 'inline-block';
+            } else if (dType === 'weekend') {
+                let wkHrs = Math.min(9, tHrs), wkOt = Math.max(0, tHrs - 9);
+                $('normalHoursText').innerHTML = `ทำงานวันหยุด ส.-อา.: <strong style="color:#047857;">${netHrs.toFixed(1)} ชม. + OT ${expOt.toFixed(1)} ชม.</strong>`;
+                $('otHoursText').innerHTML = `คำนวณเงิน: <strong style="color:#b45309;">x2 = ${wkHrs.toFixed(1)} ชม. | x3 = ${wkOt.toFixed(1)} ชม.</strong>`;
+                lb.style.display = 'none'; ob.style.display = 'inline-block';
+            } else {
+                let std = status === 'morning' ? STANDARD_MORNING_START : STANDARD_NIGHT_START;
+                let lMins = getLateMins(tIn, std);
+                $('normalHoursText').innerText = `ทำงานสุทธิ: ${netHrs.toFixed(1)} ชม. (หักพัก 1 ชม.)`;
+                $('otHoursText').innerText = `OT ที่ได้เงิน: ${(bltOt + expOt).toFixed(1)} ชม. (เรท x1.5)`;
+                if (lMins > 0) {
+                    lb.style.display = 'inline-block'; ob.style.display = 'none';
+                    lt.innerText = `สาย ${lMins} นาที -> หักเงิน ${getDeductMins(lMins)} นาที`;
+                } else {
+                    lb.style.display = 'none'; ob.style.display = 'inline-block';
+                }
+            }
+        }
+        function openModal(dStr) {
+            selectedDateStr = dStr;
+            const curr = new Date(dStr + 'T00:00:00');
+            const defType = (curr.getDay() === 0 || curr.getDay() === 6) ? 'weekend' : 'normal';
+            $('modalTitle').innerText = curr.toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
+
+            const data = attendanceData[dStr] || {
+                status: null, dayType: defType, timeIn: '08:00', timeOut: '18:00',
+                didOt: false, otStart: '18:30', otEnd: '21:30', leaveType: 'absent'
+            };
+            for (let r of document.getElementsByName('dayStatusOpt')) r.checked = (r.value === data.status);
+            $('dayType').value = data.dayType;
+            $('timeIn').value = data.timeIn;
+            $('timeOut').value = data.timeOut;
+            $('otCheckbox').checked = data.didOt;
+
+            let defOtStart = data.status === 'night' ? '06:30' : '18:30';
+            let defOtEnd = data.status === 'night' ? '09:30' : '21:30';
+            $('otStart').value = data.otStart || defOtStart;
+            $('otEnd').value = data.otEnd || defOtEnd;
+
+            if (data.status === 'leave') {
+                for (let r of document.getElementsByName('leaveTypeOpt')) r.checked = (r.value === data.leaveType);
+            }
+            const sp = specialHolidays[dStr];
+            $('chkSpecial').checked = !!sp;
+            $('holidayName').value = sp || '';
+            $('holidayName').style.display = sp ? 'block' : 'none';
+
+            const apt = appointments[dStr];
+            $('chkAppointment').checked = !!apt;
+            $('aptIcon').value = apt ? apt.icon : '📌';
+            $('aptTitle').value = apt ? apt.title : '';
+            $('aptDesc').value = apt ? apt.desc : '';
+
+            toggleAppointmentUI();
+            toggleDayStatus(false);
+            $('modal').style.display = 'flex';
+        }
+        function closeModal() {
+            $('modal').style.display = 'none';
+        }
+        function saveDayData() {
+            const isSp = $('chkSpecial').checked;
+            const hName = $('holidayName').value;
+            const isApt = $('chkAppointment').checked;
+            const status = getActiveStatus();
+
+            if (['morning', 'night'].includes(status)) {
+                const tIn = $('timeIn').value, tOut = $('timeOut').value;
+                const dType = $('dayType').value;
+                const didOt = $('otCheckbox').checked;
+                const oStart = $('otStart').value, oEnd = $('otEnd').value;
+                const netHrs = getActualWorkMinutes(tIn, tOut) / 60;
+                let isLate = false, fLateMins = 0;
+                if (dType === 'normal') {
+                    let std = status === 'morning' ? STANDARD_MORNING_START : STANDARD_NIGHT_START;
+                    fLateMins = getLateMins(tIn, std);
+                    if (fLateMins > 0) isLate = true;
+                }
+                attendanceData[selectedDateStr] = {
+                    status, dayType: dType, timeIn: tIn, timeOut: tOut, didOt,
+                    otStart: oStart, otEnd: oEnd,
+                    explicitOtHrs: didOt ? calcMinutesDiff(oStart, oEnd) / 60 : 0,
+                    builtInOtHrs: Math.max(0, netHrs - 9),
+                    isLate, finalLateMins: fLateMins
+                };
+            } else if (status === 'leave') {
+                let lType = 'absent';
+                for (let r of document.getElementsByName('leaveTypeOpt')) if (r.checked) lType = r.value;
+                attendanceData[selectedDateStr] = { status: 'leave', leaveType: lType };
+            } else {
+                delete attendanceData[selectedDateStr];
+            }
+
+            if (isSp) specialHolidays[selectedDateStr] = hName || 'วันหยุดพิเศษ';
+            else delete specialHolidays[selectedDateStr];
+
+            if (isApt) {
+                appointments[selectedDateStr] = {
+                    icon: $('aptIcon').value || '📌',
+                    title: $('aptTitle').value || 'นัดหมาย',
+                    desc: $('aptDesc').value || ''
+                };
+            } else { delete appointments[selectedDateStr]; }
+
+            closeModal();
+            syncDataToCloud();
+        }
+
+        // ── CALENDAR ──────────────────────────────────────────────────────────
+        function initCalendar() {
+            const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const [year, month] = monthVal.split('-').map(Number);
             document.body.setAttribute('data-month', month);
-
             const firstDayIndex = new Date(year, month - 1, 1).getDay();
             const daysInMonth = new Date(year, month, 0).getDate();
-            const calendarDays = document.getElementById('calendarDays');
+            const calendarDays = $('calendarDays');
             if (!calendarDays) return;
             calendarDays.innerHTML = '';
 
             const createCell = (dateObj, isOutMonth) => {
-                const cellYear = dateObj.getFullYear();
-                const cellMonth = String(dateObj.getMonth() + 1).padStart(2, '0');
-                const cellDay = String(dateObj.getDate()).padStart(2, '0');
-                const dateStr = `${cellYear}-${cellMonth}-${cellDay}`;
-
+                const cy = dateObj.getFullYear(), cm = String(dateObj.getMonth() + 1).padStart(2, '0'), cd = String(dateObj.getDate()).padStart(2, '0');
+                const dateStr = `${cy}-${cm}-${cd}`;
                 const isWeekend = dateObj.getDay() === 0 || dateObj.getDay() === 6;
                 const savedData = attendanceData[dateStr];
                 const isSpecial = specialHolidays[dateStr];
@@ -1582,358 +1671,50 @@
                 if (isWeekend) cellDiv.classList.add('weekend');
                 if (isSpecial) cellDiv.classList.add('special-holiday');
 
-                let numClass = 'date-num';
-                if (isWeekend) numClass += ' sunday';
-
-                let cellContent = `<div class="${numClass}">${dateObj.getDate()}</div>`;
-                cellContent += `<div class="tags-area">`;
+                let numClass = isWeekend ? 'date-num sunday' : 'date-num';
+                let html = `<div class="${numClass}">${dateObj.getDate()}</div><div class="tags-area">`;
 
                 if (savedData) {
-                    if (savedData.status === 'morning' || savedData.status === 'night') {
-                        let iconToShow = activeWorkIcon;
-                        let inOutClass = 'tag tag-work';
-
-                        if (savedData.status === 'night') {
-                            inOutClass = 'tag tag-night';
-                            iconToShow = '🌙';
-                        }
-
-                        if (savedData.isLate && savedData.dayType === 'normal') {
-                            inOutClass = 'tag tag-late';
-                            iconToShow = '🔴';
-                        }
-
-                        cellContent += `<div class="${inOutClass}"><span>${iconToShow}</span> <span class="tag-text">${savedData.timeIn}-${savedData.timeOut}</span></div>`;
-
-                        let totalOtHrs = (savedData.builtInOtHrs || 0) + (savedData.explicitOtHrs || 0);
-                        if (totalOtHrs > 0) {
-                            cellContent += `<div class="tag tag-ot">⏱️ <span class="tag-text">OT: ${totalOtHrs.toFixed(1)}h</span></div>`;
-                        }
+                    if (['morning', 'night'].includes(savedData.status)) {
+                        let ic = activeWorkIcon, cls = 'tag tag-work';
+                        if (savedData.status === 'night') { cls = 'tag tag-night'; ic = '🌙'; }
+                        if (savedData.isLate && savedData.dayType === 'normal') { cls = 'tag tag-late'; ic = '🔴'; }
+                        html += `<div class="${cls}"><span>${ic}</span><span class="tag-text">${savedData.timeIn}-${savedData.timeOut}</span></div>`;
+                        let tOt = (savedData.builtInOtHrs || 0) + (savedData.explicitOtHrs || 0);
+                        if (tOt > 0) html += `<div class="tag tag-ot">⏱️ <span class="tag-text">OT: ${tOt.toFixed(1)}h</span></div>`;
                     } else if (savedData.status === 'leave') {
-                        if (savedData.leaveType === 'absent') cellContent += `<div class="tag tag-absent">❌ <span class="tag-text">ขาดงาน</span></div>`;
-                        else if (savedData.leaveType === 'personal') cellContent += `<div class="tag tag-personal">📝 <span class="tag-text">ลากิจ</span></div>`;
-                        else if (savedData.leaveType === 'sick') cellContent += `<div class="tag tag-sick">💊 <span class="tag-text">ลาป่วย</span></div>`;
-                        else if (savedData.leaveType === 'vacation') cellContent += `<div class="tag tag-vacation">🏖️ <span class="tag-text">ลาพักร้อน</span></div>`;
+                        const leaveMap = { absent: 'tag tag-absent', personal: 'tag tag-personal', sick: 'tag tag-sick', vacation: 'tag tag-vacation' };
+                        const leaveIcon = { absent: '❌ ขาดงาน', personal: '📝 ลากิจ', sick: '💊 ลาป่วย', vacation: '🏖️ ลาพักร้อน' };
+                        html += `<div class="${leaveMap[savedData.leaveType] || 'tag tag-absent'}">${leaveIcon[savedData.leaveType] || '❌ ขาดงาน'}</div>`;
                     }
                 }
+                if (isSpecial) html += `<div class="tag" style="background:#a855f7;color:white;border-color:#9333ea;font-size:11px;font-weight:bold;justify-content:center;">🎉 <span class="tag-text">${isSpecial}</span></div>`;
+                if (aptData) html += `<div class="tag tag-apt" title="${aptData.desc}"><span>${aptData.icon}</span> <span class="tag-text">${aptData.title}</span></div>`;
 
-                if (isSpecial) {
-                    cellContent += `<div class="tag" style="background:#a855f7; color:white; border-color:#9333ea; font-size:11px; font-weight:bold; justify-content:center;">🎉 <span class="tag-text">${isSpecial}</span></div>`;
-                }
-
-                if (aptData) {
-                    cellContent += `<div class="tag tag-apt" title="${aptData.desc}"><span>${aptData.icon}</span> <span class="tag-text">${aptData.title}</span></div>`;
-                }
-
-                cellContent += `</div>`;
-                cellDiv.innerHTML = cellContent;
-                cellDiv.onclick = () => window.openModal(dateStr);
+                html += `</div>`;
+                cellDiv.innerHTML = html;
+                cellDiv.onclick = () => openModal(dateStr);
                 calendarDays.appendChild(cellDiv);
             };
 
-            for (let i = 0; i < firstDayIndex; i++) {
-                createCell(new Date(year, month - 1, 0 - (firstDayIndex - 1 - i)), true);
-            }
-            for (let day = 1; day <= daysInMonth; day++) {
-                createCell(new Date(year, month - 1, day), false);
-            }
+            for (let i = 0; i < firstDayIndex; i++) createCell(new Date(year, month - 1, 0 - (firstDayIndex - 1 - i)), true);
+            for (let d = 1; d <= daysInMonth; d++)   createCell(new Date(year, month - 1, d), false);
+            const total = firstDayIndex + daysInMonth;
+            const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+            for (let i = 1; i <= remaining; i++) createCell(new Date(year, month, i), true);
 
-            const currentTotalCells = firstDayIndex + daysInMonth;
-            const remainingCells = currentTotalCells % 7 === 0 ? 0 : 7 - (currentTotalCells % 7);
-
-            for (let i = 1; i <= remainingCells; i++) {
-                createCell(new Date(year, month, i), true);
-            }
-
-            window.calculateSalary();
-        };
-
-        function calcMinutesDiff(startStr, endStr) {
-            if (!startStr || !endStr) return 0;
-            let [sh, sm] = startStr.split(':').map(Number);
-            let [eh, em] = endStr.split(':').map(Number);
-            let smins = sh * 60 + sm;
-            let emins = eh * 60 + em;
-            if (emins < smins) emins += 24 * 60;
-            return emins - smins;
+            calculateSalary();
         }
 
-        function getLateMins(tIn, std) {
-            let diff = calcMinutesDiff(std, tIn);
-            return diff > 720 ? 0 : diff;
-        }
+        // ── SALARY CALC ───────────────────────────────────────────────────────
+        function calculateSalary() {
+            const bSal = parseFloat($('baseSalary').value) || 0;
+            const dRate = bSal / 30, hRate = dRate / 9, mRate = hRate / 60;
+            let tOtN = 0, tOtW = 0, tOtH = 0, tTrav = 0, tLateD = 0, unpLeave = 0, yrP = 0, yrS = 0, yrV = 0, dNight = 0;
 
-        function getDeductMins(m) {
-            if (m <= 3) return 0;
-            if (m <= 30) return m;
-            return Math.ceil(m / 30) * 30;
-        }
-
-        function getActualWorkMinutes(tIn, tOut) {
-            let m = calcMinutesDiff(tIn, tOut);
-            return Math.max(0, m >= 540 ? m - 60 : m);
-        }
-
-        function getActiveStatus() {
-            const radios = document.getElementsByName('dayStatusOpt');
-            for (let r of radios) {
-                if (r.checked) return r.value;
-            }
-            return null;
-        }
-
-        window.toggleAppointmentUI = function () {
-            const isChecked = document.getElementById('chkAppointment').checked;
-            document.getElementById('aptFields').style.display = isChecked ? 'block' : 'none';
-        };
-
-        window.toggleSpecialHolidayUI = function () {
-            const isChecked = document.getElementById('chkSpecial').checked;
-            document.getElementById('holidayName').style.display = isChecked ? 'block' : 'none';
-            document.getElementById('dayType').value = isChecked ? 'special' : 'normal';
-            window.updateCalculations();
-        };
-
-        window.toggleOtFields = function () {
-            const isOt = document.getElementById('otCheckbox').checked;
-            document.getElementById('otFieldsBox').style.display = isOt ? 'block' : 'none';
-            window.updateCalculations();
-        };
-
-        window.toggleDayStatus = function (isClick = false) {
-            const status = getActiveStatus();
-
-            document.getElementById('cardMorning').classList.remove('active');
-            document.getElementById('cardNight').classList.remove('active');
-            document.getElementById('cardLeave').classList.remove('active');
-
-            document.getElementById('workFields').style.display = 'none';
-            document.getElementById('leaveFieldsBox').style.display = 'none';
-
-            if (status === 'morning') {
-                document.getElementById('cardMorning').classList.add('active');
-                document.getElementById('workFields').style.display = 'block';
-                document.getElementById('lblTimeIn').innerText = 'เข้างาน (ปกติ 08:00)';
-                if (isClick) {
-                    document.getElementById('otStart').value = '18:30';
-                    document.getElementById('otEnd').value = '21:30';
-                }
-            } else if (status === 'night') {
-                document.getElementById('cardNight').classList.add('active');
-                document.getElementById('workFields').style.display = 'block';
-                document.getElementById('lblTimeIn').innerText = 'เข้างาน (ปกติ 20:00)';
-                if (isClick) {
-                    document.getElementById('otStart').value = '06:30';
-                    document.getElementById('otEnd').value = '09:30';
-                }
-            } else if (status === 'leave') {
-                document.getElementById('cardLeave').classList.add('active');
-                document.getElementById('leaveFieldsBox').style.display = 'block';
-            }
-
-            if (status === 'morning' || status === 'night') {
-                window.updateCalculations();
-            } else {
-                document.getElementById('lateBadge').style.display = 'none';
-                document.getElementById('onTimeBadge').style.display = 'none';
-            }
-        };
-
-        window.updateCalculations = function () {
-            const status = getActiveStatus();
-            if (status !== 'morning' && status !== 'night') return;
-
-            const tIn = document.getElementById('timeIn').value;
-            const tOut = document.getElementById('timeOut').value;
-            const dType = document.getElementById('dayType').value;
-
-            const didOt = document.getElementById('otCheckbox').checked;
-            const oStart = document.getElementById('otStart').value;
-            const oEnd = document.getElementById('otEnd').value;
-
-            let netHrs = getActualWorkMinutes(tIn, tOut) / 60;
-            let expOt = didOt ? calcMinutesDiff(oStart, oEnd) / 60 : 0;
-            let totHrs = netHrs + expOt;
-            let bltOt = Math.max(0, netHrs - 9);
-
-            const lb = document.getElementById('lateBadge');
-            const ob = document.getElementById('onTimeBadge');
-            const lt = document.getElementById('lateTextDisplay');
-
-            if (dType === 'special') {
-                // แก้ไข: แสดงผลวันหยุดพิเศษ ให้บอกว่าคิด 2 เท่าทั้งหมด
-                document.getElementById('normalHoursText').innerHTML = `ทำงานวันหยุดพิเศษ: <strong style="color:#6b21a8;">เรท x2 ทั้งหมด</strong>`;
-                document.getElementById('otHoursText').innerHTML = `คำนวณเงิน: <strong style="color:#6b21a8;">รวม ${totHrs.toFixed(1)} ชม. (คิดเรท x2 ทั้งหมด)</strong>`;
-                lb.style.display = 'none'; 
-                ob.style.display = 'inline-block';
-            } else if (dType === 'weekend') {
-                let wkHrs = Math.min(9, totHrs);
-                let wkOt = Math.max(0, totHrs - 9);
-
-                document.getElementById('normalHoursText').innerHTML = `ทำงานวันหยุด ส.-อา.: <strong style="color:#047857;">${netHrs.toFixed(1)} ชม. + OT ${expOt.toFixed(1)} ชม.</strong>`;
-                // แก้ไขตัวเลขโชว์เรท weekend ตามที่เราปรับในฟังก์ชัน calculateSalary
-                document.getElementById('otHoursText').innerHTML = `คำนวณเงิน: <strong style="color:#b45309;">x2 = ${wkHrs.toFixed(1)} ชม. | x3 = ${wkOt.toFixed(1)} ชม.</strong>`;
-                
-                lb.style.display = 'none'; 
-                ob.style.display = 'inline-block';
-            } else {
-                // ส่วนของวันธรรมดา (normal) ไม่ต้องแก้ครับ
-                let std = status === 'morning' ? STANDARD_MORNING_START : STANDARD_NIGHT_START;
-                let lMins = getLateMins(tIn, std);
-
-                document.getElementById('normalHoursText').innerText = `ทำงานสุทธิ: ${netHrs.toFixed(1)} ชม. (หักพัก 1 ชม.)`;
-                document.getElementById('otHoursText').innerText = `OT ที่ได้เงิน: ${(bltOt + expOt).toFixed(1)} ชม. (เรท x1.5)`;
-
-                if (lMins > 0) {
-                    lb.style.display = 'inline-block';
-                    ob.style.display = 'none';
-                    lt.innerText = `สาย ${lMins} นาที -> หักเงิน ${getDeductMins(lMins)} นาที`;
-                } else {
-                    lb.style.display = 'none';
-                    ob.style.display = 'inline-block';
-                }
-            }
-        };
-
-        window.openModal = function (dStr) {
-            selectedDateStr = dStr;
-            const curr = new Date(dStr);
-            const defType = (curr.getDay() === 0 || curr.getDay() === 6) ? 'weekend' : 'normal';
-
-            document.getElementById('modalTitle').innerHTML = curr.toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
-
-            const data = attendanceData[dStr] || {
-                status: null, dayType: defType, timeIn: '08:00', timeOut: '18:00',
-                didOt: false, otStart: '18:30', otEnd: '21:30', leaveType: 'absent'
-            };
-
-            const radios = document.getElementsByName('dayStatusOpt');
-            for (let r of radios) {
-                r.checked = (r.value === data.status);
-            }
-
-            document.getElementById('dayType').value = data.dayType;
-            document.getElementById('timeIn').value = data.timeIn;
-            document.getElementById('timeOut').value = data.timeOut;
-            document.getElementById('otCheckbox').checked = data.didOt;
-
-            let defaultOtStart = data.status === 'night' ? '06:30' : '18:30';
-            let defaultOtEnd = data.status === 'night' ? '09:30' : '21:30';
-
-            document.getElementById('otStart').value = data.otStart || defaultOtStart;
-            document.getElementById('otEnd').value = data.otEnd || defaultOtEnd;
-
-            if (data.status === 'leave') {
-                const lRadios = document.getElementsByName('leaveTypeOpt');
-                for (let r of lRadios) {
-                    r.checked = (r.value === data.leaveType);
-                }
-            }
-
-            const sp = specialHolidays[dStr];
-            document.getElementById('chkSpecial').checked = !!sp;
-            document.getElementById('holidayName').value = sp || '';
-            document.getElementById('holidayName').style.display = sp ? 'block' : 'none';
-
-            const apt = appointments[dStr];
-            document.getElementById('chkAppointment').checked = !!apt;
-            document.getElementById('aptIcon').value = apt ? apt.icon : '📌';
-            document.getElementById('aptTitle').value = apt ? apt.title : '';
-            document.getElementById('aptDesc').value = apt ? apt.desc : '';
-
-            window.toggleAppointmentUI();
-            window.toggleDayStatus(false);
-            document.getElementById('modal').style.display = "flex";
-        };
-
-        window.closeModal = function () {
-            document.getElementById('modal').style.display = "none";
-        };
-
-        window.saveDayData = function () {
-            const isSp = document.getElementById('chkSpecial').checked;
-            const hName = document.getElementById('holidayName').value;
-            const isApt = document.getElementById('chkAppointment').checked;
-            const status = getActiveStatus();
-
-            if (['morning', 'night'].includes(status)) {
-                const tIn = document.getElementById('timeIn').value;
-                const tOut = document.getElementById('timeOut').value;
-                const dType = document.getElementById('dayType').value;
-                const didOt = document.getElementById('otCheckbox').checked;
-                const oStart = document.getElementById('otStart').value;
-                const oEnd = document.getElementById('otEnd').value;
-
-                const netHrs = getActualWorkMinutes(tIn, tOut) / 60;
-                let isLate = false;
-                let fLateMins = 0;
-
-                if (dType === 'normal') {
-                    let std = status === 'morning' ? STANDARD_MORNING_START : STANDARD_NIGHT_START;
-                    fLateMins = getLateMins(tIn, std);
-                    if (fLateMins > 0) isLate = true;
-                }
-
-                attendanceData[selectedDateStr] = {
-                    status: status,
-                    dayType: dType,
-                    timeIn: tIn,
-                    timeOut: tOut,
-                    didOt: didOt,
-                    otStart: oStart,
-                    otEnd: oEnd,
-                    explicitOtHrs: didOt ? calcMinutesDiff(oStart, oEnd) / 60 : 0,
-                    builtInOtHrs: Math.max(0, netHrs - 9),
-                    isLate: isLate,
-                    finalLateMins: fLateMins
-                };
-            } else if (status === 'leave') {
-                let lType = 'absent';
-                const radios = document.getElementsByName('leaveTypeOpt');
-                for (let r of radios) {
-                    if (r.checked) lType = r.value;
-                }
-                attendanceData[selectedDateStr] = {
-                    status: 'leave',
-                    leaveType: lType
-                };
-            } else {
-                delete attendanceData[selectedDateStr];
-            }
-
-            if (isSp) {
-                specialHolidays[selectedDateStr] = hName || 'วันหยุดพิเศษ';
-            } else {
-                delete specialHolidays[selectedDateStr];
-            }
-
-            if (isApt) {
-                appointments[selectedDateStr] = {
-                    icon: document.getElementById('aptIcon').value || '📌',
-                    title: document.getElementById('aptTitle').value || 'นัดหมาย',
-                    desc: document.getElementById('aptDesc').value || ''
-                };
-            } else {
-                delete appointments[selectedDateStr];
-            }
-
-            window.closeModal();
-            syncDataToCloud();
-        };
-
-        window.calculateSalary = function () {
-            const bSal = parseFloat(document.getElementById('baseSalary').value) || 0;
-            const dRate = bSal / 30;
-            const hRate = dRate / 9;
-            const mRate = hRate / 60;
-
-            let tOtN = 0, tOtW = 0, tOtH = 0, tTrav = 0, tLateD = 0;
-            let unpLeave = 0, yrP = 0, yrS = 0, yrV = 0, dNight = 0;
-
-            const monthVal = document.getElementById('currentMonth').value || new Date().toISOString().slice(0, 7);
+            const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const [y, m] = monthVal.split('-').map(Number);
-            const sDate = new Date(y, m - 2, 25);
-            const eDate = new Date(y, m - 1, 24);
+            const sDate = new Date(y, m - 2, 25), eDate = new Date(y, m - 1, 24);
 
             for (let k in attendanceData) {
                 if (k.startsWith(String(y)) && attendanceData[k].status === 'leave') {
@@ -1946,79 +1727,191 @@
             for (let d = new Date(sDate); d <= eDate; d.setDate(d.getDate() + 1)) {
                 let dStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
                 let dt = attendanceData[dStr];
+                if (!dt) continue;
 
-                if (dt) {
-                    if (['morning', 'night'].includes(dt.status)) {
-                        tTrav += 35;
-                        if (dt.status === 'night') dNight++;
+                if (['morning', 'night'].includes(dt.status)) {
+                    tTrav += 35;
+                    if (dt.status === 'night') dNight++;
+                    let nHrs = getActualWorkMinutes(dt.timeIn, dt.timeOut) / 60;
+                    let eOt = dt.explicitOtHrs || 0;
+                    let tHrs = nHrs + eOt;
 
-                        let nHrs = getActualWorkMinutes(dt.timeIn, dt.timeOut) / 60;
-                        let eOt = dt.explicitOtHrs || 0;
-                        let tHrs = nHrs + eOt;
-
-                        if (dt.dayType === 'normal') {
-                            tLateD += getDeductMins(dt.finalLateMins || 0) * mRate;
-                            tOtN += ((dt.builtInOtHrs || 0) + eOt) * (hRate * 1.5);
-                        } else if (dt.dayType === 'weekend') {
-<<<<<<< HEAD
-                            // แก้ไข: 9 ชม.แรกคิดเป็น 2 เท่า ส่วนที่เกิน 9 ชม. (OT) คิด 3 เท่า
-                            tOtW += Math.min(9, tHrs) * (hRate * 2) + Math.max(0, tHrs - 9) * (hRate * 3);
-                        } else if (dt.dayType === 'special') {
-                            // แก้ไข: วันหยุดพิเศษ คิด 2 เท่าตั้งแต่ชั่วโมงแรกที่มาทำงานทั้งหมด (รวม OT ด้วย)
-                            tOtH += tHrs * (hRate * 2);
-=======
-                            tOtW += Math.min(9, tHrs) * (hRate * 1) + Math.max(0, tHrs - 9) * (hRate * 3);
-                        } else {
-                            tOtH += Math.min(9, tHrs) * (hRate * 2) + Math.max(0, tHrs - 9) * (hRate * 3);
->>>>>>> 79d6e6a4805f4ac148d7ffa3aa8e3cc91eb2afc3
+                    if (dt.dayType === 'normal') {
+                        tLateD += getDeductMins(dt.finalLateMins || 0) * mRate;
+                        tOtN += ((dt.builtInOtHrs || 0) + eOt) * (hRate * 1.5);
+                    } else if (dt.dayType === 'weekend') {
+                        tOtW += Math.min(9, tHrs) * (hRate * 2) + Math.max(0, tHrs - 9) * (hRate * 3);
+                    } else if (dt.dayType === 'special') {
+                        tOtH += tHrs * (hRate * 2);
+                    }
+                } else if (dt.status === 'leave') {
+                    if (dt.leaveType === 'absent') {
+                        unpLeave++;
+                    } else if (dt.leaveType === 'personal') {
+                        let cnt = 0;
+                        for (let k in attendanceData) {
+                            if (k.startsWith(String(y)) && attendanceData[k].status === 'leave' && attendanceData[k].leaveType === 'personal' && new Date(k) <= new Date(dStr)) cnt++;
                         }
-                    } else if (dt.status === 'leave') {
-                        if (dt.leaveType === 'absent') {
-                            unpLeave++;
-                        } else if (dt.leaveType === 'personal') {
-                            let cnt = 0;
-                            for (let k in attendanceData) {
-                                if (k.startsWith(String(y)) && attendanceData[k].status === 'leave' && attendanceData[k].leaveType === 'personal' && new Date(k) <= new Date(dStr)) {
-                                    cnt++;
-                                }
-                            }
-                            if (cnt > 3) unpLeave++;
-                        }
+                        if (cnt > 3) unpLeave++;
                     }
                 }
             }
 
-            const vCarry = parseFloat(document.getElementById('vacationCarryOver').value) || 0;
-            const vQuota = parseFloat(document.getElementById('vacationQuota').value) || 0;
-
-            document.getElementById('statPersonal').innerText = `${yrP} / 15 วัน`;
-            document.getElementById('statSick').innerText = `${yrS} / 30 วัน`;
-            document.getElementById('statVacation').innerText = `${yrV} / ${vCarry + vQuota} วัน`;
+            const vCarry = parseFloat($('vacationCarryOver').value) || 0;
+            const vQuota = parseFloat($('vacationQuota').value) || 0;
+            $('statPersonal').innerText = `${yrP} / 15 วัน`;
+            $('statSick').innerText = `${yrS} / 30 วัน`;
+            $('statVacation').innerText = `${yrV} / ${vCarry + vQuota} วัน`;
 
             let tAbsD = unpLeave * dRate;
-            let cOut = (parseFloat(document.getElementById('vacationCashOutDays').value) || 0) * dRate;
-
-            let aTrav = document.getElementById('hasTravel').checked ? tTrav : 0;
-            let aLang = document.getElementById('hasLanguage').checked ? (parseFloat(document.getElementById('languageAllowance').value) || 0) : 0;
-            let oth = parseFloat(document.getElementById('otherIncome').value) || 0;
-            let soc = parseFloat(document.getElementById('socialSecurity').value) || 0;
-            let tax = parseFloat(document.getElementById('taxDeduction').value) || 0;
-
+            let cOut = (parseFloat($('vacationCashOutDays').value) || 0) * dRate;
+            let aTrav = $('hasTravel').checked ? tTrav : 0;
+            let aLang = $('hasLanguage').checked ? (parseFloat($('languageAllowance').value) || 0) : 0;
+            let oth = parseFloat($('otherIncome').value) || 0;
+            let soc = parseFloat($('socialSecurity').value) || 0;
+            let tax = parseFloat($('taxDeduction').value) || 0;
             let tDed = soc + tax + tLateD + tAbsD;
             let tEarn = (bSal + tOtN + tOtW + tOtH + aTrav + aLang + (dNight * 50) + oth + cOut) - tDed;
 
-            document.getElementById('showOtNormal').innerText = `${tOtN.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('showOtWeekend').innerText = `${tOtW.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('showOtHoliday').innerText = `${tOtH.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('showTravel').innerText = `${tTrav.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('showNightShift').innerText = `${(dNight * 50).toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('showAutoLate').innerText = `${tLateD.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('labelAbsentDeduct').innerText = `12. หัก ขาดงาน/ลากิจเกิน (${unpLeave} วัน)`;
-            document.getElementById('showAbsentDeduct').innerText = `${tAbsD.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('showTotalDeduction').innerText = `${tDed.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('showVacationCash').innerText = `${cOut.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('totalEarnings').innerText = `${tEarn.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-        };
+            const fmt = v => v.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            $('showOtNormal').innerText = `${fmt(tOtN)} ฿`;
+            $('showOtWeekend').innerText = `${fmt(tOtW)} ฿`;
+            $('showOtHoliday').innerText = `${fmt(tOtH)} ฿`;
+            $('showTravel').innerText = `${fmt(tTrav)} ฿`;
+            $('showNightShift').innerText = `${fmt(dNight * 50)} ฿`;
+            $('showAutoLate').innerText = `${fmt(tLateD)} ฿`;
+            $('labelAbsentDeduct').innerText = `12. หัก ขาดงาน/ลากิจเกิน (${unpLeave} วัน)`;
+            $('showAbsentDeduct').innerText = `${fmt(tAbsD)} ฿`;
+            $('showTotalDeduction').innerText = `${fmt(tDed)} ฿`;
+            $('showVacationCash').innerText = `${fmt(cOut)} ฿`;
+            $('totalEarnings').innerText = `${fmt(tEarn)} ฿`;
+        }
+
+        function syncSidebar() { calculateSalary(); syncDataToCloud(); }
+
+        // ── CLOUD ─────────────────────────────────────────────────────────────
+        async function syncDataToCloud() {
+            if (!currentUser) return;
+            const userDocRef = doc(db, "salary_calendars", currentUser.uid);
+            const sidebarData = {
+                baseSalary: $('baseSalary').value,
+                hasTravel: $('hasTravel').checked,
+                hasLanguage: $('hasLanguage').checked,
+                languageAllowance: $('languageAllowance').value,
+                otherIncome: $('otherIncome').value,
+                socialSecurity: $('socialSecurity').value,
+                taxDeduction: $('taxDeduction').value,
+                vacationCarryOver: $('vacationCarryOver').value,
+                vacationQuota: $('vacationQuota').value,
+                vacationCashOutDays: $('vacationCashOutDays').value,
+                themeMode: $('themeSelect').value
+            };
+            const customColors = {
+                bg: $('colorBg').value,
+                card: $('colorCard').value,
+                primary: $('colorPrimary').value,
+                text: $('colorText').value
+            };
+            await setDoc(userDocRef, { attendanceData, specialHolidays, appointments, sidebarData, customColors }, { merge: true });
+        }
+
+        function listenToCloudData() {
+            if (!currentUser) return;
+            const userDocRef = doc(db, "salary_calendars", currentUser.uid);
+            onSnapshot(userDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const cd = docSnap.data();
+                    attendanceData = cd.attendanceData || {};
+                    specialHolidays = cd.specialHolidays || {};
+                    appointments = cd.appointments || {};
+                    if (cd.sidebarData) {
+                        const d = cd.sidebarData;
+                        if (d.baseSalary !== undefined) $('baseSalary').value = d.baseSalary;
+                        if (d.hasTravel !== undefined) $('hasTravel').checked = d.hasTravel;
+                        if (d.hasLanguage !== undefined) $('hasLanguage').checked = d.hasLanguage;
+                        if (d.languageAllowance !== undefined) $('languageAllowance').value = d.languageAllowance;
+                        if (d.otherIncome !== undefined) $('otherIncome').value = d.otherIncome;
+                        if (d.socialSecurity !== undefined) $('socialSecurity').value = d.socialSecurity;
+                        if (d.taxDeduction !== undefined) $('taxDeduction').value = d.taxDeduction;
+                        if (d.vacationCarryOver !== undefined) $('vacationCarryOver').value = d.vacationCarryOver;
+                        if (d.vacationQuota !== undefined) $('vacationQuota').value = d.vacationQuota;
+                        if (d.vacationCashOutDays !== undefined) $('vacationCashOutDays').value = d.vacationCashOutDays;
+                        if (d.themeMode !== undefined) $('themeSelect').value = d.themeMode;
+                        if (d.themeMode === 'custom' && cd.customColors) {
+                            $('colorBg').value = cd.customColors.bg || "#f3f4f6";
+                            $('colorCard').value = cd.customColors.card || "#ffffff";
+                            $('colorPrimary').value = cd.customColors.primary || "#0284c7";
+                            $('colorText').value = cd.customColors.text || "#374151";
+                        }
+                    }
+                }
+                const theme = $('themeSelect').value;
+                if (theme === 'custom') { $('customColorBox').style.display = 'flex'; applyCustomColors(); }
+                else { $('customColorBox').style.display = 'none'; applySeasonalGimmick(); }
+                initCalendar();
+            });
+        }
+
+        // ── AUTH ──────────────────────────────────────────────────────────────
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                $('loginSection').style.display = 'none';
+                $('appContainer').style.display = 'flex';
+                listenToCloudData();
+            } else {
+                currentUser = null;
+                $('loginSection').style.display = 'flex';
+                $('appContainer').style.display = 'none';
+            }
+        });
+
+        // ── WIRE UP ALL EVENTS (no inline handlers!) ─────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set default month to current
+            const now = new Date();
+            $('currentMonth').value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+        });
+
+        // Login / Logout
+        $('loginBtn').addEventListener('click', () => {
+            signInWithPopup(auth, provider).catch(err => alert("เกิดข้อผิดพลาดในการล็อกอิน: " + err.message));
+        });
+        $('logoutBtn').addEventListener('click', () => {
+            signOut(auth).then(() => location.reload());
+        });
+
+        // Controls
+        $('currentMonth').addEventListener('change', () => { applySeasonalGimmick(); initCalendar(); });
+        $('themeSelect').addEventListener('change', changeTheme);
+        $('colorBg').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
+        $('colorCard').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
+        $('colorPrimary').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
+        $('colorText').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
+
+        // Sidebar inputs
+        ['baseSalary', 'languageAllowance', 'otherIncome', 'socialSecurity', 'taxDeduction',
+            'vacationCarryOver', 'vacationQuota', 'vacationCashOutDays'].forEach(id => {
+                $(id).addEventListener('change', syncSidebar);
+            });
+        $('hasTravel').addEventListener('change', syncSidebar);
+        $('hasLanguage').addEventListener('change', syncSidebar);
+
+        // Modal radio / checkbox
+        document.getElementsByName('dayStatusOpt').forEach(r => r.addEventListener('change', () => toggleDayStatus(true)));
+        $('dayType').addEventListener('change', updateCalculations);
+        $('timeIn').addEventListener('change', updateCalculations);
+        $('timeOut').addEventListener('change', updateCalculations);
+        $('otCheckbox').addEventListener('change', toggleOtFields);
+        $('otStart').addEventListener('change', updateCalculations);
+        $('otEnd').addEventListener('change', updateCalculations);
+        $('chkSpecial').addEventListener('change', toggleSpecialHolidayUI);
+        $('chkAppointment').addEventListener('change', toggleAppointmentUI);
+        $('btnModalCancel').addEventListener('click', closeModal);
+        $('btnModalSave').addEventListener('click', saveDayData);
+
+        // Close modal on overlay click
+        $('modal').addEventListener('click', (e) => { if (e.target === $('modal')) closeModal(); });
     </script>
 </body>
 
