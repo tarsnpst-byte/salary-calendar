@@ -1251,7 +1251,7 @@
                     <select id="dayType" onchange="updateCalculations()"
                         style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-color); margin-top:4px;">
                         <option value="normal">💼 วันธรรมดาปกติ (OT x1.5)</option>
-                        <option value="weekend">🏝️ วันเสาร์-อาทิตย์ (ทำงานได้ x2, OT x3)</option>
+                        <option value="weekend">🏝️ วันเสาร์-อาทิตย์ (ทำงานได้ x1, OT x3)</option>
                         <option value="special">🎊 วันหยุดพิเศษ/นักขัตฤกษ์ (ทำงานได้ x2, OT x3)</option>
                     </select>
                 </div>
@@ -1760,16 +1760,24 @@
             const ob = document.getElementById('onTimeBadge');
             const lt = document.getElementById('lateTextDisplay');
 
-            if (['weekend', 'special', 'holiday'].includes(dType)) {
+            if (dType === 'special') {
+                // แก้ไข: แสดงผลวันหยุดพิเศษ ให้บอกว่าคิด 2 เท่าทั้งหมด
+                document.getElementById('normalHoursText').innerHTML = `ทำงานวันหยุดพิเศษ: <strong style="color:#6b21a8;">เรท x2 ทั้งหมด</strong>`;
+                document.getElementById('otHoursText').innerHTML = `คำนวณเงิน: <strong style="color:#6b21a8;">รวม ${totHrs.toFixed(1)} ชม. (คิดเรท x2 ทั้งหมด)</strong>`;
+                lb.style.display = 'none'; 
+                ob.style.display = 'inline-block';
+            } else if (dType === 'weekend') {
                 let wkHrs = Math.min(9, totHrs);
                 let wkOt = Math.max(0, totHrs - 9);
 
-                document.getElementById('normalHoursText').innerHTML = `ทำงานสุทธิ: <strong style="color:#047857;">${netHrs.toFixed(1)} ชม. + OT ${expOt.toFixed(1)} ชม.</strong>`;
+                document.getElementById('normalHoursText').innerHTML = `ทำงานวันหยุด ส.-อา.: <strong style="color:#047857;">${netHrs.toFixed(1)} ชม. + OT ${expOt.toFixed(1)} ชม.</strong>`;
+                // แก้ไขตัวเลขโชว์เรท weekend ตามที่เราปรับในฟังก์ชัน calculateSalary
                 document.getElementById('otHoursText').innerHTML = `คำนวณเงิน: <strong style="color:#b45309;">x2 = ${wkHrs.toFixed(1)} ชม. | x3 = ${wkOt.toFixed(1)} ชม.</strong>`;
-
-                lb.style.display = 'none';
+                
+                lb.style.display = 'none'; 
                 ob.style.display = 'inline-block';
             } else {
+                // ส่วนของวันธรรมดา (normal) ไม่ต้องแก้ครับ
                 let std = status === 'morning' ? STANDARD_MORNING_START : STANDARD_NIGHT_START;
                 let lMins = getLateMins(tIn, std);
 
@@ -1952,9 +1960,11 @@
                             tLateD += getDeductMins(dt.finalLateMins || 0) * mRate;
                             tOtN += ((dt.builtInOtHrs || 0) + eOt) * (hRate * 1.5);
                         } else if (dt.dayType === 'weekend') {
-                            tOtW += Math.min(9, tHrs) * (hRate) + Math.max(0, tHrs - 9) * (hRate * 3);
-                        } else {
-                            tOtH += Math.min(9, tHrs) * (hRate * 1) + Math.max(0, tHrs - 9) * (hRate * 3);
+                            // แก้ไข: 9 ชม.แรกคิดเป็น 2 เท่า ส่วนที่เกิน 9 ชม. (OT) คิด 3 เท่า
+                            tOtW += Math.min(9, tHrs) * (hRate * 2) + Math.max(0, tHrs - 9) * (hRate * 3);
+                        } else if (dt.dayType === 'special') {
+                            // แก้ไข: วันหยุดพิเศษ คิด 2 เท่าตั้งแต่ชั่วโมงแรกที่มาทำงานทั้งหมด (รวม OT ด้วย)
+                            tOtH += tHrs * (hRate * 2);
                         }
                     } else if (dt.status === 'leave') {
                         if (dt.leaveType === 'absent') {
