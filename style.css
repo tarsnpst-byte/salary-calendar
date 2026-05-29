@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+        
+        /* === โครงสร้างธีมหลัก (สว่าง/มืด) === */
+        :root {
+            /* โหมดสว่างเริ่มต้น (Light Base) */
+            --bg-body: #f3f4f6; --text-main: #374151; --bg-card: #ffffff;
+            --bg-header: #f9fafb; --border-cell: #e5e7eb; --modal-bg: #ffffff;
+            --watermark-opacity: 0.05; 
+            --tag-work-bg: #dcfce7; --tag-work-text: #166534; --tag-late-bg: #fee2e2; --tag-late-text: #991b1b;
+        }
+
+        [data-theme="dark"] {
+            /* โหมดมืดเริ่มต้น (Dark Base) */
+            --bg-body: #111827; --text-main: #f3f4f6; --bg-card: #1f2937;
+            --bg-header: #111827; --border-cell: #374151; --modal-bg: #1f2937;
+            --watermark-opacity: 0.03;
+            --tag-work-bg: rgba(34, 197, 94, 0.2); --tag-work-text: #4ade80; --tag-late-bg: rgba(239, 68, 68, 0.2); --tag-late-text: #f87171;
+        }
+
+        /* === ปรับปรุงสีพื้นหลังแต่ละเดือน === */
+        /* เดือน 1 */
+        [data-theme="light"][data-month="1"] { --primary-color: #0284c7; --border-color: #bae6fd; --bg-weekend: #f0f9ff; --bg-hover: #e0f2fe; --bg-outmonth: #f8fafc; --bg-page: #e0f2fe; }
+        [data-theme="dark"][data-month="1"] { --primary-color: #38bdf8; --border-color: #0369a1; --bg-weekend: #0f172a; --bg-hover: #1e293b; --bg-outmonth: #020617; --bg-page: #082f49; }
+        /* เดือน 2 */
+        [data-theme="light"][data-month="2"] { --primary-color: #dc2626; --border-color: #fca5a5; --bg-weekend: #fef2f2; --bg-hover: #fee2e2; --bg-outmonth: #fef2f2; --bg-page: #fecaca; }
+        [data-theme="dark"][data-month="2"] { --primary-color: #f87171; --border-color: #991b1b; --bg-weekend: #2a0a0a; --bg-hover: #450a0a; --bg-outmonth: #000000; --bg-page: #450a0a; }
+        /* เดือน 3 */
+        [data-theme="light"][data-month="3"] { --primary-color: #ea580c; --border-color: #fdba74; --bg-weekend: #fff7ed; --bg-hover: #ffedd5; --bg-outmonth: #fff7ed; --bg-page: #ffedd5; }
+        [data-theme="dark"][data-month="3"] { --primary-color: #fb923c; --border-color: #9a3412; --bg-weekend: #2a1505; --bg-hover: #431407; --bg-outmonth: #000000; --bg-page: #431407; }
+        /* เดือน 4 */
+        [data-theme="light"][data-month="4"] { --primary-color: #0891b2; --border-color: #67e8f9; --bg-weekend: #ecfeff; --bg-hover: #cffafe; --bg-outmonth: #f8fafc; --bg-page: #cffafe; }
+        [data-theme="dark"][data-month="4"] { --primary-color: #22d3ee; --border-color: #0891b2; --bg-weekend: #082f49; --bg-hover: #164e63; --bg-outmonth: #000000; --bg-page: #164e63; }
+        /* เดือน 5 */
+        [data-theme="light"][data-month="5"] { --primary-color: #059669; --border-color: #6ee7b7; --bg-weekend: #ecfdf5; --bg-hover: #d1fae5; --bg-outmonth: #f0fdf4; --bg-page: #d1fae5; }
+        [data-theme="dark"][data-month="5"] { --primary-color: #34d399; --border-color: #059669; --bg-weekend: #064e3b; --bg-hover: #065f46; --bg-outmonth: #000000; --bg-page: #065f46; }
+        /* เดือน 6 */
+        [data-theme="light"][data-month="6"] { --primary-color: #4f46e5; --border-color: #a5b4fc; --bg-weekend: #eef2ff; --bg-hover: #e0e7ff; --bg-outmonth: #f8fafc; --bg-page: #e0e7ff; }
+        [data-theme="dark"][data-month="6"] { --primary-color: #818cf8; --border-color: #4338ca; --bg-weekend: #1e1b4b; --bg-hover: #312e81; --bg-outmonth: #000000; --bg-page: #1e1b4b; }
+        /* เดือน 7 */
+        [data-theme="light"][data-month="7"] { --primary-color: #0d9488; --border-color: #5eead4; --bg-weekend: #f0fdfa; --bg-hover: #ccfbf1; --bg-outmonth: #f8fafc; --bg-page: #ccfbf1; }
+        [data-theme="dark"][data-month="7"] { --primary-color: #2dd4bf; --border-color: #0f766e; --bg-weekend: #042f2e; --bg-hover: #134e4a; --bg-outmonth: #000000; --bg-page: #134e4a; }
+        /* เดือน 8 */
+        [data-theme="light"][data-month="8"] { --primary-color: #16a34a; --border-color: #86efac; --bg-weekend: #f0fdf4; --bg-hover: #dcfce7; --bg-outmonth: #f8fafc; --bg-page: #dcfce7; }
+        [data-theme="dark"][data-month="8"] { --primary-color: #4ade80; --border-color: #15803d; --bg-weekend: #052e16; --bg-hover: #14532d; --bg-outmonth: #000000; --bg-page: #14532d; }
+        /* เดือน 9 */
+        [data-theme="light"][data-month="9"] { --primary-color: #d97706; --border-color: #fcd34d; --bg-weekend: #fffbeb; --bg-hover: #fef3c7; --bg-outmonth: #fffbeb; --bg-page: #fef3c7; }
+        [data-theme="dark"][data-month="9"] { --primary-color: #fbbf24; --border-color: #b45309; --bg-weekend: #451a03; --bg-hover: #78350f; --bg-outmonth: #000000; --bg-page: #78350f; }
+        /* เดือน 10 */
+        [data-theme="light"][data-month="10"] { --primary-color: #9333ea; --border-color: #d8b4fe; --bg-weekend: #faf5ff; --bg-hover: #f3e8ff; --bg-outmonth: #faf5ff; --bg-page: #f3e8ff; }
+        [data-theme="dark"][data-month="10"] { --primary-color: #c084fc; --border-color: #7e22ce; --bg-weekend: #2e1065; --bg-hover: #3b0764; --bg-outmonth: #000000; --bg-page: #3b0764; }
+        /* เดือน 11 */
+        [data-theme="light"][data-month="11"] { --primary-color: #4338ca; --border-color: #a5b4fc; --bg-weekend: #eef2ff; --bg-hover: #e0e7ff; --bg-outmonth: #f8fafc; --bg-page: #e0e7ff; }
+        [data-theme="dark"][data-month="11"] { --primary-color: #818cf8; --border-color: #4338ca; --bg-weekend: #1e1b4b; --bg-hover: #312e81; --bg-outmonth: #000000; --bg-page: #1e1b4b; }
+        /* เดือน 12 */
+        [data-theme="light"][data-month="12"] { --primary-color: #e11d48; --border-color: #fda4af; --bg-weekend: #fff1f2; --bg-hover: #ffe4e6; --bg-outmonth: #fff1f2; --bg-page: #ffe4e6; }
+        [data-theme="dark"][data-month="12"] { --primary-color: #fb7185; --border-color: #be123c; --bg-weekend: #4c0519; --bg-hover: #881337; --bg-outmonth: #000000; --bg-page: #881337; }
+
+        /* === ตั้งค่าพื้นฐาน UI === */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-main); padding: 20px; line-height: 1.5; transition: all 0.5s ease; }
+        input, select { color-scheme: light dark; }
+        
+        .container { max-width: 1350px; margin: 0 auto; display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+        .card { background: var(--bg-card); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid var(--border-color); transition: all 0.5s ease; }
+        .main-panel { flex: 2.5; min-width: 320px; }
+        .side-panel { flex: 1.2; min-width: 320px; position: sticky; top: 24px; }
+        
+        /* === ส่วนหัว === */
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 10px; }
+        h1 { font-size: 26px; color: var(--text-main); display: flex; align-items: center; gap: 8px; font-weight: 700; transition: color 0.5s;}
+        .season-emoji { font-size: 32px; animation: pop 0.5s ease-out; }
+        @keyframes pop { 0% { transform: scale(0.5) rotate(-10deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+        
+        .controls-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .control-box { display: flex; align-items: center; gap: 8px; background: var(--bg-header); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); transition: all 0.5s ease; }
+        .control-box select, .control-box input { border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; font-family: inherit; background: var(--bg-card); color: var(--text-main); font-weight: 500;}
+        
+        /* === ตารางปฏิทิน & ลายน้ำ === */
+        .calendar-wrapper { position: relative; border-top: 1px solid var(--border-color); border-left: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; background: var(--bg-card); transition: border-color 0.5s; }
+        .watermark-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 250px; opacity: 0.5; pointer-events: none; user-select: none; z-index: 0; transition: all 0.5s ease; filter: grayscale(20%); }
+        
+        .grid-row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); position: relative; z-index: 1; }
+        .day-header { background: var(--bg-header); padding: 12px 0; text-align: center; font-size: 14px; font-weight: 600; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); color: var(--text-main); transition: all 0.5s; }
+        .day-header.sunday { color: #ef4444; }
+        .day-header.saturday { color: var(--primary-color); }
+        
+        .day-cell { min-height: 120px; padding: 8px; border-right: 1px solid var(--border-cell); border-bottom: 1px solid var(--border-cell); cursor: pointer; transition: background 0.2s; display: flex; flex-direction: column; background: transparent; }
+        .day-cell:hover { background: var(--bg-hover); backdrop-filter: blur(2px); }
+        .day-cell.out-month { background: var(--bg-outmonth); opacity: 0.6; }
+        .day-cell.weekend { background: var(--bg-weekend); }
+        .date-num { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+        .date-num.sunday { color: #ef4444; }
+        
+        /* === แท็กในปฏิทิน === */
+        .tags-area { margin-top: auto; display: flex; flex-direction: column; gap: 4px; }
+        .tag { font-size: 11px; padding: 4px; border-radius: 6px; border: 1px solid; text-align: left; font-weight: 600; line-height: 1.2; box-shadow: 0 1px 2px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 4px;}
+        .tag span { font-size: 13px; } 
+        
+        .day-cell.special-holiday { 
+            background: #e9d5ff !important; /* สีม่วงอ่อนทึบ */
+            border: 2px solid #a855f7 !important; 
+        }
+        [data-theme="dark"] .day-cell.special-holiday { 
+            background: #581c87 !important; 
+        }   
+        
+        /* สีกำหนดอัตโนมัติตามโหมดสว่าง-มืด */
+        .tag-work { color: var(--tag-work-text); border-color: var(--tag-work-text); background: var(--tag-work-bg); }
+        .tag-late { color: var(--tag-late-text); border-color: var(--tag-late-text); background: var(--tag-late-bg); }
+        .tag-ot { color: #b45309; border-color: #f59e0b; background: var(--bg-card); justify-content: center;}
+        .tag-holiday { color: #6b21a8; border-color: #a855f7; background: var(--bg-card); justify-content: center;}
+
+        [data-theme="dark"] .tag-ot { color: #fbbf24; background: rgba(245, 158, 11, 0.15); border-color: #fbbf24; }
+        [data-theme="dark"] .tag-holiday { color: #c084fc; background: rgba(168, 85, 247, 0.15); border-color: #c084fc; }
+
+        /* === สรุปยอด 12 รายการ === */
+        .summary-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+        .sum-list { display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 500; margin-bottom: 16px; }
+        .sum-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-header); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-cell); transition: all 0.5s; }
+        .sum-row input[type="number"] { width: 90px; text-align: right; border: 1px solid var(--border-color); border-radius: 4px; padding: 2px 4px; background: var(--bg-card); color: var(--text-main); font-size: 13px; font-weight: bold; transition: all 0.3s ease;}
+        .sum-row input[type="number"]:disabled { opacity: 0.5; cursor: not-allowed; }
+        .sum-label { font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .sum-label input[type="checkbox"] { width: 14px; height: 14px; cursor: pointer; }
+        .total-box { background: var(--bg-header); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; text-align: center; transition: all 0.5s;}
+        .total-box span { display: block; font-size: 13px; color: var(--primary-color); font-weight: 600; margin-bottom: 2px; }
+        .total-box strong { font-size: 26px; color: var(--text-main); }
+
+        /* === Modal === */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal-content { background: var(--modal-bg); border-radius: 12px; padding: 24px; width: 100%; max-width: 400px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); border: 1px solid var(--border-color); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modal-header h3 { font-size: 18px; color: var(--text-main); }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; display: none; }
+        .badge-green { background: #dcfce7; color: #166534; }
+        .badge-red { background: #fee2e2; color: #991b1b; }
+        
+        .check-group { display: flex; align-items: center; gap: 10px; background: var(--bg-header); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); cursor: pointer; margin-bottom: 16px; }
+        .check-group input { width: 18px; height: 18px; }
+        
+        .time-box { background: var(--bg-header); padding: 16px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 12px; }
+        .time-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
+        .time-row { display: flex; gap: 12px; }
+        .time-col { flex: 1; }
+        .time-col label { font-size: 11px; opacity: 0.8; display: block; margin-bottom: 4px; }
+        .time-col input { width: 100%; border: 1px solid var(--border-color); border-radius: 6px; padding: 6px; background: var(--bg-card); color: var(--text-main); font-family: inherit;}
+        
+        .btn-row { display: flex; gap: 12px; margin-top: 24px; }
+        .btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-family: inherit; font-weight: 600; cursor: pointer; transition: opacity 0.2s;}
+        .btn:hover { opacity: 0.8; }
+        .btn-cancel { background: var(--border-color); color: var(--text-main); }
+        .btn-save { background: var(--primary-color); color: white; }
