@@ -28,6 +28,7 @@
             --tag-work-text: #166534;
             --tag-late-bg: #fee2e2;
             --tag-late-text: #991b1b;
+            --primary-color: #0284c7;
         }
 
         [data-theme="dark"] {
@@ -290,24 +291,31 @@
             border: 1px solid #e5e7eb;
         }
 
-        .login-btn {
-            background: #ffffff;
-            color: #374151;
+        .auth-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
             border: 1px solid #d1d5db;
-            padding: 12px 24px;
             border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 24px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            font-family: 'Sarabun', sans-serif;
             font-size: 15px;
         }
 
-        .login-btn:hover {
-            background: #f9fafb;
+        .auth-btn {
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+
+        .auth-btn:hover {
+            filter: brightness(0.9);
         }
 
         .card {
@@ -1026,24 +1034,20 @@
     <div id="loginSection" class="login-screen">
         <div class="login-card">
             <h2 style="font-size: 22px; margin-bottom: 8px;">📊 Smart Salary Calendar</h2>
-            <p style="font-size: 13px; color: #6b7280;">กรุณาเข้าสู่ระบบเพื่อเชื่อมต่อข้อมูลปฏิทินของคุณออนไลน์</p>
-            <button class="login-btn" id="loginBtn">
-                <svg width="18" height="18" viewBox="0 0 18 18">
-                    <path
-                        d="M17.64 9.2c0-.63-.06-1.25-.16-1.84H9v3.47h4.84c-.21 1.12-.84 2.07-1.79 2.7l2.78 2.16c1.63-1.51 2.57-3.73 2.57-6.49z"
-                        fill="#4285F4" />
-                    <path
-                        d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.78-2.16c-.77.52-1.75.83-2.92.83-2.25 0-4.16-1.52-4.84-3.57L1.61 13.2C3.1 16.17 6.18 18 9 18z"
-                        fill="#34A853" />
-                    <path
-                        d="M4.16 10.92c-.17-.52-.27-1.07-.27-1.64s.1-1.12.27-1.64V5.48H1.37C.5 7.21 0 9.14 0 11s.5 3.79 1.37 5.52l2.79-2.16z"
-                        fill="#FBBC05" />
-                    <path
-                        d="M9 3.58c1.32 0 2.5.45 3.44 1.35L15 2.4C13.47.96 11.44 0 9 0 6.18 0 3.1 1.83 1.37 4.8l2.79 2.16c.68-2.05 2.59-3.57 4.84-3.57z"
-                        fill="#EA4335" />
-                </svg>
-                ลงชื่อเข้าใช้ด้วย Google
-            </button>
+            <p style="font-size: 13px; color: #6b7280; margin-bottom: 20px;" id="authToggleText">
+                เข้าสู่ระบบ หรือ <a href="#" onclick="toggleAuthMode()"
+                    style="color:var(--primary-color); font-weight:bold; text-decoration:none;">สมัครสมาชิกใหม่</a>
+            </p>
+
+            <div style="text-align: left;">
+                <label style="font-size: 13px; font-weight: bold; color: var(--text-main);">อีเมล</label>
+                <input type="email" id="authEmail" class="auth-input" placeholder="your@email.com">
+
+                <label style="font-size: 13px; font-weight: bold; color: var(--text-main);">รหัสผ่าน</label>
+                <input type="password" id="authPassword" class="auth-input" placeholder="••••••••">
+
+                <button class="auth-btn" id="authSubmitBtn" onclick="handleAuth()">เข้าสู่ระบบ</button>
+            </div>
         </div>
     </div>
 
@@ -1058,27 +1062,27 @@
                 <div class="controls-row">
                     <div class="control-box">
                         <label>รอบเดือน:</label>
-                        <input type="month" id="currentMonth">
+                        <input type="month" id="currentMonth" onchange="initCalendar()">
                     </div>
                     <div class="control-box">
                         <label>โหมดแสง:</label>
-                        <select id="themeSelect">
+                        <select id="themeSelect" onchange="changeTheme()">
                             <option value="light">☀️ สว่าง (Auto)</option>
                             <option value="dark">🌙 มืด (Auto)</option>
                             <option value="custom">🎨 กำหนดสีเอง</option>
                         </select>
                     </div>
                     <div class="control-box" id="customColorBox" style="display: none;">
-                        <label class="color-picker-wrapper">พื้นหลัง <input type="color" id="colorBg"
-                                value="#f3f4f6"></label>
-                        <label class="color-picker-wrapper">ปฏิทิน <input type="color" id="colorCard"
-                                value="#ffffff"></label>
-                        <label class="color-picker-wrapper">สีหลัก <input type="color" id="colorPrimary"
-                                value="#0284c7"></label>
-                        <label class="color-picker-wrapper">อักษร <input type="color" id="colorText"
-                                value="#374151"></label>
+                        <label class="color-picker-wrapper">พื้นหลัง <input type="color" id="colorBg" value="#f3f4f6"
+                                onchange="applyCustomColors()"></label>
+                        <label class="color-picker-wrapper">ปฏิทิน <input type="color" id="colorCard" value="#ffffff"
+                                onchange="applyCustomColors()"></label>
+                        <label class="color-picker-wrapper">สีหลัก <input type="color" id="colorPrimary" value="#0284c7"
+                                onchange="applyCustomColors()"></label>
+                        <label class="color-picker-wrapper">อักษร <input type="color" id="colorText" value="#374151"
+                                onchange="applyCustomColors()"></label>
                     </div>
-                    <button id="logoutBtn"
+                    <button onclick="logout()"
                         style="padding:8px 12px; border-radius:8px; border:1px solid #ef4444; background:transparent; color:#ef4444; font-weight:bold; cursor:pointer; font-size:12px;">ออกจากระบบ</button>
                 </div>
             </div>
@@ -1118,16 +1122,17 @@
                 <div style="margin-top:10px; padding-top:10px; border-top:1px dashed var(--border-color);">
                     <div class="sum-row" style="margin-bottom:4px; border:none; padding:2px 0; background:transparent;">
                         <span class="sum-label" style="font-size:11px;">+ พักร้อนยกยอด:</span>
-                        <input type="number" id="vacationCarryOver" value="0" style="width:50px;">
+                        <input type="number" id="vacationCarryOver" value="0" onchange="syncSidebar()"
+                            style="width:50px;">
                     </div>
                     <div class="sum-row" style="margin-bottom:4px; border:none; padding:2px 0; background:transparent;">
                         <span class="sum-label" style="font-size:11px;">+ พักร้อนได้สิทธิ์:</span>
-                        <input type="number" id="vacationQuota" value="6" style="width:50px;">
+                        <input type="number" id="vacationQuota" value="6" onchange="syncSidebar()" style="width:50px;">
                     </div>
                     <div class="sum-row" style="border:none; padding:2px 0; background:transparent;">
                         <span class="sum-label" style="font-size:11px; color:#10b981;">💰 แปลงพักร้อนเป็นเงิน:</span>
                         <div style="display:flex; align-items:center; gap:4px;">
-                            <input type="number" id="vacationCashOutDays" value="0"
+                            <input type="number" id="vacationCashOutDays" value="0" onchange="syncSidebar()"
                                 style="width:40px; border-color:#10b981;">
                             <span style="font-size:11px;">วัน</span>
                         </div>
@@ -1142,7 +1147,7 @@
             <div class="sum-list">
                 <div class="sum-row">
                     <span>1. เงินเดือนปกติ</span>
-                    <input type="number" id="baseSalary" value="23000" style="width:90px;">
+                    <input type="number" id="baseSalary" value="23000" onchange="syncSidebar()" style="width:90px;">
                 </div>
                 <div class="sum-row" style="color:var(--primary-color);">
                     <span>2. OT ปกติ (x1.5)</span>
@@ -1160,7 +1165,7 @@
                     <span>5. ค่าเดินทาง (เข้างาน)</span>
                     <div style="display:flex; align-items:center; gap:8px;">
                         <span id="showTravel" style="font-weight:bold;">0 ฿</span>
-                        <input type="checkbox" id="hasTravel" checked>
+                        <input type="checkbox" id="hasTravel" checked onchange="syncSidebar()">
                     </div>
                 </div>
                 <div class="sum-row" style="color:#4338ca;">
@@ -1170,13 +1175,14 @@
                 <div class="sum-row">
                     <span>7. ค่าภาษา</span>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <input type="number" id="languageAllowance" value="2000" style="width:70px;">
-                        <input type="checkbox" id="hasLanguage" checked>
+                        <input type="number" id="languageAllowance" value="2000" onchange="syncSidebar()"
+                            style="width:70px;">
+                        <input type="checkbox" id="hasLanguage" checked onchange="syncSidebar()">
                     </div>
                 </div>
                 <div class="sum-row">
                     <span>8. รายรับอื่นๆ</span>
-                    <input type="number" id="otherIncome" value="0" style="width:90px;">
+                    <input type="number" id="otherIncome" value="0" onchange="syncSidebar()" style="width:90px;">
                 </div>
                 <div class="sum-row" style="color:#047857;">
                     <span>9. คืนเงินพักร้อน (+)</span>
@@ -1187,7 +1193,8 @@
                     style="color:#b91c1c; flex-direction:column; align-items:stretch; gap:6px; padding-top:12px; margin-top:8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span>10. หัก ประกันสังคม (-)</span>
-                        <input type="number" id="socialSecurity" value="825" style="width:70px;">
+                        <input type="number" id="socialSecurity" value="825" onchange="syncSidebar()"
+                            style="width:70px;">
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-top:4px;">
                         <span>11. หัก มาสาย (Auto)</span>
@@ -1234,21 +1241,21 @@
             </div>
 
             <label class="option-card opt-morning" id="cardMorning">
-                <input type="radio" name="dayStatusOpt" value="morning">
+                <input type="radio" name="dayStatusOpt" value="morning" onchange="toggleDayStatus(true)">
                 <div>
                     <strong style="color:#166534;">☀️ เข้างานกะเช้า</strong>
                     <span style="color:#166534;">Default: 08:00 - 18:00 (รับค่าเดินทาง)</span>
                 </div>
             </label>
             <label class="option-card opt-night" id="cardNight">
-                <input type="radio" name="dayStatusOpt" value="night">
+                <input type="radio" name="dayStatusOpt" value="night" onchange="toggleDayStatus(true)">
                 <div>
                     <strong style="color:#4338ca;">🌙 เข้างานกะดึก</strong>
                     <span style="color:#4338ca;">Default: 20:00 - 06:00 (รับค่าเดินทาง + ค่ากะ)</span>
                 </div>
             </label>
             <label class="option-card opt-leave" id="cardLeave">
-                <input type="radio" name="dayStatusOpt" value="leave">
+                <input type="radio" name="dayStatusOpt" value="leave" onchange="toggleDayStatus(true)">
                 <div>
                     <strong style="color:#b91c1c;">❌ หยุดงาน / ลางาน</strong>
                     <span style="color:#b91c1c;">ขาดงาน, ลากิจ, ลาป่วย, พักร้อน</span>
@@ -1256,7 +1263,7 @@
             </label>
 
             <label class="option-card opt-reset" id="cardReset">
-                <input type="radio" name="dayStatusOpt" value="reset">
+                <input type="radio" name="dayStatusOpt" value="reset" onchange="toggleDayStatus(true)">
                 <div>
                     <strong style="color:#374151;">⚪ ล้างสถานะ (เคลียร์เป็นวันว่าง)</strong>
                     <span style="color:#6b7280;">ลบข้อมูลมาทำงานหรือลาออกจากวันนี้</span>
@@ -1266,7 +1273,7 @@
             <div id="workFields" style="display:none;">
                 <div class="form-group" style="margin-bottom:12px; margin-top:16px;">
                     <label style="font-size:13px; font-weight:bold;">ประเภทวัน (สำหรับคิด OT):</label>
-                    <select id="dayType"
+                    <select id="dayType" onchange="updateCalculations()"
                         style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-color); margin-top:4px;">
                         <option value="normal">💼 วันธรรมดาปกติ (OT x1.5)</option>
                         <option value="weekend">🏝️ วันเสาร์-อาทิตย์ (ทำงานได้ x1, OT x3)</option>
@@ -1279,11 +1286,11 @@
                     <div class="time-row">
                         <div class="time-col">
                             <label id="lblTimeIn">เข้างาน</label>
-                            <input type="time" id="timeIn" value="08:00">
+                            <input type="time" id="timeIn" value="08:00" onchange="updateCalculations()">
                         </div>
                         <div class="time-col">
                             <label>เลิกงาน</label>
-                            <input type="time" id="timeOut" value="18:00">
+                            <input type="time" id="timeOut" value="18:00" onchange="updateCalculations()">
                         </div>
                     </div>
                     <div style="font-size:11px; text-align:center; opacity:0.7; margin-top:8px;" id="normalHoursText">
@@ -1292,7 +1299,7 @@
 
                 <label
                     style="display:flex; align-items:center; gap:8px; margin-bottom:12px; padding:8px 12px; background:var(--bg-header); border:1px solid var(--border-color); border-radius:8px; cursor:pointer;">
-                    <input type="checkbox" id="otCheckbox" style="width:16px; height:16px;">
+                    <input type="checkbox" id="otCheckbox" onchange="toggleOtFields()" style="width:16px; height:16px;">
                     <div><strong style="font-size:14px;">ทำล่วงเวลา (OT) ในวันนี้</strong></div>
                 </label>
 
@@ -1301,11 +1308,11 @@
                     <div class="time-row">
                         <div class="time-col">
                             <label style="color:#b45309;">เริ่ม OT</label>
-                            <input type="time" id="otStart" value="18:30">
+                            <input type="time" id="otStart" value="18:30" onchange="updateCalculations()">
                         </div>
                         <div class="time-col">
                             <label style="color:#b45309;">จบ OT</label>
-                            <input type="time" id="otEnd" value="21:30">
+                            <input type="time" id="otEnd" value="21:30" onchange="updateCalculations()">
                         </div>
                     </div>
                     <div style="font-size:13px; font-weight:bold; text-align:center; color:#b45309; margin-top:8px;"
@@ -1335,8 +1342,10 @@
                 style="padding:10px; background:#f3e8ff; border-radius:8px; border:1px solid #d8b4fe; margin-bottom:12px;">
                 <label class="check-group"
                     style="background:transparent; border:none; margin-bottom:5px; padding:0; display: flex; align-items: center; cursor: pointer;">
-                    <input type="checkbox" id="chkSpecial">
-                    <div style="margin-left:10px;"><strong style="color:#6b21a8;">🎉 ตั้งเป็นวันหยุดพิเศษ</strong></div>
+                    <input type="checkbox" id="chkSpecial" onchange="toggleSpecialHolidayUI()">
+                    <div style="margin-left:10px;">
+                        <strong style="color:#6b21a8;">🎉 ตั้งเป็นวันหยุดพิเศษ</strong>
+                    </div>
                 </label>
                 <input type="text" id="holidayName" placeholder="ชื่อเทศกาล (เช่น วันปีใหม่)"
                     style="display:none; width:100%; padding:6px; border:1px solid #a855f7; border-radius:4px; margin-top:8px; font-size:13px;">
@@ -1346,7 +1355,7 @@
                 style="padding:10px; background:#fffbeb; border-radius:8px; border:1px solid #fde68a;">
                 <label class="check-group"
                     style="background:transparent; border:none; margin-bottom:5px; padding:0; display: flex; align-items: center; cursor: pointer;">
-                    <input type="checkbox" id="chkAppointment">
+                    <input type="checkbox" id="chkAppointment" onchange="toggleAppointmentUI()">
                     <strong style="color:#d97706; margin-left:10px;">📌 บันทึกวันนัดหมาย / โน้ต</strong>
                 </label>
                 <div id="aptFields" style="display:none; margin-top:8px;">
@@ -1362,8 +1371,8 @@
             </div>
 
             <div class="btn-row">
-                <button class="btn btn-cancel" id="btnModalCancel">ยกเลิก</button>
-                <button class="btn btn-save" id="btnModalSave">บันทึกข้อมูล</button>
+                <button class="btn btn-cancel" onclick="closeModal()">ยกเลิก</button>
+                <button class="btn btn-save" onclick="saveDayData()">บันทึกข้อมูล</button>
             </div>
         </div>
     </div>
@@ -1399,9 +1408,9 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        // เปลี่ยนจาก GoogleAuth มาเป็น Email/Password Auth
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD-Zk6GPdlNeqI7MpkAtjyVLXCJWblzTkw",
@@ -1414,16 +1423,15 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const provider = new GoogleAuthProvider();
 
         // ตัวแปรส่วนกลาง
         let currentUser = null;
         let attendanceData = {};
         let specialHolidays = {};
         let appointments = {};
+        let isLoginMode = true; // ใช้สำหรับสลับหน้าจอ Login / Register
 
         // ชุดข้อมูลรายการหัก (ตั้งต้น 4 ช่องว่างๆ)
         let customDeductions = [
@@ -1485,6 +1493,58 @@
         }
 
         // ==========================================
+        // ระบบ AUTHENTICATION (อีเมล / รหัสผ่าน)
+        // ==========================================
+        window.toggleAuthMode = function () {
+            isLoginMode = !isLoginMode;
+            const btn = $('authSubmitBtn');
+            const text = $('authToggleText');
+
+            if (isLoginMode) {
+                btn.innerText = "เข้าสู่ระบบ";
+                text.innerHTML = `เข้าสู่ระบบ หรือ <a href="#" onclick="toggleAuthMode()" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">สมัครสมาชิกใหม่</a>`;
+            } else {
+                btn.innerText = "สมัครสมาชิก";
+                text.innerHTML = `สมัครสมาชิก หรือ <a href="#" onclick="toggleAuthMode()" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">เข้าสู่ระบบ</a>`;
+            }
+        };
+
+        window.handleAuth = function () {
+            const email = $('authEmail').value;
+            const password = $('authPassword').value;
+
+            if (!email || !password) {
+                alert("กรุณากรอกอีเมลและรหัสผ่านให้ครบถ้วน");
+                return;
+            }
+
+            if (isLoginMode) {
+                signInWithEmailAndPassword(auth, email, password)
+                    .catch(error => alert("เข้าสู่ระบบไม่สำเร็จ: " + error.message));
+            } else {
+                createUserWithEmailAndPassword(auth, email, password)
+                    .catch(error => alert("สมัครสมาชิกไม่สำเร็จ: " + error.message));
+            }
+        };
+
+        window.logout = function () {
+            signOut(auth).then(() => location.reload());
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                $('loginSection').style.display = 'none';
+                $('appContainer').style.display = 'flex';
+                listenToCloudData();
+            } else {
+                currentUser = null;
+                $('loginSection').style.display = 'flex';
+                $('appContainer').style.display = 'none';
+            }
+        });
+
+        // ==========================================
         // ระบบ DEDUCTION MODAL (หน้าต่างหักเงิน)
         // ==========================================
         window.openDeductionModal = function () {
@@ -1536,96 +1596,140 @@
         };
 
         // ==========================================
-        // ระบบ THEME & UI UPDATE
+        // ดึงข้อมูล/เซฟข้อมูล CLOUD
         // ==========================================
-        function applyCustomColors() {
+        function listenToCloudData() {
+            if (!currentUser) return;
+            const userDocRef = doc(db, "salary_calendars", currentUser.uid);
+            onSnapshot(userDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const cloudData = docSnap.data();
+                    attendanceData = cloudData.attendanceData || {};
+                    specialHolidays = cloudData.specialHolidays || {};
+                    appointments = cloudData.appointments || {};
+
+                    if (cloudData.customDeductions && cloudData.customDeductions.length > 0) {
+                        customDeductions = cloudData.customDeductions;
+                    }
+
+                    if (cloudData.sidebarData) {
+                        const d = cloudData.sidebarData;
+                        if (d.baseSalary !== undefined) $('baseSalary').value = d.baseSalary;
+                        if (d.hasTravel !== undefined) $('hasTravel').checked = d.hasTravel;
+                        if (d.hasLanguage !== undefined) $('hasLanguage').checked = d.hasLanguage;
+                        if (d.languageAllowance !== undefined) $('languageAllowance').value = d.languageAllowance;
+                        if (d.otherIncome !== undefined) $('otherIncome').value = d.otherIncome;
+                        if (d.socialSecurity !== undefined) $('socialSecurity').value = d.socialSecurity;
+                        if (d.vacationCarryOver !== undefined) $('vacationCarryOver').value = d.vacationCarryOver;
+                        if (d.vacationQuota !== undefined) $('vacationQuota').value = d.vacationQuota;
+                        if (d.vacationCashOutDays !== undefined) $('vacationCashOutDays').value = d.vacationCashOutDays;
+                        if (d.themeMode !== undefined) $('themeSelect').value = d.themeMode;
+                    }
+                }
+                window.changeTheme();
+            });
+        }
+
+        async function syncDataToCloud() {
+            if (!currentUser) return;
+            const userDocRef = doc(db, "salary_calendars", currentUser.uid);
+            const sidebarData = {
+                baseSalary: $('baseSalary').value,
+                hasTravel: $('hasTravel').checked,
+                hasLanguage: $('hasLanguage').checked,
+                languageAllowance: $('languageAllowance').value,
+                otherIncome: $('otherIncome').value,
+                socialSecurity: $('socialSecurity').value,
+                vacationCarryOver: $('vacationCarryOver').value,
+                vacationQuota: $('vacationQuota').value,
+                vacationCashOutDays: $('vacationCashOutDays').value,
+                themeMode: $('themeSelect').value
+            };
+            await setDoc(userDocRef, { attendanceData, specialHolidays, appointments, sidebarData, customDeductions }, { merge: true });
+        }
+
+        window.syncSidebar = function () {
+            window.calculateSalary();
+            syncDataToCloud();
+        };
+
+        // ==========================================
+        // ระบบ THEME
+        // ==========================================
+        window.changeTheme = function () {
+            const theme = $('themeSelect').value;
+            if (theme === 'custom') {
+                $('customColorBox').style.display = 'flex';
+                window.applyCustomColors();
+            } else {
+                $('customColorBox').style.display = 'none';
+                window.applySeasonalGimmick();
+            }
+            window.initCalendar();
+        };
+
+        window.applyCustomColors = function () {
             const root = document.documentElement;
             root.style.setProperty('--custom-bg', $('colorBg').value);
             root.style.setProperty('--custom-card', $('colorCard').value);
             root.style.setProperty('--custom-primary', $('colorPrimary').value);
             root.style.setProperty('--custom-text', $('colorText').value);
             document.body.setAttribute('data-theme', 'custom');
-            const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
-            const g = monthlyGimmicks[parseInt(monthVal.split('-')[1])] || monthlyGimmicks[1];
-            activeWorkIcon = g.workIcon;
-            $('seasonEmoji').innerText = g.emoji;
-            $('seasonText').innerText = `| ${g.sig}`;
-            $('watermarkBg').innerText = g.waterMark;
-        }
+        };
 
-        function applySeasonalGimmick() {
+        window.applySeasonalGimmick = function () {
             const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const month = parseInt(monthVal.split('-')[1]);
             const themeMode = $('themeSelect').value;
-            if (themeMode === 'custom') { applyCustomColors(); return; }
+            if (themeMode === 'custom') return;
             document.body.setAttribute('data-theme', themeMode);
             document.body.setAttribute('data-month', month);
-            const g = monthlyGimmicks[month] || monthlyGimmicks[1];
-            activeWorkIcon = g.workIcon;
-            $('seasonEmoji').innerText = g.emoji;
-            $('seasonText').innerText = `| ${g.sig}`;
-            $('watermarkBg').innerText = g.waterMark;
-        }
-
-        function changeTheme() {
-            const theme = $('themeSelect').value;
-            if (theme === 'custom') {
-                $('customColorBox').style.display = 'flex';
-                applyCustomColors();
-            } else {
-                $('customColorBox').style.display = 'none';
-                applySeasonalGimmick();
-            }
-            syncDataToCloud();
-        }
+            const gimmick = monthlyGimmicks[month] || monthlyGimmicks[1];
+            activeWorkIcon = gimmick.workIcon;
+            $('seasonEmoji').innerText = gimmick.emoji;
+            $('seasonText').innerText = `| ${gimmick.sig}`;
+            $('watermarkBg').innerText = gimmick.waterMark;
+        };
 
         // ==========================================
         // ระบบกรอกเวลา MODAL ของปฏิทิน
         // ==========================================
-        function toggleAppointmentUI() {
-            $('aptFields').style.display = $('chkAppointment').checked ? 'block' : 'none';
-        }
-        function toggleSpecialHolidayUI() {
+        window.toggleAppointmentUI = function () { $('aptFields').style.display = $('chkAppointment').checked ? 'block' : 'none'; };
+        window.toggleSpecialHolidayUI = function () {
             const on = $('chkSpecial').checked;
             $('holidayName').style.display = on ? 'block' : 'none';
             $('dayType').value = on ? 'special' : 'normal';
-            updateCalculations();
-        }
-        function toggleOtFields() {
+            window.updateCalculations();
+        };
+        window.toggleOtFields = function () {
             $('otFieldsBox').style.display = $('otCheckbox').checked ? 'block' : 'none';
-            updateCalculations();
-        }
-        function toggleDayStatus(isClick = false) {
+            window.updateCalculations();
+        };
+        window.toggleDayStatus = function (isClick = false) {
             const status = getActiveStatus();
-            $('cardMorning').classList.remove('active');
-            $('cardNight').classList.remove('active');
-            $('cardLeave').classList.remove('active');
-            $('cardReset').classList.remove('active');
+            ['cardMorning', 'cardNight', 'cardLeave', 'cardReset'].forEach(id => $(id).classList.remove('active'));
             $('workFields').style.display = 'none';
             $('leaveFieldsBox').style.display = 'none';
 
             if (status === 'morning') {
-                $('cardMorning').classList.add('active');
-                $('workFields').style.display = 'block';
+                $('cardMorning').classList.add('active'); $('workFields').style.display = 'block';
                 $('lblTimeIn').innerText = 'เข้างาน (ปกติ 08:00)';
                 if (isClick) { $('timeIn').value = '08:00'; $('timeOut').value = '18:00'; $('otStart').value = '18:30'; $('otEnd').value = '21:30'; }
             } else if (status === 'night') {
-                $('cardNight').classList.add('active');
-                $('workFields').style.display = 'block';
+                $('cardNight').classList.add('active'); $('workFields').style.display = 'block';
                 $('lblTimeIn').innerText = 'เข้างาน (ปกติ 20:00)';
                 if (isClick) { $('timeIn').value = '20:00'; $('timeOut').value = '06:00'; $('otStart').value = '06:30'; $('otEnd').value = '09:30'; }
             } else if (status === 'leave') {
-                $('cardLeave').classList.add('active');
-                $('leaveFieldsBox').style.display = 'block';
+                $('cardLeave').classList.add('active'); $('leaveFieldsBox').style.display = 'block';
             } else if (status === 'reset') {
                 $('cardReset').classList.add('active');
             }
 
-            if (['morning', 'night'].includes(status)) updateCalculations();
+            if (['morning', 'night'].includes(status)) window.updateCalculations();
             else { $('lateBadge').style.display = 'none'; $('onTimeBadge').style.display = 'none'; }
-        }
+        };
 
-        function updateCalculations() {
+        window.updateCalculations = function () {
             const status = getActiveStatus();
             if (!['morning', 'night'].includes(status)) return;
 
@@ -1648,7 +1752,6 @@
             } else if (dType === 'weekend') {
                 let wkHrs = Math.min(9, tHrs), wkOt = Math.max(0, tHrs - 9);
                 $('normalHoursText').innerHTML = `ทำงานวันหยุด ส.-อา.: <strong style="color:#047857;">${netHrs.toFixed(1)} ชม. + OT ${expOt.toFixed(1)} ชม.</strong>`;
-                // แก้ตัวโชว์ Pop-up สำหรับวันหยุด เสาร์-อาทิตย์ ให้เป็น x1, x3
                 $('otHoursText').innerHTML = `คำนวณเงิน: <strong style="color:#b45309;">x1 = ${wkHrs.toFixed(1)} ชม. | x3 = ${wkOt.toFixed(1)} ชม.</strong>`;
                 lb.style.display = 'none'; ob.style.display = 'inline-block';
             } else {
@@ -1663,7 +1766,7 @@
                     lb.style.display = 'none'; ob.style.display = 'inline-block';
                 }
             }
-        }
+        };
 
         window.openModal = function (dStr) {
             selectedDateStr = dStr;
@@ -1700,16 +1803,16 @@
             $('aptTitle').value = apt ? apt.title : '';
             $('aptDesc').value = apt ? apt.desc : '';
 
-            toggleAppointmentUI();
-            toggleDayStatus(false);
+            window.toggleAppointmentUI();
+            window.toggleDayStatus(false);
             $('modal').style.display = 'flex';
         }
 
-        function closeModal() {
+        window.closeModal = function () {
             $('modal').style.display = 'none';
         }
 
-        function saveDayData() {
+        window.saveDayData = function () {
             const isSp = $('chkSpecial').checked;
             const hName = $('holidayName').value;
             const isApt = $('chkAppointment').checked;
@@ -1753,14 +1856,14 @@
                 };
             } else { delete appointments[selectedDateStr]; }
 
-            closeModal();
+            window.closeModal();
             syncDataToCloud();
         }
 
         // ==========================================
         // วาดปฏิทิน
         // ==========================================
-        function initCalendar() {
+        window.initCalendar = function () {
             const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const [year, month] = monthVal.split('-').map(Number);
             document.body.setAttribute('data-month', month);
@@ -1816,13 +1919,13 @@
             const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
             for (let i = 1; i <= remaining; i++) createCell(new Date(year, month, i), true);
 
-            calculateSalary();
+            window.calculateSalary();
         }
 
         // ==========================================
         // คำนวณยอดรวม (SALARY CALC)
         // ==========================================
-        function calculateSalary() {
+        window.calculateSalary = function () {
             const bSal = parseFloat($('baseSalary').value) || 0;
             const dRate = bSal / 30, hRate = dRate / 9, mRate = hRate / 60;
             let tOtN = 0, tOtW = 0, tOtH = 0, tTrav = 0, tLateD = 0, unpLeave = 0, yrP = 0, yrS = 0, yrV = 0, dNight = 0;
@@ -1904,62 +2007,25 @@
             $('labelAbsentDeduct').innerText = `12. หัก ขาดงาน/ลากิจเกิน (${unpLeave} วัน)`;
             $('showAbsentDeduct').innerText = `${fmt(tAbsD)} ฿`;
 
-            $('showOtherDeductions').innerText = `${fmt(otherDedTotal)} ฿`; // อัปเดตตัวเลขแสดงผลยอดหักจุกจิก
+            $('showOtherDeductions').innerText = `${fmt(otherDedTotal)} ฿`;
             $('showTotalDeduction').innerText = `${fmt(tDed)} ฿`;
             $('showVacationCash').innerText = `${fmt(cOut)} ฿`;
             $('totalEarnings').innerText = `${fmt(tEarn)} ฿`;
         }
 
-        function syncSidebar() { calculateSalary(); syncDataToCloud(); }
-
         // ==========================================
-        // EVENTS (เชื่อมต่อปุ่มกดทั้งหมด)
+        // EVENTS (เชื่อมต่อเมื่อโหลดเว็บเสร็จ)
         // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             const now = new Date();
             $('currentMonth').value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
         });
 
-        $('loginBtn').addEventListener('click', () => {
-            signInWithPopup(auth, provider).catch(err => alert("เกิดข้อผิดพลาดในการล็อกอิน: " + err.message));
-        });
-        $('logoutBtn').addEventListener('click', () => {
-            signOut(auth).then(() => location.reload());
-        });
-
-        $('currentMonth').addEventListener('change', () => { applySeasonalGimmick(); initCalendar(); });
-        $('themeSelect').addEventListener('change', changeTheme);
-        $('colorBg').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
-        $('colorCard').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
-        $('colorPrimary').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
-        $('colorText').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
-
-        ['baseSalary', 'languageAllowance', 'otherIncome', 'socialSecurity', 'vacationCarryOver', 'vacationQuota', 'vacationCashOutDays'].forEach(id => {
-            $(id).addEventListener('change', syncSidebar);
-        });
-        $('hasTravel').addEventListener('change', syncSidebar);
-        $('hasLanguage').addEventListener('change', syncSidebar);
-
-        // Calendar Modal
-        document.getElementsByName('dayStatusOpt').forEach(r => r.addEventListener('change', () => toggleDayStatus(true)));
-        $('dayType').addEventListener('change', updateCalculations);
-        $('timeIn').addEventListener('change', updateCalculations);
-        $('timeOut').addEventListener('change', updateCalculations);
-        $('otCheckbox').addEventListener('change', toggleOtFields);
-        $('otStart').addEventListener('change', updateCalculations);
-        $('otEnd').addEventListener('change', updateCalculations);
-        $('chkSpecial').addEventListener('change', toggleSpecialHolidayUI);
-        $('chkAppointment').addEventListener('change', toggleAppointmentUI);
-        $('btnModalCancel').addEventListener('click', closeModal);
-        $('btnModalSave').addEventListener('click', saveDayData);
-        $('modal').addEventListener('click', (e) => { if (e.target === $('modal')) closeModal(); });
-
-        // Deduction Modal
         $('btnOpenDeduct').addEventListener('click', window.openDeductionModal);
-        $('btnAddDeduct').addEventListener('click', window.addDeductionSlot);
         $('btnDeductCancel').addEventListener('click', window.closeDeductionModal);
         $('btnDeductSave').addEventListener('click', window.saveDeductions);
-        $('deductionModal').addEventListener('click', (e) => { if (e.target === $('deductionModal')) window.closeDeductionModal(); });
+        $('btnAddDeduct').addEventListener('click', window.addDeductionSlot);
+
     </script>
 </body>
 
