@@ -1253,6 +1253,7 @@
                         <span id="showAbsentDeduct" style="font-weight:bold;">0 ฿</span>
                     </div>
 
+                    <!-- ส่วนหักเงินรวมแบบ Dynamic -->
                     <div
                         style="display:flex; justify-content:space-between; align-items:center; margin-top:4px; border-top:1px dashed var(--border-cell); padding-top:8px;">
                         <span>13. รายการหักเงินอื่นๆ</span>
@@ -1279,6 +1280,7 @@
         </div>
     </div>
 
+    <!-- Modal Form (ลงเวลา) -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1318,6 +1320,7 @@
                 </div>
             </label>
 
+            <!-- ส่วนลงเวลาปกติ -->
             <div id="workFields" style="display:none;">
                 <div class="form-group" style="margin-bottom:12px; margin-top:16px;">
                     <label style="font-size:13px; font-weight:bold;">ประเภทวัน (สำหรับคิด OT):</label>
@@ -1368,6 +1371,7 @@
                 </div>
             </div>
 
+            <!-- ส่วนการลาหยุด (อัปเดตระบบระบุชั่วโมง) -->
             <div id="leaveFieldsBox"
                 style="display:none; background:#fef2f2; padding:16px; border-radius:8px; border:1px dashed #fca5a5; margin-top:16px;">
                 <strong
@@ -1396,9 +1400,52 @@
                         ระบุชั่วโมง
                     </label>
                 </div>
-                <div id="leaveHoursDiv" style="display:none; margin-top:10px;">
-                    <input type="number" id="leaveHoursInput" placeholder="ระบุจำนวนชั่วโมงที่ลา (เช่น 4)"
-                        style="width:100%; padding:8px; border-radius:4px; border:1px solid #fca5a5; font-family:inherit;">
+
+                <div id="leaveHoursDiv"
+                    style="display:none; margin-top:10px; background: white; padding: 12px; border-radius: 6px; border: 1px solid #fca5a5;">
+                    <input type="number" id="leaveHoursInput" placeholder="จำนวนชั่วโมงที่ลา (เช่น 4)"
+                        style="width:100%; padding:8px; border-radius:4px; border:1px solid #fca5a5; margin-bottom: 10px; font-family:inherit;">
+
+                    <strong
+                        style="color:#991b1b; font-size:13px; display:block; margin-bottom:6px;">สถานะการมาทำงาน:</strong>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <label style="font-size:13px; cursor:pointer;">
+                            <input type="radio" name="hourlyWorkStatus" value="none" checked
+                                onchange="toggleLeaveWork()"> ไม่มาทำงานเลย (หักเงินชั่วโมงส่วนที่เหลือ)
+                        </label>
+                        <label style="font-size:13px; cursor:pointer;">
+                            <input type="radio" name="hourlyWorkStatus" value="worked" onchange="toggleLeaveWork()">
+                            มาทำงานช่วงเวลาที่เหลือ
+                        </label>
+                    </div>
+
+                    <div id="leaveWorkFields"
+                        style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed #fca5a5;">
+                        <div class="time-row" style="margin-bottom:8px;">
+                            <div class="time-col">
+                                <label>เวลาเข้างาน</label>
+                                <input type="time" id="lvTimeIn" value="13:00">
+                            </div>
+                            <div class="time-col">
+                                <label>เวลาเลิกงาน</label>
+                                <input type="time" id="lvTimeOut" value="18:00">
+                            </div>
+                        </div>
+                        <label style="display:flex; align-items:center; gap:8px; margin-bottom:8px; cursor:pointer;">
+                            <input type="checkbox" id="lvOtCheckbox" onchange="toggleLvOt()"> <strong
+                                style="font-size:13px; color:#b45309;">ทำ OT ต่อ (คิดเรท 1.5x)</strong>
+                        </label>
+                        <div class="time-row" id="lvOtBox" style="display:none;">
+                            <div class="time-col">
+                                <label style="color:#b45309;">เริ่ม OT</label>
+                                <input type="time" id="lvOtStart" value="18:30">
+                            </div>
+                            <div class="time-col">
+                                <label style="color:#b45309;">จบ OT</label>
+                                <input type="time" id="lvOtEnd" value="20:30">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1443,6 +1490,7 @@
         </div>
     </div>
 
+    <!-- Modal Form (หน้าต่างเพิ่มรายการหักเงิน) -->
     <div class="modal-overlay" id="deductionModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1453,6 +1501,7 @@
                 เงินกู้ ฯลฯ</p>
 
             <div id="deductionModalList">
+                <!-- JS จะสร้างช่องกรอกข้อมูลตรงนี้ -->
             </div>
 
             <button onclick="addDeductionSlot()"
@@ -1472,6 +1521,7 @@
         </div>
     </div>
 
+    <!-- Firebase SDK และระบบ Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -1723,6 +1773,15 @@
             $('leaveHoursDiv').style.display = isHourly ? 'block' : 'none';
         };
 
+        window.toggleLeaveWork = function () {
+            const isWorked = document.querySelector('input[name="hourlyWorkStatus"][value="worked"]').checked;
+            $('leaveWorkFields').style.display = isWorked ? 'block' : 'none';
+        };
+
+        window.toggleLvOt = function () {
+            $('lvOtBox').style.display = $('lvOtCheckbox').checked ? 'flex' : 'none';
+        };
+
         window.toggleDayStatus = function (isClick = false) {
             const status = getActiveStatus();
             ['cardMorning', 'cardNight', 'cardLeave', 'cardReset'].forEach(id => $(id).classList.remove('active'));
@@ -1789,7 +1848,7 @@
 
             const data = attendanceData[dStr] || {
                 status: null, dayType: defType, timeIn: '08:00', timeOut: '18:00',
-                didOt: false, otStart: '18:30', otEnd: '21:30', leaveType: 'absent', leaveDuration: 9
+                didOt: false, otStart: '18:30', otEnd: '21:30', leaveType: 'absent'
             };
 
             for (let r of document.getElementsByName('dayStatusOpt')) r.checked = (r.value === data.status);
@@ -1805,19 +1864,32 @@
 
             if (data.status === 'leave') {
                 for (let r of document.getElementsByName('leaveTypeOpt')) r.checked = (r.value === data.leaveType);
-                let lHrs = data.leaveDuration !== undefined ? data.leaveDuration : 9;
-                if (lHrs < 9) {
+                let durMode = data.leaveDurationMode || 'full';
+                if (durMode === 'hourly') {
                     document.querySelector('input[name="leaveDurationMode"][value="hourly"]').checked = true;
-                    $('leaveHoursInput').value = lHrs;
+                    $('leaveHoursInput').value = data.leaveHours || 4;
+                    let wStat = data.hourlyWorkStatus || 'none';
+                    document.querySelector(`input[name="hourlyWorkStatus"][value="${wStat}"]`).checked = true;
+                    if (wStat === 'worked') {
+                        $('lvTimeIn').value = data.timeIn || '13:00';
+                        $('lvTimeOut').value = data.timeOut || '18:00';
+                        $('lvOtCheckbox').checked = data.didOt || false;
+                        $('lvOtStart').value = data.otStart || '18:30';
+                        $('lvOtEnd').value = data.otEnd || '20:30';
+                    }
                 } else {
                     document.querySelector('input[name="leaveDurationMode"][value="full"]').checked = true;
                     $('leaveHoursInput').value = '';
+                    document.querySelector('input[name="hourlyWorkStatus"][value="none"]').checked = true;
                 }
-                window.toggleLeaveHours();
             } else {
                 document.querySelector('input[name="leaveDurationMode"][value="full"]').checked = true;
-                window.toggleLeaveHours();
+                document.querySelector('input[name="hourlyWorkStatus"][value="none"]').checked = true;
             }
+
+            window.toggleLeaveHours();
+            window.toggleLeaveWork();
+            window.toggleLvOt();
 
             const sp = specialHolidays[dStr];
             $('chkSpecial').checked = !!sp;
@@ -1865,9 +1937,25 @@
                 for (let r of document.getElementsByName('leaveTypeOpt')) if (r.checked) lType = r.value;
 
                 let durMode = document.querySelector('input[name="leaveDurationMode"]:checked').value;
-                let lHrs = durMode === 'hourly' ? (parseFloat($('leaveHoursInput').value) || 9) : 9;
+                if (durMode === 'full') {
+                    attendanceData[selectedDateStr] = { status: 'leave', leaveType: lType, leaveDurationMode: 'full' };
+                } else {
+                    let lHrs = parseFloat($('leaveHoursInput').value) || 9;
+                    let wStat = document.querySelector('input[name="hourlyWorkStatus"]:checked').value;
+                    let lData = { status: 'leave', leaveType: lType, leaveDurationMode: 'hourly', leaveHours: lHrs, hourlyWorkStatus: wStat };
 
-                attendanceData[selectedDateStr] = { status: 'leave', leaveType: lType, leaveDuration: lHrs };
+                    if (wStat === 'worked') {
+                        lData.timeIn = $('lvTimeIn').value;
+                        lData.timeOut = $('lvTimeOut').value;
+                        lData.didOt = $('lvOtCheckbox').checked;
+                        if (lData.didOt) {
+                            lData.otStart = $('lvOtStart').value;
+                            lData.otEnd = $('lvOtEnd').value;
+                            lData.explicitOtHrs = calcMinutesDiff(lData.otStart, lData.otEnd) / 60;
+                        }
+                    }
+                    attendanceData[selectedDateStr] = lData;
+                }
             }
 
             if (isSp) specialHolidays[selectedDateStr] = hName || 'วันหยุดพิเศษ';
@@ -1919,9 +2007,17 @@
                     } else if (savedData.status === 'leave') {
                         const leaveMap = { absent: 'tag tag-absent', personal: 'tag tag-personal', sick: 'tag tag-sick', vacation: 'tag tag-vacation' };
                         const leaveIcon = { absent: '❌ ขาดงาน', personal: '📝 ลากิจ', sick: '💊 ลาป่วย', vacation: '🏖️ ลาพักร้อน' };
-                        let lHrs = savedData.leaveDuration !== undefined ? savedData.leaveDuration : 9;
-                        let hrText = lHrs < 9 ? ` (${lHrs}ชม.)` : '';
+
+                        let lHrs = savedData.leaveDurationMode === 'hourly' ? (savedData.leaveHours || 0) : 9;
+                        let hrText = (savedData.leaveDurationMode === 'hourly') ? ` (${lHrs}ชม.)` : '';
                         html += `<div class="${leaveMap[savedData.leaveType] || 'tag tag-absent'}">${leaveIcon[savedData.leaveType] || '❌ ขาดงาน'}${hrText}</div>`;
+
+                        if (savedData.leaveDurationMode === 'hourly' && savedData.hourlyWorkStatus === 'worked') {
+                            html += `<div class="tag tag-work"><span>💼</span><span class="tag-text">${savedData.timeIn}-${savedData.timeOut}</span></div>`;
+                            if (savedData.didOt && savedData.explicitOtHrs > 0) {
+                                html += `<div class="tag tag-ot">⏱️ <span class="tag-text">OT: ${savedData.explicitOtHrs.toFixed(1)}h</span></div>`;
+                            }
+                        }
                     }
                 }
                 if (isSpecial) html += `<div class="tag" style="background:#a855f7;color:white;border-color:#9333ea;font-size:11px;font-weight:bold;justify-content:center;">🎉 <span class="tag-text">${isSpecial}</span></div>`;
@@ -1948,24 +2044,21 @@
             const dRate = bSal / 30, hRate = dRate / 9, mRate = hRate / 60;
             let tOtN = 0, tOtW = 0, tOtH = 0, tTrav = 0, tLateD = 0, dNight = 0;
 
-            // ใช้เก็บเป็นชั่วโมงแทนจำนวนวัน
             let yrP_hrs = 0, yrS_hrs = 0, yrV_hrs = 0, unpLeave_hrs = 0;
 
             const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const [y, m] = monthVal.split('-').map(Number);
             const sDate = new Date(y, m - 2, 25), eDate = new Date(y, m - 1, 24);
 
-            // 1) นับจำนวนชั่วโมงลาพักต่างๆ รวมทั้งปี (เพื่อแสดงใน sidebar)
             for (let k in attendanceData) {
                 if (k.startsWith(String(y)) && attendanceData[k].status === 'leave') {
-                    let lHrs = attendanceData[k].leaveDuration !== undefined ? attendanceData[k].leaveDuration : 9;
+                    let lHrs = attendanceData[k].leaveDurationMode === 'hourly' ? (attendanceData[k].leaveHours || 0) : 9;
                     if (attendanceData[k].leaveType === 'personal') yrP_hrs += lHrs;
                     if (attendanceData[k].leaveType === 'sick') yrS_hrs += lHrs;
                     if (attendanceData[k].leaveType === 'vacation') yrV_hrs += lHrs;
                 }
             }
 
-            // 2) นับการหักเงินในช่วงรอบบิล (25-24)
             for (let d = new Date(sDate); d <= eDate; d.setDate(d.getDate() + 1)) {
                 let dStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
                 let dt = attendanceData[dStr];
@@ -1987,26 +2080,42 @@
                         tOtH += tHrs * (hRate * 2);
                     }
                 } else if (dt.status === 'leave') {
-                    let lHrs = dt.leaveDuration !== undefined ? dt.leaveDuration : 9;
-                    if (dt.leaveType === 'absent') {
-                        unpLeave_hrs += lHrs;
-                    } else if (dt.leaveType === 'personal') {
-                        // คำนวณลากิจสะสมก่อนหน้าวันนี้ ว่าใช้ไปกี่ชั่วโมงแล้ว
+                    let durMode = dt.leaveDurationMode || 'full';
+                    let lHrs = durMode === 'hourly' ? (dt.leaveHours || 0) : 9;
+                    let lType = dt.leaveType;
+
+                    let unpaid_this_leave = 0;
+                    if (lType === 'absent') {
+                        unpaid_this_leave = lHrs;
+                    } else if (lType === 'personal') {
                         let pastPHrs = 0;
                         for (let k in attendanceData) {
                             if (k.startsWith(String(y)) && attendanceData[k].status === 'leave' && attendanceData[k].leaveType === 'personal' && new Date(k) < new Date(dStr)) {
-                                pastPHrs += (attendanceData[k].leaveDuration !== undefined ? attendanceData[k].leaveDuration : 9);
+                                pastPHrs += (attendanceData[k].leaveDurationMode === 'hourly' ? (attendanceData[k].leaveHours || 0) : 9);
                             }
                         }
-                        // โควตาลากิจแบบได้เงินคือ 3 วัน = 27 ชั่วโมง
                         let remainingPaidQuota = Math.max(0, 27 - pastPHrs);
-                        let unpaidPortion = Math.max(0, lHrs - remainingPaidQuota);
-                        unpLeave_hrs += unpaidPortion; // หักเฉพาะส่วนที่เกิน 27 ชม.
+                        unpaid_this_leave = Math.max(0, lHrs - remainingPaidQuota);
+                    }
+                    unpLeave_hrs += unpaid_this_leave;
+
+                    if (durMode === 'hourly') {
+                        if (dt.hourlyWorkStatus === 'none' || !dt.hourlyWorkStatus) {
+                            unpLeave_hrs += Math.max(0, 9 - lHrs);
+                        } else if (dt.hourlyWorkStatus === 'worked') {
+                            tTrav += 35;
+                            let wHrs = getActualWorkMinutes(dt.timeIn, dt.timeOut) / 60;
+                            let deficit = Math.max(0, 9 - (lHrs + wHrs));
+                            unpLeave_hrs += deficit;
+
+                            if (dt.didOt && dt.explicitOtHrs > 0) {
+                                tOtN += dt.explicitOtHrs * (hRate * 1.5);
+                            }
+                        }
                     }
                 }
             }
 
-            // ฟังก์ชันช่วยจัดรูปแบบตัวเลข (โควตา)
             const formatLeave = (hrs, quotaDays) => {
                 let d = hrs / 9;
                 let dStr = d % 1 === 0 ? d.toString() : d.toFixed(2);
@@ -2020,7 +2129,7 @@
             $('statSick').innerText = formatLeave(yrS_hrs, 30);
             $('statVacation').innerText = formatLeave(yrV_hrs, vCarry + vQuota);
 
-            let tAbsD = unpLeave_hrs * hRate; // คำนวณหักเงินตามชั่วโมง
+            let tAbsD = unpLeave_hrs * hRate;
             let cOut = (parseFloat($('vacationCashOutDays').value) || 0) * dRate;
             let aTrav = $('hasTravel').checked ? tTrav : 0;
             let aLang = $('hasLanguage').checked ? (parseFloat($('languageAllowance').value) || 0) : 0;
@@ -2041,7 +2150,6 @@
             $('showNightShift').innerText = `${fmt(dNight * 50)} ฿`;
             $('showAutoLate').innerText = `${fmt(tLateD)} ฿`;
 
-            // แสดงผลการหักวันลาที่เกิน เป็นจำนวนวันในวงเล็บ
             $('labelAbsentDeduct').innerText = `12. หัก ขาดงาน/ลากิจเกิน (${(unpLeave_hrs / 9).toFixed(2)} วัน)`;
             $('showAbsentDeduct').innerText = `${fmt(tAbsD)} ฿`;
 
