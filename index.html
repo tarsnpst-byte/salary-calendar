@@ -1110,7 +1110,6 @@
                 <div class="controls-row">
                     <div class="control-box">
                         <label>รอบเดือน:</label>
-                        <!-- สั่งให้เมื่อเปลี่ยนเดือน รันการวาดปฏิทิน ซึ่งจะปรับไอคอนให้อัตโนมัติ -->
                         <input type="month" id="currentMonth" onchange="initCalendar()">
                     </div>
                     <div class="control-box">
@@ -1157,15 +1156,15 @@
             <div class="leave-stats-box">
                 <div class="leave-stat-row">
                     <span style="color:#b45309;">📝 ลากิจ (หักหลัง 3 วัน)</span>
-                    <strong id="statPersonal">0 / 15 วัน</strong>
+                    <strong id="statPersonal">0 (0 ชม.) / 15 วัน</strong>
                 </div>
                 <div class="leave-stat-row">
                     <span style="color:#0369a1;">💊 ลาป่วย (ไม่หักเงิน)</span>
-                    <strong id="statSick">0 / 30 วัน</strong>
+                    <strong id="statSick">0 (0 ชม.) / 30 วัน</strong>
                 </div>
                 <div class="leave-stat-row" style="border:none;">
                     <span style="color:#047857;">🏖️ ลาพักร้อน (ใช้สิทธิ์แล้ว)</span>
-                    <strong id="statVacation">0 วัน</strong>
+                    <strong id="statVacation">0 (0 ชม.) / 0 วัน</strong>
                 </div>
 
                 <div style="margin-top:10px; padding-top:10px; border-top:1px dashed var(--border-color);">
@@ -1254,7 +1253,6 @@
                         <span id="showAbsentDeduct" style="font-weight:bold;">0 ฿</span>
                     </div>
 
-                    <!-- ส่วนหักเงินรวมแบบ Dynamic -->
                     <div
                         style="display:flex; justify-content:space-between; align-items:center; margin-top:4px; border-top:1px dashed var(--border-cell); padding-top:8px;">
                         <span>13. รายการหักเงินอื่นๆ</span>
@@ -1281,7 +1279,6 @@
         </div>
     </div>
 
-    <!-- Modal Form (หน้าต่างกรอกข้อมูลปฏิทิน) -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1309,7 +1306,7 @@
                 <input type="radio" name="dayStatusOpt" value="leave" onchange="toggleDayStatus(true)">
                 <div>
                     <strong style="color:#b91c1c;">❌ หยุดงาน / ลางาน</strong>
-                    <span style="color:#b91c1c;">ขาดงาน, ลากิจ, ลาป่วย, พักร้อน</span>
+                    <span style="color:#b91c1c;">ขาดงาน, ลากิจ, ลาป่วย, พักร้อน (ระบุเวลาได้)</span>
                 </div>
             </label>
 
@@ -1385,6 +1382,24 @@
                     <label style="color:#047857;"><input type="radio" name="leaveTypeOpt" value="vacation"> 🏖️
                         ลาพักร้อน (หักจากโควตา)</label>
                 </div>
+
+                <hr style="border-top:1px solid #fca5a5; border-bottom:none; margin:14px 0;">
+
+                <strong style="color:#991b1b; display:block; margin-bottom:8px; font-size:14px;">ระยะเวลาการลา:</strong>
+                <div style="display:flex; gap:16px; align-items:center;">
+                    <label style="color:#991b1b; font-size:13px; cursor:pointer;">
+                        <input type="radio" name="leaveDurationMode" value="full" checked onchange="toggleLeaveHours()">
+                        เต็มวัน (9 ชม.)
+                    </label>
+                    <label style="color:#991b1b; font-size:13px; cursor:pointer;">
+                        <input type="radio" name="leaveDurationMode" value="hourly" onchange="toggleLeaveHours()">
+                        ระบุชั่วโมง
+                    </label>
+                </div>
+                <div id="leaveHoursDiv" style="display:none; margin-top:10px;">
+                    <input type="number" id="leaveHoursInput" placeholder="ระบุจำนวนชั่วโมงที่ลา (เช่น 4)"
+                        style="width:100%; padding:8px; border-radius:4px; border:1px solid #fca5a5; font-family:inherit;">
+                </div>
             </div>
 
             <hr style="border:0; border-top:1px solid var(--border-color); margin:16px 0;">
@@ -1428,7 +1443,6 @@
         </div>
     </div>
 
-    <!-- Modal Form (หน้าต่างเพิ่มรายการหักเงิน) -->
     <div class="modal-overlay" id="deductionModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1439,7 +1453,6 @@
                 เงินกู้ ฯลฯ</p>
 
             <div id="deductionModalList">
-                <!-- JS จะสร้างช่องกรอกข้อมูลตรงนี้ -->
             </div>
 
             <button onclick="addDeductionSlot()"
@@ -1459,10 +1472,8 @@
         </div>
     </div>
 
-    <!-- Firebase SDK และระบบ Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        // เปลี่ยนจาก GoogleAuth มาเป็น Email/Password Auth
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -1480,14 +1491,12 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // ตัวแปรส่วนกลาง
         let currentUser = null;
         let attendanceData = {};
         let specialHolidays = {};
         let appointments = {};
-        let isLoginMode = true; // ใช้สำหรับสลับหน้าจอ Login / Register
+        let isLoginMode = true;
 
-        // ชุดข้อมูลรายการหัก (ตั้งต้น 4 ช่องว่างๆ)
         let customDeductions = [
             { name: '', amount: 0 },
             { name: '', amount: 0 },
@@ -1497,7 +1506,6 @@
 
         let selectedDateStr = '';
         let activeWorkIcon = "💼";
-
         const STANDARD_MORNING_START = "08:00";
         const STANDARD_NIGHT_START = "20:00";
 
@@ -1546,14 +1554,11 @@
             return null;
         }
 
-        // ==========================================
-        // ระบบ AUTHENTICATION (อีเมล / รหัสผ่าน)
-        // ==========================================
+        // ================= AUTH =================
         window.toggleAuthMode = function () {
             isLoginMode = !isLoginMode;
             const btn = $('authSubmitBtn');
             const text = $('authToggleText');
-
             if (isLoginMode) {
                 btn.innerText = "เข้าสู่ระบบ";
                 text.innerHTML = `เข้าสู่ระบบ หรือ <a href="#" onclick="toggleAuthMode()" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">สมัครสมาชิกใหม่</a>`;
@@ -1566,24 +1571,16 @@
         window.handleAuth = function () {
             const email = $('authEmail').value;
             const password = $('authPassword').value;
-
-            if (!email || !password) {
-                alert("กรุณากรอกอีเมลและรหัสผ่านให้ครบถ้วน");
-                return;
-            }
+            if (!email || !password) return alert("กรุณากรอกอีเมลและรหัสผ่านให้ครบถ้วน");
 
             if (isLoginMode) {
-                signInWithEmailAndPassword(auth, email, password)
-                    .catch(error => alert("เข้าสู่ระบบไม่สำเร็จ: " + error.message));
+                signInWithEmailAndPassword(auth, email, password).catch(err => alert("เข้าสู่ระบบไม่สำเร็จ: " + err.message));
             } else {
-                createUserWithEmailAndPassword(auth, email, password)
-                    .catch(error => alert("สมัครสมาชิกไม่สำเร็จ: " + error.message));
+                createUserWithEmailAndPassword(auth, email, password).catch(err => alert("สมัครสมาชิกไม่สำเร็จ: " + err.message));
             }
         };
 
-        window.logout = function () {
-            signOut(auth).then(() => location.reload());
-        };
+        window.logout = function () { signOut(auth).then(() => location.reload()); };
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -1598,16 +1595,9 @@
             }
         });
 
-        // ==========================================
-        // ระบบ DEDUCTION MODAL (หน้าต่างหักเงิน)
-        // ==========================================
-        window.openDeductionModal = function () {
-            window.renderDeductionModal();
-            $('deductionModal').style.display = 'flex';
-        };
-        window.closeDeductionModal = function () {
-            $('deductionModal').style.display = 'none';
-        };
+        // ================= DEDUCTION MODAL =================
+        window.openDeductionModal = function () { window.renderDeductionModal(); $('deductionModal').style.display = 'flex'; };
+        window.closeDeductionModal = function () { $('deductionModal').style.display = 'none'; };
         window.renderDeductionModal = function () {
             const list = $('deductionModalList');
             list.innerHTML = '';
@@ -1625,33 +1615,20 @@
             });
             $('deductionModalTotal').innerText = `${total.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
         };
-        window.addDeductionSlot = function () {
-            customDeductions.push({ name: '', amount: 0 });
-            window.renderDeductionModal();
-        };
-        window.removeDeductionSlot = function (idx) {
-            customDeductions.splice(idx, 1);
-            window.renderDeductionModal();
-        };
+        window.addDeductionSlot = function () { customDeductions.push({ name: '', amount: 0 }); window.renderDeductionModal(); };
+        window.removeDeductionSlot = function (idx) { customDeductions.splice(idx, 1); window.renderDeductionModal(); };
         window.calcDeductionModalTotal = function () {
             let total = 0;
-            customDeductions.forEach((_, idx) => {
-                total += parseFloat($(`dedAmt_${idx}`).value) || 0;
-            });
+            customDeductions.forEach((_, idx) => { total += parseFloat($(`dedAmt_${idx}`).value) || 0; });
             $('deductionModalTotal').innerText = `${total.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
         };
         window.saveDeductions = function () {
-            customDeductions = customDeductions.map((_, idx) => ({
-                name: $(`dedName_${idx}`).value,
-                amount: parseFloat($(`dedAmt_${idx}`).value) || 0
-            }));
+            customDeductions = customDeductions.map((_, idx) => ({ name: $(`dedName_${idx}`).value, amount: parseFloat($(`dedAmt_${idx}`).value) || 0 }));
             window.closeDeductionModal();
             window.syncSidebar();
         };
 
-        // ==========================================
-        // ดึงข้อมูล/เซฟข้อมูล CLOUD
-        // ==========================================
+        // ================= CLOUD SYNC =================
         function listenToCloudData() {
             if (!currentUser) return;
             const userDocRef = doc(db, "salary_calendars", currentUser.uid);
@@ -1661,11 +1638,7 @@
                     attendanceData = cloudData.attendanceData || {};
                     specialHolidays = cloudData.specialHolidays || {};
                     appointments = cloudData.appointments || {};
-
-                    if (cloudData.customDeductions && cloudData.customDeductions.length > 0) {
-                        customDeductions = cloudData.customDeductions;
-                    }
-
+                    if (cloudData.customDeductions && cloudData.customDeductions.length > 0) customDeductions = cloudData.customDeductions;
                     if (cloudData.sidebarData) {
                         const d = cloudData.sidebarData;
                         if (d.baseSalary !== undefined) $('baseSalary').value = d.baseSalary;
@@ -1702,43 +1675,26 @@
             await setDoc(userDocRef, { attendanceData, specialHolidays, appointments, sidebarData, customDeductions }, { merge: true });
         }
 
-        window.syncSidebar = function () {
-            window.calculateSalary();
-            syncDataToCloud();
-        };
+        window.syncSidebar = function () { window.calculateSalary(); syncDataToCloud(); };
 
-        // ==========================================
-        // ระบบ THEME
-        // ==========================================
+        // ================= THEME =================
         window.applySeasonalGimmick = function () {
             const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const month = parseInt(monthVal.split('-')[1]);
             const themeMode = $('themeSelect').value;
-
-            // แปะเดือนเก็บไว้
             document.body.setAttribute('data-month', month);
-
-            // อัปเดตไอคอนข้อความฤดูกาลเสมอ
             const gimmick = monthlyGimmicks[month] || monthlyGimmicks[1];
             activeWorkIcon = gimmick.workIcon;
             $('seasonEmoji').innerText = gimmick.emoji;
             $('seasonText').innerText = `| ${gimmick.sig}`;
             $('watermarkBg').innerText = gimmick.waterMark;
-
-            // อัปเดตสีตามฤดูกาลถ้าไม่ได้ใช้ custom theme
-            if (themeMode !== 'custom') {
-                document.body.setAttribute('data-theme', themeMode);
-            }
+            if (themeMode !== 'custom') document.body.setAttribute('data-theme', themeMode);
         };
 
         window.changeTheme = function () {
             const theme = $('themeSelect').value;
-            if (theme === 'custom') {
-                $('customColorBox').style.display = 'flex';
-                window.applyCustomColors();
-            } else {
-                $('customColorBox').style.display = 'none';
-            }
+            if (theme === 'custom') { $('customColorBox').style.display = 'flex'; window.applyCustomColors(); }
+            else { $('customColorBox').style.display = 'none'; }
             window.initCalendar();
             syncDataToCloud();
         };
@@ -1752,9 +1708,7 @@
             document.body.setAttribute('data-theme', 'custom');
         };
 
-        // ==========================================
-        // ระบบกรอกเวลา MODAL ของปฏิทิน
-        // ==========================================
+        // ================= CALENDAR MODAL =================
         window.toggleAppointmentUI = function () { $('aptFields').style.display = $('chkAppointment').checked ? 'block' : 'none'; };
         window.toggleSpecialHolidayUI = function () {
             const on = $('chkSpecial').checked;
@@ -1762,10 +1716,13 @@
             $('dayType').value = on ? 'special' : 'normal';
             window.updateCalculations();
         };
-        window.toggleOtFields = function () {
-            $('otFieldsBox').style.display = $('otCheckbox').checked ? 'block' : 'none';
-            window.updateCalculations();
+        window.toggleOtFields = function () { $('otFieldsBox').style.display = $('otCheckbox').checked ? 'block' : 'none'; window.updateCalculations(); };
+
+        window.toggleLeaveHours = function () {
+            const isHourly = document.querySelector('input[name="leaveDurationMode"][value="hourly"]').checked;
+            $('leaveHoursDiv').style.display = isHourly ? 'block' : 'none';
         };
+
         window.toggleDayStatus = function (isClick = false) {
             const status = getActiveStatus();
             ['cardMorning', 'cardNight', 'cardLeave', 'cardReset'].forEach(id => $(id).classList.remove('active'));
@@ -1793,17 +1750,14 @@
         window.updateCalculations = function () {
             const status = getActiveStatus();
             if (!['morning', 'night'].includes(status)) return;
-
             const tIn = $('timeIn').value, tOut = $('timeOut').value;
             const dType = $('dayType').value;
             const didOt = $('otCheckbox').checked;
             const oStart = $('otStart').value, oEnd = $('otEnd').value;
-
             let netHrs = getActualWorkMinutes(tIn, tOut) / 60;
             let expOt = didOt ? calcMinutesDiff(oStart, oEnd) / 60 : 0;
             let tHrs = netHrs + expOt;
             let bltOt = Math.max(0, netHrs - 9);
-
             const lb = $('lateBadge'), ob = $('onTimeBadge'), lt = $('lateTextDisplay');
 
             if (dType === 'special') {
@@ -1823,9 +1777,7 @@
                 if (lMins > 0) {
                     lb.style.display = 'inline-block'; ob.style.display = 'none';
                     lt.innerText = `สาย ${lMins} นาที -> หักเงิน ${getDeductMins(lMins)} นาที`;
-                } else {
-                    lb.style.display = 'none'; ob.style.display = 'inline-block';
-                }
+                } else { lb.style.display = 'none'; ob.style.display = 'inline-block'; }
             }
         };
 
@@ -1837,8 +1789,9 @@
 
             const data = attendanceData[dStr] || {
                 status: null, dayType: defType, timeIn: '08:00', timeOut: '18:00',
-                didOt: false, otStart: '18:30', otEnd: '21:30', leaveType: 'absent'
+                didOt: false, otStart: '18:30', otEnd: '21:30', leaveType: 'absent', leaveDuration: 9
             };
+
             for (let r of document.getElementsByName('dayStatusOpt')) r.checked = (r.value === data.status);
             $('dayType').value = data.dayType;
             $('timeIn').value = data.timeIn;
@@ -1852,7 +1805,20 @@
 
             if (data.status === 'leave') {
                 for (let r of document.getElementsByName('leaveTypeOpt')) r.checked = (r.value === data.leaveType);
+                let lHrs = data.leaveDuration !== undefined ? data.leaveDuration : 9;
+                if (lHrs < 9) {
+                    document.querySelector('input[name="leaveDurationMode"][value="hourly"]').checked = true;
+                    $('leaveHoursInput').value = lHrs;
+                } else {
+                    document.querySelector('input[name="leaveDurationMode"][value="full"]').checked = true;
+                    $('leaveHoursInput').value = '';
+                }
+                window.toggleLeaveHours();
+            } else {
+                document.querySelector('input[name="leaveDurationMode"][value="full"]').checked = true;
+                window.toggleLeaveHours();
             }
+
             const sp = specialHolidays[dStr];
             $('chkSpecial').checked = !!sp;
             $('holidayName').value = sp || '';
@@ -1869,23 +1835,17 @@
             $('modal').style.display = 'flex';
         }
 
-        window.closeModal = function () {
-            $('modal').style.display = 'none';
-        }
+        window.closeModal = function () { $('modal').style.display = 'none'; }
 
         window.saveDayData = function () {
-            const isSp = $('chkSpecial').checked;
-            const hName = $('holidayName').value;
-            const isApt = $('chkAppointment').checked;
-            const status = getActiveStatus();
+            const isSp = $('chkSpecial').checked, hName = $('holidayName').value;
+            const isApt = $('chkAppointment').checked, status = getActiveStatus();
 
             if (status === 'reset') {
                 delete attendanceData[selectedDateStr];
             } else if (['morning', 'night'].includes(status)) {
-                const tIn = $('timeIn').value, tOut = $('timeOut').value;
-                const dType = $('dayType').value;
-                const didOt = $('otCheckbox').checked;
-                const oStart = $('otStart').value, oEnd = $('otEnd').value;
+                const tIn = $('timeIn').value, tOut = $('timeOut').value, dType = $('dayType').value;
+                const didOt = $('otCheckbox').checked, oStart = $('otStart').value, oEnd = $('otEnd').value;
                 const netHrs = getActualWorkMinutes(tIn, tOut) / 60;
                 let isLate = false, fLateMins = 0;
                 if (dType === 'normal') {
@@ -1903,34 +1863,28 @@
             } else if (status === 'leave') {
                 let lType = 'absent';
                 for (let r of document.getElementsByName('leaveTypeOpt')) if (r.checked) lType = r.value;
-                attendanceData[selectedDateStr] = { status: 'leave', leaveType: lType };
+
+                let durMode = document.querySelector('input[name="leaveDurationMode"]:checked').value;
+                let lHrs = durMode === 'hourly' ? (parseFloat($('leaveHoursInput').value) || 9) : 9;
+
+                attendanceData[selectedDateStr] = { status: 'leave', leaveType: lType, leaveDuration: lHrs };
             }
 
             if (isSp) specialHolidays[selectedDateStr] = hName || 'วันหยุดพิเศษ';
             else delete specialHolidays[selectedDateStr];
 
-            if (isApt) {
-                appointments[selectedDateStr] = {
-                    icon: $('aptIcon').value || '📌',
-                    title: $('aptTitle').value || 'นัดหมาย',
-                    desc: $('aptDesc').value || ''
-                };
-            } else { delete appointments[selectedDateStr]; }
+            if (isApt) appointments[selectedDateStr] = { icon: $('aptIcon').value || '📌', title: $('aptTitle').value || 'นัดหมาย', desc: $('aptDesc').value || '' };
+            else delete appointments[selectedDateStr];
 
             window.closeModal();
             syncDataToCloud();
         }
 
-        // ==========================================
-        // วาดปฏิทิน
-        // ==========================================
+        // ================= CALENDAR =================
         window.initCalendar = function () {
-            // อัปเดตไอคอนตามเดือนใหม่เสมอเมื่อมีการวาดปฏิทิน!
             window.applySeasonalGimmick();
-
             const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const [year, month] = monthVal.split('-').map(Number);
-
             const firstDayIndex = new Date(year, month - 1, 1).getDay();
             const daysInMonth = new Date(year, month, 0).getDate();
             const calendarDays = $('calendarDays');
@@ -1965,7 +1919,9 @@
                     } else if (savedData.status === 'leave') {
                         const leaveMap = { absent: 'tag tag-absent', personal: 'tag tag-personal', sick: 'tag tag-sick', vacation: 'tag tag-vacation' };
                         const leaveIcon = { absent: '❌ ขาดงาน', personal: '📝 ลากิจ', sick: '💊 ลาป่วย', vacation: '🏖️ ลาพักร้อน' };
-                        html += `<div class="${leaveMap[savedData.leaveType] || 'tag tag-absent'}">${leaveIcon[savedData.leaveType] || '❌ ขาดงาน'}</div>`;
+                        let lHrs = savedData.leaveDuration !== undefined ? savedData.leaveDuration : 9;
+                        let hrText = lHrs < 9 ? ` (${lHrs}ชม.)` : '';
+                        html += `<div class="${leaveMap[savedData.leaveType] || 'tag tag-absent'}">${leaveIcon[savedData.leaveType] || '❌ ขาดงาน'}${hrText}</div>`;
                     }
                 }
                 if (isSpecial) html += `<div class="tag" style="background:#a855f7;color:white;border-color:#9333ea;font-size:11px;font-weight:bold;justify-content:center;">🎉 <span class="tag-text">${isSpecial}</span></div>`;
@@ -1986,26 +1942,30 @@
             window.calculateSalary();
         }
 
-        // ==========================================
-        // คำนวณยอดรวม (SALARY CALC)
-        // ==========================================
+        // ================= CALCULATE =================
         window.calculateSalary = function () {
             const bSal = parseFloat($('baseSalary').value) || 0;
             const dRate = bSal / 30, hRate = dRate / 9, mRate = hRate / 60;
-            let tOtN = 0, tOtW = 0, tOtH = 0, tTrav = 0, tLateD = 0, unpLeave = 0, yrP = 0, yrS = 0, yrV = 0, dNight = 0;
+            let tOtN = 0, tOtW = 0, tOtH = 0, tTrav = 0, tLateD = 0, dNight = 0;
+
+            // ใช้เก็บเป็นชั่วโมงแทนจำนวนวัน
+            let yrP_hrs = 0, yrS_hrs = 0, yrV_hrs = 0, unpLeave_hrs = 0;
 
             const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const [y, m] = monthVal.split('-').map(Number);
             const sDate = new Date(y, m - 2, 25), eDate = new Date(y, m - 1, 24);
 
+            // 1) นับจำนวนชั่วโมงลาพักต่างๆ รวมทั้งปี (เพื่อแสดงใน sidebar)
             for (let k in attendanceData) {
                 if (k.startsWith(String(y)) && attendanceData[k].status === 'leave') {
-                    if (attendanceData[k].leaveType === 'personal') yrP++;
-                    if (attendanceData[k].leaveType === 'sick') yrS++;
-                    if (attendanceData[k].leaveType === 'vacation') yrV++;
+                    let lHrs = attendanceData[k].leaveDuration !== undefined ? attendanceData[k].leaveDuration : 9;
+                    if (attendanceData[k].leaveType === 'personal') yrP_hrs += lHrs;
+                    if (attendanceData[k].leaveType === 'sick') yrS_hrs += lHrs;
+                    if (attendanceData[k].leaveType === 'vacation') yrV_hrs += lHrs;
                 }
             }
 
+            // 2) นับการหักเงินในช่วงรอบบิล (25-24)
             for (let d = new Date(sDate); d <= eDate; d.setDate(d.getDate() + 1)) {
                 let dStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
                 let dt = attendanceData[dStr];
@@ -2027,32 +1987,46 @@
                         tOtH += tHrs * (hRate * 2);
                     }
                 } else if (dt.status === 'leave') {
+                    let lHrs = dt.leaveDuration !== undefined ? dt.leaveDuration : 9;
                     if (dt.leaveType === 'absent') {
-                        unpLeave++;
+                        unpLeave_hrs += lHrs;
                     } else if (dt.leaveType === 'personal') {
-                        let cnt = 0;
+                        // คำนวณลากิจสะสมก่อนหน้าวันนี้ ว่าใช้ไปกี่ชั่วโมงแล้ว
+                        let pastPHrs = 0;
                         for (let k in attendanceData) {
-                            if (k.startsWith(String(y)) && attendanceData[k].status === 'leave' && attendanceData[k].leaveType === 'personal' && new Date(k) <= new Date(dStr)) cnt++;
+                            if (k.startsWith(String(y)) && attendanceData[k].status === 'leave' && attendanceData[k].leaveType === 'personal' && new Date(k) < new Date(dStr)) {
+                                pastPHrs += (attendanceData[k].leaveDuration !== undefined ? attendanceData[k].leaveDuration : 9);
+                            }
                         }
-                        if (cnt > 3) unpLeave++;
+                        // โควตาลากิจแบบได้เงินคือ 3 วัน = 27 ชั่วโมง
+                        let remainingPaidQuota = Math.max(0, 27 - pastPHrs);
+                        let unpaidPortion = Math.max(0, lHrs - remainingPaidQuota);
+                        unpLeave_hrs += unpaidPortion; // หักเฉพาะส่วนที่เกิน 27 ชม.
                     }
                 }
             }
 
+            // ฟังก์ชันช่วยจัดรูปแบบตัวเลข (โควตา)
+            const formatLeave = (hrs, quotaDays) => {
+                let d = hrs / 9;
+                let dStr = d % 1 === 0 ? d.toString() : d.toFixed(2);
+                let hStr = hrs % 1 === 0 ? hrs.toString() : hrs.toFixed(1);
+                return `${dStr} (${hStr} ชม.) / ${quotaDays} วัน`;
+            };
+
             const vCarry = parseFloat($('vacationCarryOver').value) || 0;
             const vQuota = parseFloat($('vacationQuota').value) || 0;
-            $('statPersonal').innerText = `${yrP} / 15 วัน`;
-            $('statSick').innerText = `${yrS} / 30 วัน`;
-            $('statVacation').innerText = `${yrV} / ${vCarry + vQuota} วัน`;
+            $('statPersonal').innerText = formatLeave(yrP_hrs, 15);
+            $('statSick').innerText = formatLeave(yrS_hrs, 30);
+            $('statVacation').innerText = formatLeave(yrV_hrs, vCarry + vQuota);
 
-            let tAbsD = unpLeave * dRate;
+            let tAbsD = unpLeave_hrs * hRate; // คำนวณหักเงินตามชั่วโมง
             let cOut = (parseFloat($('vacationCashOutDays').value) || 0) * dRate;
             let aTrav = $('hasTravel').checked ? tTrav : 0;
             let aLang = $('hasLanguage').checked ? (parseFloat($('languageAllowance').value) || 0) : 0;
             let oth = parseFloat($('otherIncome').value) || 0;
             let soc = parseFloat($('socialSecurity').value) || 0;
 
-            // นำยอดรวมรายการหักแบบ Dynamic มาคิดด้วย
             let otherDedTotal = 0;
             customDeductions.forEach(d => otherDedTotal += parseFloat(d.amount) || 0);
 
@@ -2066,7 +2040,9 @@
             $('showTravel').innerText = `${fmt(tTrav)} ฿`;
             $('showNightShift').innerText = `${fmt(dNight * 50)} ฿`;
             $('showAutoLate').innerText = `${fmt(tLateD)} ฿`;
-            $('labelAbsentDeduct').innerText = `12. หัก ขาดงาน/ลากิจเกิน (${unpLeave} วัน)`;
+
+            // แสดงผลการหักวันลาที่เกิน เป็นจำนวนวันในวงเล็บ
+            $('labelAbsentDeduct').innerText = `12. หัก ขาดงาน/ลากิจเกิน (${(unpLeave_hrs / 9).toFixed(2)} วัน)`;
             $('showAbsentDeduct').innerText = `${fmt(tAbsD)} ฿`;
 
             $('showOtherDeductions').innerText = `${fmt(otherDedTotal)} ฿`;
@@ -2075,9 +2051,6 @@
             $('totalEarnings').innerText = `${fmt(tEarn)} ฿`;
         }
 
-        // ==========================================
-        // EVENTS (ตอนโหลดเว็บเสร็จ)
-        // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             const now = new Date();
             $('currentMonth').value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
