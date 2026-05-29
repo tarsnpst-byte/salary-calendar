@@ -1952,9 +1952,9 @@
                             tLateD += getDeductMins(dt.finalLateMins || 0) * mRate;
                             tOtN += ((dt.builtInOtHrs || 0) + eOt) * (hRate * 1.5);
                         } else if (dt.dayType === 'weekend') {
-                            tOtW += Math.min(9, tHrs) * (hRate) + Math.max(0, tHrs - 9) * (hRate * 3);
+                            tOtW += Math.min(9, tHrs) * (hRate * 1) + Math.max(0, tHrs - 9) * (hRate * 3);
                         } else {
-                            tOtH += Math.min(9, tHrs) * (hRate * 1) + Math.max(0, tHrs - 9) * (hRate * 3);
+                            tOtH += Math.min(9, tHrs) * (hRate * 2) + Math.max(0, tHrs - 9) * (hRate * 3);
                         }
                     } else if (dt.status === 'leave') {
                         if (dt.leaveType === 'absent') {
