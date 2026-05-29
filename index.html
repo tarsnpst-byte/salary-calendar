@@ -961,54 +961,6 @@
             cursor: pointer;
         }
 
-        /* Dynamic Deductions List UI */
-        .deduction-item {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            margin-bottom: 6px;
-            background: var(--bg-card);
-            padding: 4px 8px;
-            border-radius: 6px;
-            border: 1px solid var(--border-cell);
-        }
-
-        .deduction-item input[type="text"] {
-            flex: 1;
-            padding: 4px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 12px;
-            background: transparent;
-            color: var(--text-main);
-        }
-
-        .deduction-item input[type="number"] {
-            width: 80px;
-            padding: 4px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 12px;
-            text-align: right;
-            background: transparent;
-            color: var(--text-main);
-        }
-
-        .btn-del-deduct {
-            background: #ef4444;
-            color: white;
-            border: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -1075,7 +1027,7 @@
         <div class="login-card">
             <h2 style="font-size: 22px; margin-bottom: 8px;">📊 Smart Salary Calendar</h2>
             <p style="font-size: 13px; color: #6b7280;">กรุณาเข้าสู่ระบบเพื่อเชื่อมต่อข้อมูลปฏิทินของคุณออนไลน์</p>
-            <button class="login-btn" onclick="loginWithGoogle()">
+            <button class="login-btn" id="loginBtn">
                 <svg width="18" height="18" viewBox="0 0 18 18">
                     <path
                         d="M17.64 9.2c0-.63-.06-1.25-.16-1.84H9v3.47h4.84c-.21 1.12-.84 2.07-1.79 2.7l2.78 2.16c1.63-1.51 2.57-3.73 2.57-6.49z"
@@ -1106,27 +1058,27 @@
                 <div class="controls-row">
                     <div class="control-box">
                         <label>รอบเดือน:</label>
-                        <input type="month" id="currentMonth" onchange="initCalendar()">
+                        <input type="month" id="currentMonth">
                     </div>
                     <div class="control-box">
                         <label>โหมดแสง:</label>
-                        <select id="themeSelect" onchange="changeTheme()">
+                        <select id="themeSelect">
                             <option value="light">☀️ สว่าง (Auto)</option>
                             <option value="dark">🌙 มืด (Auto)</option>
                             <option value="custom">🎨 กำหนดสีเอง</option>
                         </select>
                     </div>
                     <div class="control-box" id="customColorBox" style="display: none;">
-                        <label class="color-picker-wrapper">พื้นหลัง <input type="color" id="colorBg" value="#f3f4f6"
-                                onchange="applyCustomColors()"></label>
-                        <label class="color-picker-wrapper">ปฏิทิน <input type="color" id="colorCard" value="#ffffff"
-                                onchange="applyCustomColors()"></label>
-                        <label class="color-picker-wrapper">สีหลัก <input type="color" id="colorPrimary" value="#0284c7"
-                                onchange="applyCustomColors()"></label>
-                        <label class="color-picker-wrapper">อักษร <input type="color" id="colorText" value="#374151"
-                                onchange="applyCustomColors()"></label>
+                        <label class="color-picker-wrapper">พื้นหลัง <input type="color" id="colorBg"
+                                value="#f3f4f6"></label>
+                        <label class="color-picker-wrapper">ปฏิทิน <input type="color" id="colorCard"
+                                value="#ffffff"></label>
+                        <label class="color-picker-wrapper">สีหลัก <input type="color" id="colorPrimary"
+                                value="#0284c7"></label>
+                        <label class="color-picker-wrapper">อักษร <input type="color" id="colorText"
+                                value="#374151"></label>
                     </div>
-                    <button onclick="logout()"
+                    <button id="logoutBtn"
                         style="padding:8px 12px; border-radius:8px; border:1px solid #ef4444; background:transparent; color:#ef4444; font-weight:bold; cursor:pointer; font-size:12px;">ออกจากระบบ</button>
                 </div>
             </div>
@@ -1166,17 +1118,16 @@
                 <div style="margin-top:10px; padding-top:10px; border-top:1px dashed var(--border-color);">
                     <div class="sum-row" style="margin-bottom:4px; border:none; padding:2px 0; background:transparent;">
                         <span class="sum-label" style="font-size:11px;">+ พักร้อนยกยอด:</span>
-                        <input type="number" id="vacationCarryOver" value="0" onchange="syncSidebar()"
-                            style="width:50px;">
+                        <input type="number" id="vacationCarryOver" value="0" style="width:50px;">
                     </div>
                     <div class="sum-row" style="margin-bottom:4px; border:none; padding:2px 0; background:transparent;">
                         <span class="sum-label" style="font-size:11px;">+ พักร้อนได้สิทธิ์:</span>
-                        <input type="number" id="vacationQuota" value="6" onchange="syncSidebar()" style="width:50px;">
+                        <input type="number" id="vacationQuota" value="6" style="width:50px;">
                     </div>
                     <div class="sum-row" style="border:none; padding:2px 0; background:transparent;">
                         <span class="sum-label" style="font-size:11px; color:#10b981;">💰 แปลงพักร้อนเป็นเงิน:</span>
                         <div style="display:flex; align-items:center; gap:4px;">
-                            <input type="number" id="vacationCashOutDays" value="0" onchange="syncSidebar()"
+                            <input type="number" id="vacationCashOutDays" value="0"
                                 style="width:40px; border-color:#10b981;">
                             <span style="font-size:11px;">วัน</span>
                         </div>
@@ -1191,14 +1142,14 @@
             <div class="sum-list">
                 <div class="sum-row">
                     <span>1. เงินเดือนปกติ</span>
-                    <input type="number" id="baseSalary" value="23000" onchange="syncSidebar()" style="width:90px;">
+                    <input type="number" id="baseSalary" value="23000" style="width:90px;">
                 </div>
                 <div class="sum-row" style="color:var(--primary-color);">
                     <span>2. OT ปกติ (x1.5)</span>
                     <span id="showOtNormal" style="font-weight:bold;">0 ฿</span>
                 </div>
                 <div class="sum-row" style="color:#ef4444;">
-                    <span>3. งานวันหยุด ส.-อา. (x2, x3)</span>
+                    <span>3. งานวันหยุด ส.-อา. (x1, x3)</span>
                     <span id="showOtWeekend" style="font-weight:bold;">0 ฿</span>
                 </div>
                 <div class="sum-row" style="color:#9333ea;">
@@ -1209,7 +1160,7 @@
                     <span>5. ค่าเดินทาง (เข้างาน)</span>
                     <div style="display:flex; align-items:center; gap:8px;">
                         <span id="showTravel" style="font-weight:bold;">0 ฿</span>
-                        <input type="checkbox" id="hasTravel" checked onchange="syncSidebar()">
+                        <input type="checkbox" id="hasTravel" checked>
                     </div>
                 </div>
                 <div class="sum-row" style="color:#4338ca;">
@@ -1219,14 +1170,13 @@
                 <div class="sum-row">
                     <span>7. ค่าภาษา</span>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <input type="number" id="languageAllowance" value="2000" onchange="syncSidebar()"
-                            style="width:70px;">
-                        <input type="checkbox" id="hasLanguage" checked onchange="syncSidebar()">
+                        <input type="number" id="languageAllowance" value="2000" style="width:70px;">
+                        <input type="checkbox" id="hasLanguage" checked>
                     </div>
                 </div>
                 <div class="sum-row">
                     <span>8. รายรับอื่นๆ</span>
-                    <input type="number" id="otherIncome" value="0" onchange="syncSidebar()" style="width:90px;">
+                    <input type="number" id="otherIncome" value="0" style="width:90px;">
                 </div>
                 <div class="sum-row" style="color:#047857;">
                     <span>9. คืนเงินพักร้อน (+)</span>
@@ -1237,8 +1187,7 @@
                     style="color:#b91c1c; flex-direction:column; align-items:stretch; gap:6px; padding-top:12px; margin-top:8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span>10. หัก ประกันสังคม (-)</span>
-                        <input type="number" id="socialSecurity" value="825" onchange="syncSidebar()"
-                            style="width:70px;">
+                        <input type="number" id="socialSecurity" value="825" style="width:70px;">
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-top:4px;">
                         <span>11. หัก มาสาย (Auto)</span>
@@ -1249,17 +1198,13 @@
                         <span id="showAbsentDeduct" style="font-weight:bold;">0 ฿</span>
                     </div>
 
-                    <!-- ส่วนหักเงินรวมแบบ Dynamic (แทนระบบภาษีเดิม) -->
-                    <div style="border-top: 1px dashed var(--border-cell); margin-top: 6px; padding-top: 6px;">
-                        <div
-                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
-                            <span style="font-weight: 600; color: #991b1b;">13. รายการหักเงินอื่นๆ</span>
-                            <button onclick="addDeductionRow()"
-                                style="padding: 2px 8px; font-size: 11px; background: #991b1b; color: white; border: none; border-radius: 4px; cursor: pointer;">➕
-                                เพิ่มรายการหัก</button>
-                        </div>
-                        <div id="deductionsContainer">
-                            <!-- แถวหักเงินจะถูกสร้างขึ้นมาตรงนี้ด้วย JS -->
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; margin-top:4px; border-top:1px dashed var(--border-cell); padding-top:8px;">
+                        <span>13. รายการหักเงินอื่นๆ</span>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span id="showOtherDeductions" style="font-weight:bold; color:#991b1b;">0 ฿</span>
+                            <button id="btnOpenDeduct"
+                                style="padding: 4px 8px; font-size: 11px; background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 4px; cursor: pointer;">จัดการ</button>
                         </div>
                     </div>
 
@@ -1279,7 +1224,6 @@
         </div>
     </div>
 
-    <!-- Modal Form (หน้าต่างกรอกข้อมูล) -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1290,21 +1234,21 @@
             </div>
 
             <label class="option-card opt-morning" id="cardMorning">
-                <input type="radio" name="dayStatusOpt" value="morning" onchange="toggleDayStatus(true)">
+                <input type="radio" name="dayStatusOpt" value="morning">
                 <div>
                     <strong style="color:#166534;">☀️ เข้างานกะเช้า</strong>
                     <span style="color:#166534;">Default: 08:00 - 18:00 (รับค่าเดินทาง)</span>
                 </div>
             </label>
             <label class="option-card opt-night" id="cardNight">
-                <input type="radio" name="dayStatusOpt" value="night" onchange="toggleDayStatus(true)">
+                <input type="radio" name="dayStatusOpt" value="night">
                 <div>
                     <strong style="color:#4338ca;">🌙 เข้างานกะดึก</strong>
                     <span style="color:#4338ca;">Default: 20:00 - 06:00 (รับค่าเดินทาง + ค่ากะ)</span>
                 </div>
             </label>
             <label class="option-card opt-leave" id="cardLeave">
-                <input type="radio" name="dayStatusOpt" value="leave" onchange="toggleDayStatus(true)">
+                <input type="radio" name="dayStatusOpt" value="leave">
                 <div>
                     <strong style="color:#b91c1c;">❌ หยุดงาน / ลางาน</strong>
                     <span style="color:#b91c1c;">ขาดงาน, ลากิจ, ลาป่วย, พักร้อน</span>
@@ -1312,7 +1256,7 @@
             </label>
 
             <label class="option-card opt-reset" id="cardReset">
-                <input type="radio" name="dayStatusOpt" value="reset" onchange="toggleDayStatus(true)">
+                <input type="radio" name="dayStatusOpt" value="reset">
                 <div>
                     <strong style="color:#374151;">⚪ ล้างสถานะ (เคลียร์เป็นวันว่าง)</strong>
                     <span style="color:#6b7280;">ลบข้อมูลมาทำงานหรือลาออกจากวันนี้</span>
@@ -1322,10 +1266,10 @@
             <div id="workFields" style="display:none;">
                 <div class="form-group" style="margin-bottom:12px; margin-top:16px;">
                     <label style="font-size:13px; font-weight:bold;">ประเภทวัน (สำหรับคิด OT):</label>
-                    <select id="dayType" onchange="updateCalculations()"
+                    <select id="dayType"
                         style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-color); margin-top:4px;">
                         <option value="normal">💼 วันธรรมดาปกติ (OT x1.5)</option>
-                        <option value="weekend">🏝️ วันเสาร์-อาทิตย์ (ทำงานได้ x2, OT x3)</option>
+                        <option value="weekend">🏝️ วันเสาร์-อาทิตย์ (ทำงานได้ x1, OT x3)</option>
                         <option value="special">🎊 วันหยุดพิเศษ/นักขัตฤกษ์ (คิด x2 ตั้งแต่ ชม. แรก!)</option>
                     </select>
                 </div>
@@ -1335,11 +1279,11 @@
                     <div class="time-row">
                         <div class="time-col">
                             <label id="lblTimeIn">เข้างาน</label>
-                            <input type="time" id="timeIn" value="08:00" onchange="updateCalculations()">
+                            <input type="time" id="timeIn" value="08:00">
                         </div>
                         <div class="time-col">
                             <label>เลิกงาน</label>
-                            <input type="time" id="timeOut" value="18:00" onchange="updateCalculations()">
+                            <input type="time" id="timeOut" value="18:00">
                         </div>
                     </div>
                     <div style="font-size:11px; text-align:center; opacity:0.7; margin-top:8px;" id="normalHoursText">
@@ -1348,7 +1292,7 @@
 
                 <label
                     style="display:flex; align-items:center; gap:8px; margin-bottom:12px; padding:8px 12px; background:var(--bg-header); border:1px solid var(--border-color); border-radius:8px; cursor:pointer;">
-                    <input type="checkbox" id="otCheckbox" onchange="toggleOtFields()" style="width:16px; height:16px;">
+                    <input type="checkbox" id="otCheckbox" style="width:16px; height:16px;">
                     <div><strong style="font-size:14px;">ทำล่วงเวลา (OT) ในวันนี้</strong></div>
                 </label>
 
@@ -1357,11 +1301,11 @@
                     <div class="time-row">
                         <div class="time-col">
                             <label style="color:#b45309;">เริ่ม OT</label>
-                            <input type="time" id="otStart" value="18:30" onchange="updateCalculations()">
+                            <input type="time" id="otStart" value="18:30">
                         </div>
                         <div class="time-col">
                             <label style="color:#b45309;">จบ OT</label>
-                            <input type="time" id="otEnd" value="21:30" onchange="updateCalculations()">
+                            <input type="time" id="otEnd" value="21:30">
                         </div>
                     </div>
                     <div style="font-size:13px; font-weight:bold; text-align:center; color:#b45309; margin-top:8px;"
@@ -1391,10 +1335,8 @@
                 style="padding:10px; background:#f3e8ff; border-radius:8px; border:1px solid #d8b4fe; margin-bottom:12px;">
                 <label class="check-group"
                     style="background:transparent; border:none; margin-bottom:5px; padding:0; display: flex; align-items: center; cursor: pointer;">
-                    <input type="checkbox" id="chkSpecial" onchange="toggleSpecialHolidayUI()">
-                    <div style="margin-left:10px;">
-                        <strong style="color:#6b21a8;">🎉 ตั้งเป็นวันหยุดพิเศษ</strong>
-                    </div>
+                    <input type="checkbox" id="chkSpecial">
+                    <div style="margin-left:10px;"><strong style="color:#6b21a8;">🎉 ตั้งเป็นวันหยุดพิเศษ</strong></div>
                 </label>
                 <input type="text" id="holidayName" placeholder="ชื่อเทศกาล (เช่น วันปีใหม่)"
                     style="display:none; width:100%; padding:6px; border:1px solid #a855f7; border-radius:4px; margin-top:8px; font-size:13px;">
@@ -1404,7 +1346,7 @@
                 style="padding:10px; background:#fffbeb; border-radius:8px; border:1px solid #fde68a;">
                 <label class="check-group"
                     style="background:transparent; border:none; margin-bottom:5px; padding:0; display: flex; align-items: center; cursor: pointer;">
-                    <input type="checkbox" id="chkAppointment" onchange="toggleAppointmentUI()">
+                    <input type="checkbox" id="chkAppointment">
                     <strong style="color:#d97706; margin-left:10px;">📌 บันทึกวันนัดหมาย / โน้ต</strong>
                 </label>
                 <div id="aptFields" style="display:none; margin-top:8px;">
@@ -1420,13 +1362,41 @@
             </div>
 
             <div class="btn-row">
-                <button class="btn btn-cancel" onclick="closeModal()">ยกเลิก</button>
-                <button class="btn btn-save" onclick="saveDayData()">บันทึกข้อมูล</button>
+                <button class="btn btn-cancel" id="btnModalCancel">ยกเลิก</button>
+                <button class="btn btn-save" id="btnModalSave">บันทึกข้อมูล</button>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK และระบบ Logic การคำนวณทั้งหมด -->
+    <div class="modal-overlay" id="deductionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="color:#991b1b;">🔴 รายการหักเงินอื่นๆ</h3>
+            </div>
+
+            <p style="font-size:12px; color:#6b7280; margin-bottom:12px;">เพิ่มรายการหักเงิน เช่น ค่างวดรถ, หนี้สหกรณ์,
+                เงินกู้ ฯลฯ</p>
+
+            <div id="deductionModalList">
+            </div>
+
+            <button id="btnAddDeduct"
+                style="margin-top:10px; padding:6px 12px; border-radius:6px; border:1px dashed #991b1b; background:transparent; color:#991b1b; font-weight:bold; cursor:pointer; width:100%;">+
+                เพิ่มรายการใหม่</button>
+
+            <div
+                style="margin-top:16px; padding-top:10px; border-top:1px solid var(--border-cell); display:flex; justify-content:space-between; font-weight:bold;">
+                <span>รวมยอดหักอื่นๆ:</span>
+                <span id="deductionModalTotal" style="color:#991b1b; font-size:18px;">0 ฿</span>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-cancel" id="btnDeductCancel">ยกเลิก</button>
+                <button class="btn btn-save" id="btnDeductSave" style="background:#ef4444;">บันทึก</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -1449,16 +1419,25 @@
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
+        // ตัวแปรส่วนกลาง
         let currentUser = null;
         let attendanceData = {};
         let specialHolidays = {};
         let appointments = {};
-        let customDeductions = [];
+
+        // ชุดข้อมูลรายการหัก (ตั้งต้น 4 ช่องว่างๆ)
+        let customDeductions = [
+            { name: '', amount: 0 },
+            { name: '', amount: 0 },
+            { name: '', amount: 0 },
+            { name: '', amount: 0 }
+        ];
+
+        let selectedDateStr = '';
+        let activeWorkIcon = "💼";
 
         const STANDARD_MORNING_START = "08:00";
         const STANDARD_NIGHT_START = "20:00";
-        let activeWorkIcon = "💼";
-        let selectedDateStr = '';
 
         const monthlyGimmicks = {
             1: { emoji: "⛄", sig: "ฤดูหนาว (Winter)", workIcon: "🧣", waterMark: "❄️" },
@@ -1475,170 +1454,325 @@
             12: { emoji: "🎄", sig: "คริสต์มาส (Christmas)", workIcon: "🎅", waterMark: "🎁" }
         };
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('appContainer').style.display = 'flex';
-                listenToCloudData();
-            } else {
-                currentUser = null;
-                document.getElementById('loginSection').style.display = 'flex';
-                document.getElementById('appContainer').style.display = 'none';
+        const $ = id => document.getElementById(id);
+
+        function calcMinutesDiff(startStr, endStr) {
+            if (!startStr || !endStr) return 0;
+            let [sh, sm] = startStr.split(':').map(Number);
+            let [eh, em] = endStr.split(':').map(Number);
+            let s = sh * 60 + sm, e = eh * 60 + em;
+            if (e < s) e += 24 * 60;
+            return e - s;
+        }
+        function getLateMins(tIn, std) {
+            let diff = calcMinutesDiff(std, tIn);
+            return diff > 720 ? 0 : diff;
+        }
+        function getDeductMins(m) {
+            if (m <= 3) return 0;
+            if (m <= 30) return m;
+            return Math.ceil(m / 30) * 30;
+        }
+        function getActualWorkMinutes(tIn, tOut) {
+            let m = calcMinutesDiff(tIn, tOut);
+            return Math.max(0, m >= 540 ? m - 60 : m);
+        }
+        function getActiveStatus() {
+            for (let r of document.getElementsByName('dayStatusOpt')) {
+                if (r.checked) return r.value;
             }
-        });
-
-        // ==========================================
-        // ตั้งค่าฟังก์ชันทั้งหมดให้เรียกใช้ใน HTML ได้
-        // ==========================================
-        window.loginWithGoogle = function () {
-            signInWithPopup(auth, provider).catch(err => alert("เกิดข้อผิดพลาด: " + err.message));
-        };
-
-        window.logout = function () {
-            signOut(auth).then(() => location.reload());
-        };
-
-        function listenToCloudData() {
-            if (!currentUser) return;
-            const userDocRef = doc(db, "salary_calendars", currentUser.uid);
-            onSnapshot(userDocRef, (docSnap) => {
-                if (docSnap.exists()) {
-                    const cloudData = docSnap.data();
-                    attendanceData = cloudData.attendanceData || {};
-                    specialHolidays = cloudData.specialHolidays || {};
-                    appointments = cloudData.appointments || {};
-                    customDeductions = cloudData.customDeductions || [];
-
-                    if (cloudData.sidebarData) {
-                        const d = cloudData.sidebarData;
-                        if (d.baseSalary !== undefined) document.getElementById('baseSalary').value = d.baseSalary;
-                        if (d.hasTravel !== undefined) document.getElementById('hasTravel').checked = d.hasTravel;
-                        if (d.hasLanguage !== undefined) document.getElementById('hasLanguage').checked = d.hasLanguage;
-                        if (d.languageAllowance !== undefined) document.getElementById('languageAllowance').value = d.languageAllowance;
-                        if (d.otherIncome !== undefined) document.getElementById('otherIncome').value = d.otherIncome;
-                        if (d.socialSecurity !== undefined) document.getElementById('socialSecurity').value = d.socialSecurity;
-                        if (d.vacationCarryOver !== undefined) document.getElementById('vacationCarryOver').value = d.vacationCarryOver;
-                        if (d.vacationQuota !== undefined) document.getElementById('vacationQuota').value = d.vacationQuota;
-                        if (d.vacationCashOutDays !== undefined) document.getElementById('vacationCashOutDays').value = d.vacationCashOutDays;
-                        if (d.themeMode !== undefined) document.getElementById('themeSelect').value = d.themeMode;
-                    }
-                }
-                renderDeductionRows();
-                window.changeTheme();
-            });
+            return null;
         }
 
-        async function syncDataToCloud() {
-            if (!currentUser) return;
-            const userDocRef = doc(db, "salary_calendars", currentUser.uid);
-
-            customDeductions = [];
-            const items = document.querySelectorAll('.deduction-item');
-            items.forEach(el => {
-                const name = el.querySelector('.deduct-name').value;
-                const value = parseFloat(el.querySelector('.deduct-val').value) || 0;
-                customDeductions.push({ name, value });
-            });
-
-            const sidebarData = {
-                baseSalary: document.getElementById('baseSalary').value,
-                hasTravel: document.getElementById('hasTravel').checked,
-                hasLanguage: document.getElementById('hasLanguage').checked,
-                languageAllowance: document.getElementById('languageAllowance').value,
-                otherIncome: document.getElementById('otherIncome').value,
-                socialSecurity: document.getElementById('socialSecurity').value,
-                vacationCarryOver: document.getElementById('vacationCarryOver').value,
-                vacationQuota: document.getElementById('vacationQuota').value,
-                vacationCashOutDays: document.getElementById('vacationCashOutDays').value,
-                themeMode: document.getElementById('themeSelect').value
-            };
-
-            await setDoc(userDocRef, { attendanceData, specialHolidays, appointments, sidebarData, customDeductions }, { merge: true });
-        }
-
-        window.addDeductionRow = function (name = "", value = 0) {
-            const container = document.getElementById('deductionsContainer');
-            const div = document.createElement('div');
-            div.className = 'deduction-item';
-            div.innerHTML = `
-                <input type="text" class="deduct-name" placeholder="ระบุเหตุผล (เช่น ค่ารถ)" value="${name}" onchange="syncSidebar()">
-                <input type="number" class="deduct-val" placeholder="จำนวนเงิน" value="${value || ''}" onchange="syncSidebar()">
-                <button class="btn-del-deduct" onclick="removeDeductionRow(this)">×</button>
-            `;
-            container.appendChild(div);
-            if (name === "") syncSidebar();
+        // ==========================================
+        // ระบบ DEDUCTION MODAL (หน้าต่างหักเงิน)
+        // ==========================================
+        window.openDeductionModal = function () {
+            renderDeductionModal();
+            $('deductionModal').style.display = 'flex';
         };
-
-        window.removeDeductionRow = function (btn) {
-            btn.parentElement.remove();
+        window.closeDeductionModal = function () {
+            $('deductionModal').style.display = 'none';
+        };
+        window.renderDeductionModal = function () {
+            const list = $('deductionModalList');
+            list.innerHTML = '';
+            let total = 0;
+            customDeductions.forEach((d, idx) => {
+                total += parseFloat(d.amount) || 0;
+                list.innerHTML += `
+                    <div style="display:flex; gap:8px; margin-bottom:8px; align-items:center;">
+                        <span style="font-weight:bold; color:var(--text-main); font-size:12px;">${idx + 1}.</span>
+                        <input type="text" id="dedName_${idx}" value="${d.name}" placeholder="รายการหัก" style="flex:1; padding:6px; border:1px solid var(--border-color); border-radius:4px; font-family:inherit;">
+                        <input type="number" id="dedAmt_${idx}" value="${d.amount || ''}" placeholder="จำนวนเงิน" oninput="calcDeductionModalTotal()" style="width:90px; padding:6px; border:1px solid var(--border-color); border-radius:4px; text-align:right; font-family:inherit; font-weight:bold;">
+                        <button onclick="removeDeductionSlot(${idx})" style="background:#ef4444; color:white; border:none; border-radius:4px; width:28px; height:28px; cursor:pointer; font-weight:bold;">×</button>
+                    </div>
+                `;
+            });
+            $('deductionModalTotal').innerText = `${total.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
+        };
+        window.addDeductionSlot = function () {
+            customDeductions.push({ name: '', amount: 0 });
+            renderDeductionModal();
+        };
+        window.removeDeductionSlot = function (idx) {
+            customDeductions.splice(idx, 1);
+            renderDeductionModal();
+        };
+        window.calcDeductionModalTotal = function () {
+            let total = 0;
+            customDeductions.forEach((_, idx) => {
+                total += parseFloat($(`dedAmt_${idx}`).value) || 0;
+            });
+            $('deductionModalTotal').innerText = `${total.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
+        };
+        window.saveDeductions = function () {
+            customDeductions = customDeductions.map((_, idx) => ({
+                name: $(`dedName_${idx}`).value,
+                amount: parseFloat($(`dedAmt_${idx}`).value) || 0
+            }));
+            closeDeductionModal();
             syncSidebar();
         };
 
-        function renderDeductionRows() {
-            const container = document.getElementById('deductionsContainer');
-            container.innerHTML = '';
-            customDeductions.forEach(item => {
-                window.addDeductionRow(item.name, item.value);
-            });
+        // ==========================================
+        // ระบบ THEME & UI UPDATE
+        // ==========================================
+        function applyCustomColors() {
+            const root = document.documentElement;
+            root.style.setProperty('--custom-bg', $('colorBg').value);
+            root.style.setProperty('--custom-card', $('colorCard').value);
+            root.style.setProperty('--custom-primary', $('colorPrimary').value);
+            root.style.setProperty('--custom-text', $('colorText').value);
+            document.body.setAttribute('data-theme', 'custom');
+            const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
+            const g = monthlyGimmicks[parseInt(monthVal.split('-')[1])] || monthlyGimmicks[1];
+            activeWorkIcon = g.workIcon;
+            $('seasonEmoji').innerText = g.emoji;
+            $('seasonText').innerText = `| ${g.sig}`;
+            $('watermarkBg').innerText = g.waterMark;
         }
 
-        window.syncSidebar = function () {
-            window.calculateSalary();
-            syncDataToCloud();
-        };
-
-        window.changeTheme = function () {
-            const theme = document.getElementById('themeSelect').value;
-            if (theme === 'custom') {
-                document.getElementById('customColorBox').style.display = 'flex';
-                window.applyCustomColors();
-            } else {
-                document.getElementById('customColorBox').style.display = 'none';
-                window.applySeasonalGimmick();
-            }
-            window.initCalendar();
-        };
-
-        window.applyCustomColors = function () {
-            const root = document.documentElement;
-            root.style.setProperty('--custom-bg', document.getElementById('colorBg').value);
-            root.style.setProperty('--custom-card', document.getElementById('colorCard').value);
-            root.style.setProperty('--custom-primary', document.getElementById('colorPrimary').value);
-            root.style.setProperty('--custom-text', document.getElementById('colorText').value);
-            document.body.setAttribute('data-theme', 'custom');
-        };
-
-        window.applySeasonalGimmick = function () {
-            const monthVal = document.getElementById('currentMonth').value || new Date().toISOString().slice(0, 7);
+        function applySeasonalGimmick() {
+            const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const month = parseInt(monthVal.split('-')[1]);
-            const themeMode = document.getElementById('themeSelect').value;
-            if (themeMode === 'custom') return;
+            const themeMode = $('themeSelect').value;
+            if (themeMode === 'custom') { applyCustomColors(); return; }
             document.body.setAttribute('data-theme', themeMode);
             document.body.setAttribute('data-month', month);
-            const gimmick = monthlyGimmicks[month] || monthlyGimmicks[1];
-            activeWorkIcon = gimmick.workIcon;
-            document.getElementById('seasonEmoji').innerText = gimmick.emoji;
-            document.getElementById('seasonText').innerText = `| ${gimmick.sig}`;
-            document.getElementById('watermarkBg').innerText = gimmick.waterMark;
-        };
+            const g = monthlyGimmicks[month] || monthlyGimmicks[1];
+            activeWorkIcon = g.workIcon;
+            $('seasonEmoji').innerText = g.emoji;
+            $('seasonText').innerText = `| ${g.sig}`;
+            $('watermarkBg').innerText = g.waterMark;
+        }
 
-        window.initCalendar = function () {
-            const monthVal = document.getElementById('currentMonth').value || new Date().toISOString().slice(0, 7);
+        function changeTheme() {
+            const theme = $('themeSelect').value;
+            if (theme === 'custom') {
+                $('customColorBox').style.display = 'flex';
+                applyCustomColors();
+            } else {
+                $('customColorBox').style.display = 'none';
+                applySeasonalGimmick();
+            }
+            syncDataToCloud();
+        }
+
+        // ==========================================
+        // ระบบกรอกเวลา MODAL ของปฏิทิน
+        // ==========================================
+        function toggleAppointmentUI() {
+            $('aptFields').style.display = $('chkAppointment').checked ? 'block' : 'none';
+        }
+        function toggleSpecialHolidayUI() {
+            const on = $('chkSpecial').checked;
+            $('holidayName').style.display = on ? 'block' : 'none';
+            $('dayType').value = on ? 'special' : 'normal';
+            updateCalculations();
+        }
+        function toggleOtFields() {
+            $('otFieldsBox').style.display = $('otCheckbox').checked ? 'block' : 'none';
+            updateCalculations();
+        }
+        function toggleDayStatus(isClick = false) {
+            const status = getActiveStatus();
+            $('cardMorning').classList.remove('active');
+            $('cardNight').classList.remove('active');
+            $('cardLeave').classList.remove('active');
+            $('cardReset').classList.remove('active');
+            $('workFields').style.display = 'none';
+            $('leaveFieldsBox').style.display = 'none';
+
+            if (status === 'morning') {
+                $('cardMorning').classList.add('active');
+                $('workFields').style.display = 'block';
+                $('lblTimeIn').innerText = 'เข้างาน (ปกติ 08:00)';
+                if (isClick) { $('timeIn').value = '08:00'; $('timeOut').value = '18:00'; $('otStart').value = '18:30'; $('otEnd').value = '21:30'; }
+            } else if (status === 'night') {
+                $('cardNight').classList.add('active');
+                $('workFields').style.display = 'block';
+                $('lblTimeIn').innerText = 'เข้างาน (ปกติ 20:00)';
+                if (isClick) { $('timeIn').value = '20:00'; $('timeOut').value = '06:00'; $('otStart').value = '06:30'; $('otEnd').value = '09:30'; }
+            } else if (status === 'leave') {
+                $('cardLeave').classList.add('active');
+                $('leaveFieldsBox').style.display = 'block';
+            } else if (status === 'reset') {
+                $('cardReset').classList.add('active');
+            }
+
+            if (['morning', 'night'].includes(status)) updateCalculations();
+            else { $('lateBadge').style.display = 'none'; $('onTimeBadge').style.display = 'none'; }
+        }
+
+        function updateCalculations() {
+            const status = getActiveStatus();
+            if (!['morning', 'night'].includes(status)) return;
+
+            const tIn = $('timeIn').value, tOut = $('timeOut').value;
+            const dType = $('dayType').value;
+            const didOt = $('otCheckbox').checked;
+            const oStart = $('otStart').value, oEnd = $('otEnd').value;
+
+            let netHrs = getActualWorkMinutes(tIn, tOut) / 60;
+            let expOt = didOt ? calcMinutesDiff(oStart, oEnd) / 60 : 0;
+            let tHrs = netHrs + expOt;
+            let bltOt = Math.max(0, netHrs - 9);
+
+            const lb = $('lateBadge'), ob = $('onTimeBadge'), lt = $('lateTextDisplay');
+
+            if (dType === 'special') {
+                $('normalHoursText').innerHTML = `ทำงานวันหยุดพิเศษ: <strong style="color:#6b21a8;">เรท x2 ทั้งหมด</strong>`;
+                $('otHoursText').innerHTML = `คำนวณเงิน: <strong style="color:#6b21a8;">รวม ${tHrs.toFixed(1)} ชม. (คิดเรท x2 ทั้งหมด)</strong>`;
+                lb.style.display = 'none'; ob.style.display = 'inline-block';
+            } else if (dType === 'weekend') {
+                let wkHrs = Math.min(9, tHrs), wkOt = Math.max(0, tHrs - 9);
+                $('normalHoursText').innerHTML = `ทำงานวันหยุด ส.-อา.: <strong style="color:#047857;">${netHrs.toFixed(1)} ชม. + OT ${expOt.toFixed(1)} ชม.</strong>`;
+                // แก้ตัวโชว์ Pop-up สำหรับวันหยุด เสาร์-อาทิตย์ ให้เป็น x1, x3
+                $('otHoursText').innerHTML = `คำนวณเงิน: <strong style="color:#b45309;">x1 = ${wkHrs.toFixed(1)} ชม. | x3 = ${wkOt.toFixed(1)} ชม.</strong>`;
+                lb.style.display = 'none'; ob.style.display = 'inline-block';
+            } else {
+                let std = status === 'morning' ? STANDARD_MORNING_START : STANDARD_NIGHT_START;
+                let lMins = getLateMins(tIn, std);
+                $('normalHoursText').innerText = `ทำงานสุทธิ: ${netHrs.toFixed(1)} ชม. (หักพัก 1 ชม.)`;
+                $('otHoursText').innerText = `OT ที่ได้เงิน: ${(bltOt + expOt).toFixed(1)} ชม. (เรท x1.5)`;
+                if (lMins > 0) {
+                    lb.style.display = 'inline-block'; ob.style.display = 'none';
+                    lt.innerText = `สาย ${lMins} นาที -> หักเงิน ${getDeductMins(lMins)} นาที`;
+                } else {
+                    lb.style.display = 'none'; ob.style.display = 'inline-block';
+                }
+            }
+        }
+
+        window.openModal = function (dStr) {
+            selectedDateStr = dStr;
+            const curr = new Date(dStr + 'T00:00:00');
+            const defType = (curr.getDay() === 0 || curr.getDay() === 6) ? 'weekend' : 'normal';
+            $('modalTitle').innerText = curr.toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
+
+            const data = attendanceData[dStr] || {
+                status: null, dayType: defType, timeIn: '08:00', timeOut: '18:00',
+                didOt: false, otStart: '18:30', otEnd: '21:30', leaveType: 'absent'
+            };
+            for (let r of document.getElementsByName('dayStatusOpt')) r.checked = (r.value === data.status);
+            $('dayType').value = data.dayType;
+            $('timeIn').value = data.timeIn;
+            $('timeOut').value = data.timeOut;
+            $('otCheckbox').checked = data.didOt;
+
+            let defOtStart = data.status === 'night' ? '06:30' : '18:30';
+            let defOtEnd = data.status === 'night' ? '09:30' : '21:30';
+            $('otStart').value = data.otStart || defOtStart;
+            $('otEnd').value = data.otEnd || defOtEnd;
+
+            if (data.status === 'leave') {
+                for (let r of document.getElementsByName('leaveTypeOpt')) r.checked = (r.value === data.leaveType);
+            }
+            const sp = specialHolidays[dStr];
+            $('chkSpecial').checked = !!sp;
+            $('holidayName').value = sp || '';
+            $('holidayName').style.display = sp ? 'block' : 'none';
+
+            const apt = appointments[dStr];
+            $('chkAppointment').checked = !!apt;
+            $('aptIcon').value = apt ? apt.icon : '📌';
+            $('aptTitle').value = apt ? apt.title : '';
+            $('aptDesc').value = apt ? apt.desc : '';
+
+            toggleAppointmentUI();
+            toggleDayStatus(false);
+            $('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            $('modal').style.display = 'none';
+        }
+
+        function saveDayData() {
+            const isSp = $('chkSpecial').checked;
+            const hName = $('holidayName').value;
+            const isApt = $('chkAppointment').checked;
+            const status = getActiveStatus();
+
+            if (status === 'reset') {
+                delete attendanceData[selectedDateStr];
+            } else if (['morning', 'night'].includes(status)) {
+                const tIn = $('timeIn').value, tOut = $('timeOut').value;
+                const dType = $('dayType').value;
+                const didOt = $('otCheckbox').checked;
+                const oStart = $('otStart').value, oEnd = $('otEnd').value;
+                const netHrs = getActualWorkMinutes(tIn, tOut) / 60;
+                let isLate = false, fLateMins = 0;
+                if (dType === 'normal') {
+                    let std = status === 'morning' ? STANDARD_MORNING_START : STANDARD_NIGHT_START;
+                    fLateMins = getLateMins(tIn, std);
+                    if (fLateMins > 0) isLate = true;
+                }
+                attendanceData[selectedDateStr] = {
+                    status, dayType: dType, timeIn: tIn, timeOut: tOut, didOt,
+                    otStart: oStart, otEnd: oEnd,
+                    explicitOtHrs: didOt ? calcMinutesDiff(oStart, oEnd) / 60 : 0,
+                    builtInOtHrs: Math.max(0, netHrs - 9),
+                    isLate, finalLateMins: fLateMins
+                };
+            } else if (status === 'leave') {
+                let lType = 'absent';
+                for (let r of document.getElementsByName('leaveTypeOpt')) if (r.checked) lType = r.value;
+                attendanceData[selectedDateStr] = { status: 'leave', leaveType: lType };
+            }
+
+            if (isSp) specialHolidays[selectedDateStr] = hName || 'วันหยุดพิเศษ';
+            else delete specialHolidays[selectedDateStr];
+
+            if (isApt) {
+                appointments[selectedDateStr] = {
+                    icon: $('aptIcon').value || '📌',
+                    title: $('aptTitle').value || 'นัดหมาย',
+                    desc: $('aptDesc').value || ''
+                };
+            } else { delete appointments[selectedDateStr]; }
+
+            closeModal();
+            syncDataToCloud();
+        }
+
+        // ==========================================
+        // วาดปฏิทิน
+        // ==========================================
+        function initCalendar() {
+            const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const [year, month] = monthVal.split('-').map(Number);
-
+            document.body.setAttribute('data-month', month);
             const firstDayIndex = new Date(year, month - 1, 1).getDay();
             const daysInMonth = new Date(year, month, 0).getDate();
-            const calendarDays = document.getElementById('calendarDays');
+            const calendarDays = $('calendarDays');
             if (!calendarDays) return;
             calendarDays.innerHTML = '';
 
             const createCell = (dateObj, isOutMonth) => {
-                const cellYear = dateObj.getFullYear();
-                const cellMonth = String(dateObj.getMonth() + 1).padStart(2, '0');
-                const cellDay = String(dateObj.getDate()).padStart(2, '0');
-                const dateStr = `${cellYear}-${cellMonth}-${cellDay}`;
-
+                const cy = dateObj.getFullYear(), cm = String(dateObj.getMonth() + 1).padStart(2, '0'), cd = String(dateObj.getDate()).padStart(2, '0');
+                const dateStr = `${cy}-${cm}-${cd}`;
                 const isWeekend = dateObj.getDay() === 0 || dateObj.getDay() === 6;
                 const savedData = attendanceData[dateStr];
                 const isSpecial = specialHolidays[dateStr];
@@ -1650,247 +1784,182 @@
                 if (isWeekend) cellDiv.classList.add('weekend');
                 if (isSpecial) cellDiv.classList.add('special-holiday');
 
-                let numClass = 'date-num';
-                if (isWeekend) numClass += ' sunday';
-
-                let cellContent = `<div class="${numClass}">${dateObj.getDate()}</div><div class="tags-area">`;
+                let numClass = isWeekend ? 'date-num sunday' : 'date-num';
+                let html = `<div class="${numClass}">${dateObj.getDate()}</div><div class="tags-area">`;
 
                 if (savedData) {
-                    if (savedData.status === 'morning' || savedData.status === 'night') {
-                        let iconToShow = activeWorkIcon;
-                        let inOutClass = 'tag tag-work';
-                        if (savedData.status === 'night') { inOutClass = 'tag tag-night'; iconToShow = '🌙'; }
-                        if (savedData.isLate && savedData.dayType === 'normal') { inOutClass = 'tag tag-late'; iconToShow = '🔴'; }
-
-                        cellContent += `<div class="${inOutClass}"><span>${iconToShow}</span> <span class="tag-text">${savedData.timeIn}-${savedData.timeOut}</span></div>`;
-                        let totalOtHrs = (savedData.builtInOtHrs || 0) + (savedData.explicitOtHrs || 0);
-                        if (totalOtHrs > 0) cellContent += `<div class="tag tag-ot">⏱️ <span class="tag-text">OT: ${totalOtHrs.toFixed(1)}h</span></div>`;
+                    if (['morning', 'night'].includes(savedData.status)) {
+                        let ic = activeWorkIcon, cls = 'tag tag-work';
+                        if (savedData.status === 'night') { cls = 'tag tag-night'; ic = '🌙'; }
+                        if (savedData.isLate && savedData.dayType === 'normal') { cls = 'tag tag-late'; ic = '🔴'; }
+                        html += `<div class="${cls}"><span>${ic}</span><span class="tag-text">${savedData.timeIn}-${savedData.timeOut}</span></div>`;
+                        let tOt = (savedData.builtInOtHrs || 0) + (savedData.explicitOtHrs || 0);
+                        if (tOt > 0) html += `<div class="tag tag-ot">⏱️ <span class="tag-text">OT: ${tOt.toFixed(1)}h</span></div>`;
                     } else if (savedData.status === 'leave') {
-                        if (savedData.leaveType === 'absent') cellContent += `<div class="tag tag-absent">❌ <span class="tag-text">ขาดงาน</span></div>`;
-                        else if (savedData.leaveType === 'personal') cellContent += `<div class="tag tag-personal">📝 <span class="tag-text">ลากิจ</span></div>`;
-                        else if (savedData.leaveType === 'sick') cellContent += `<div class="tag tag-sick">💊 <span class="tag-text">ลาป่วย</span></div>`;
-                        else if (savedData.leaveType === 'vacation') cellContent += `<div class="tag tag-vacation">🏖️ <span class="tag-text">ลาพักร้อน</span></div>`;
+                        const leaveMap = { absent: 'tag tag-absent', personal: 'tag tag-personal', sick: 'tag tag-sick', vacation: 'tag tag-vacation' };
+                        const leaveIcon = { absent: '❌ ขาดงาน', personal: '📝 ลากิจ', sick: '💊 ลาป่วย', vacation: '🏖️ ลาพักร้อน' };
+                        html += `<div class="${leaveMap[savedData.leaveType] || 'tag tag-absent'}">${leaveIcon[savedData.leaveType] || '❌ ขาดงาน'}</div>`;
                     }
                 }
+                if (isSpecial) html += `<div class="tag" style="background:#a855f7;color:white;border-color:#9333ea;font-size:11px;font-weight:bold;justify-content:center;">🎉 <span class="tag-text">${isSpecial}</span></div>`;
+                if (aptData) html += `<div class="tag tag-apt" title="${aptData.desc}"><span>${aptData.icon}</span> <span class="tag-text">${aptData.title}</span></div>`;
 
-                if (isSpecial) cellContent += `<div class="tag" style="background:#a855f7; color:white; border-color:#9333ea; font-size:11px; font-weight:bold; justify-content:center;">🎉 <span class="tag-text">${isSpecial}</span></div>`;
-                if (aptData) cellContent += `<div class="tag tag-apt" title="${aptData.desc}"><span>${aptData.icon}</span> <span class="tag-text">${aptData.title}</span></div>`;
-
-                cellContent += `</div>`;
-                cellDiv.innerHTML = cellContent;
+                html += `</div>`;
+                cellDiv.innerHTML = html;
                 cellDiv.onclick = () => window.openModal(dateStr);
                 calendarDays.appendChild(cellDiv);
             };
 
             for (let i = 0; i < firstDayIndex; i++) createCell(new Date(year, month - 1, 0 - (firstDayIndex - 1 - i)), true);
-            for (let day = 1; day <= daysInMonth; day++) createCell(new Date(year, month - 1, day), false);
-            const currentTotalCells = firstDayIndex + daysInMonth;
-            const remainingCells = currentTotalCells % 7 === 0 ? 0 : 7 - (currentTotalCells % 7);
-            for (let i = 1; i <= remainingCells; i++) createCell(new Date(year, month, i), true);
-            window.calculateSalary();
-        };
+            for (let d = 1; d <= daysInMonth; d++)   createCell(new Date(year, month - 1, d), false);
+            const total = firstDayIndex + daysInMonth;
+            const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+            for (let i = 1; i <= remaining; i++) createCell(new Date(year, month, i), true);
 
-        function calcMinutesDiff(s, e) {
-            if (!s || !e) return 0;
-            let [sh, sm] = s.split(':').map(Number); let [eh, em] = e.split(':').map(Number);
-            let smins = sh * 60 + sm, emins = eh * 60 + em;
-            if (emins < smins) emins += 24 * 60;
-            return emins - smins;
+            calculateSalary();
         }
 
-        function getLateMins(tIn, std) {
-            let diff = calcMinutesDiff(std, tIn); return diff > 720 ? 0 : diff;
-        }
-        function getDeductMins(m) {
-            if (m <= 3) return 0; if (m <= 30) return m; return Math.ceil(m / 30) * 30;
-        }
-        function getActualWorkMinutes(tIn, tOut) {
-            let m = calcMinutesDiff(tIn, tOut); return Math.max(0, m >= 540 ? m - 60 : m);
-        }
-
-        function getActiveStatus() {
-            const radios = document.getElementsByName('dayStatusOpt');
-            for (let r of radios) if (r.checked) return r.value;
-            return null;
-        }
-
-        window.toggleAppointmentUI = function () { document.getElementById('aptFields').style.display = document.getElementById('chkAppointment').checked ? 'block' : 'none'; };
-        window.toggleSpecialHolidayUI = function () {
-            const isChecked = document.getElementById('chkSpecial').checked;
-            document.getElementById('holidayName').style.display = isChecked ? 'block' : 'none';
-            document.getElementById('dayType').value = isChecked ? 'special' : 'normal';
-            window.updateCalculations();
-        };
-        window.toggleOtFields = function () {
-            document.getElementById('otFieldsBox').style.display = document.getElementById('otCheckbox').checked ? 'block' : 'none';
-            window.updateCalculations();
-        };
-
-        window.toggleDayStatus = function (isClick = false) {
-            const status = getActiveStatus();
-            ['cardMorning', 'cardNight', 'cardLeave', 'cardReset'].forEach(id => document.getElementById(id).classList.remove('active'));
-            document.getElementById('workFields').style.display = 'none'; document.getElementById('leaveFieldsBox').style.display = 'none';
-
-            if (status === 'morning') {
-                document.getElementById('cardMorning').classList.add('active'); document.getElementById('workFields').style.display = 'block';
-                document.getElementById('lblTimeIn').innerText = 'เข้างาน (ปกติ 08:00)';
-                if (isClick) {
-                    document.getElementById('timeIn').value = '08:00';
-                    document.getElementById('timeOut').value = '18:00';
-                    document.getElementById('otStart').value = '18:30';
-                    document.getElementById('otEnd').value = '21:30';
-                }
-            } else if (status === 'night') {
-                document.getElementById('cardNight').classList.add('active'); document.getElementById('workFields').style.display = 'block';
-                document.getElementById('lblTimeIn').innerText = 'เข้างาน (ปกติ 20:00)';
-                if (isClick) {
-                    document.getElementById('timeIn').value = '20:00';
-                    document.getElementById('timeOut').value = '06:00';
-                    document.getElementById('otStart').value = '06:30';
-                    document.getElementById('otEnd').value = '09:30';
-                }
-            } else if (status === 'leave') {
-                document.getElementById('cardLeave').classList.add('active'); document.getElementById('leaveFieldsBox').style.display = 'block';
-            } else if (status === 'reset') {
-                document.getElementById('cardReset').classList.add('active');
-            }
-            if (status === 'morning' || status === 'night') window.updateCalculations();
-            else { document.getElementById('lateBadge').style.display = 'none'; document.getElementById('onTimeBadge').style.display = 'none'; }
-        };
-
-        window.updateCalculations = function () {
-            const status = getActiveStatus(); if (status !== 'morning' && status !== 'night') return;
-            const tIn = document.getElementById('timeIn').value, tOut = document.getElementById('timeOut').value, dType = document.getElementById('dayType').value;
-            const didOt = document.getElementById('otCheckbox').checked, oStart = document.getElementById('otStart').value, oEnd = document.getElementById('otEnd').value;
-
-            let netHrs = getActualWorkMinutes(tIn, tOut) / 60;
-            let expOt = didOt ? calcMinutesDiff(oStart, oEnd) / 60 : 0;
-            let totHrs = netHrs + expOt;
-            let bltOt = Math.max(0, netHrs - 9);
-
-            const lb = document.getElementById('lateBadge'), ob = document.getElementById('onTimeBadge'), lt = document.getElementById('lateTextDisplay');
-
-            if (dType === 'special') {
-                document.getElementById('normalHoursText').innerHTML = `ทำงานวันหยุดพิเศษ: <strong style="color:#6b21a8;">เรท x2 ทั้งหมด</strong>`;
-                document.getElementById('otHoursText').innerHTML = `คำนวณเงิน: <strong style="color:#6b21a8;">รวม ${totHrs.toFixed(1)} ชม. (คิดเรท x2 ทั้งหมด)</strong>`;
-                lb.style.display = 'none'; ob.style.display = 'inline-block';
-            } else if (dType === 'weekend') {
-                let wkHrs = Math.min(9, totHrs), wkOt = Math.max(0, totHrs - 9);
-                document.getElementById('normalHoursText').innerHTML = `ทำงานวันหยุด ส.-อา.: <strong style="color:#047857;">${netHrs.toFixed(1)} ชม. + OT ${expOt.toFixed(1)} ชม.</strong>`;
-                document.getElementById('otHoursText').innerHTML = `คำนวณเงิน: <strong style="color:#b45309;">x2 = ${wkHrs.toFixed(1)} ชม. | x3 = ${wkOt.toFixed(1)} ชม.</strong>`;
-                lb.style.display = 'none'; ob.style.display = 'inline-block';
-            } else {
-                let lMins = getLateMins(tIn, status === 'morning' ? STANDARD_MORNING_START : STANDARD_NIGHT_START);
-                document.getElementById('normalHoursText').innerText = `ทำงานสุทธิ: ${netHrs.toFixed(1)} ชม. (หักพัก 1 ชม.)`;
-                document.getElementById('otHoursText').innerText = `OT ที่ได้เงิน: ${(bltOt + expOt).toFixed(1)} ชม. (เรท x1.5)`;
-                if (lMins > 0) {
-                    lb.style.display = 'inline-block'; ob.style.display = 'none';
-                    lt.innerText = `สาย ${lMins} นาที -> หักเงิน ${getDeductMins(lMins)} นาที`;
-                } else { lb.style.display = 'none'; ob.style.display = 'inline-block'; }
-            }
-        };
-
-        window.openModal = function (dStr) {
-            selectedDateStr = dStr; const curr = new Date(dStr);
-            const defType = (curr.getDay() === 0 || curr.getDay() === 6) ? 'weekend' : 'normal';
-            document.getElementById('modalTitle').innerHTML = curr.toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
-
-            const data = attendanceData[dStr] || { status: null, dayType: defType, timeIn: '08:00', timeOut: '18:00', didOt: false, otStart: '18:30', otEnd: '21:30', leaveType: 'absent' };
-
-            document.getElementsByName('dayStatusOpt').forEach(r => r.checked = (r.value === data.status));
-            document.getElementById('dayType').value = data.dayType; document.getElementById('timeIn').value = data.timeIn; document.getElementById('timeOut').value = data.timeOut; document.getElementById('otCheckbox').checked = data.didOt;
-            document.getElementById('otStart').value = data.otStart || (data.status === 'night' ? '06:30' : '18:30'); document.getElementById('otEnd').value = data.otEnd || (data.status === 'night' ? '09:30' : '21:30');
-            if (data.status === 'leave') document.getElementsByName('leaveTypeOpt').forEach(r => r.checked = (r.value === data.leaveType));
-
-            const sp = specialHolidays[dStr]; document.getElementById('chkSpecial').checked = !!sp; document.getElementById('holidayName').value = sp || ''; document.getElementById('holidayName').style.display = sp ? 'block' : 'none';
-            const apt = appointments[dStr]; document.getElementById('chkAppointment').checked = !!apt; document.getElementById('aptIcon').value = apt ? apt.icon : '📌'; document.getElementById('aptTitle').value = apt ? apt.title : ''; document.getElementById('aptDesc').value = apt ? apt.desc : '';
-
-            window.toggleAppointmentUI(); window.toggleDayStatus(false); document.getElementById('modal').style.display = "flex";
-        };
-
-        window.closeModal = function () { document.getElementById('modal').style.display = "none"; };
-
-        window.saveDayData = function () {
-            const isSp = document.getElementById('chkSpecial').checked, hName = document.getElementById('holidayName').value;
-            const isApt = document.getElementById('chkAppointment').checked, status = getActiveStatus();
-
-            if (status === 'reset') {
-                delete attendanceData[selectedDateStr];
-            } else if (['morning', 'night'].includes(status)) {
-                const tIn = document.getElementById('timeIn').value, tOut = document.getElementById('timeOut').value, dType = document.getElementById('dayType').value;
-                const didOt = document.getElementById('otCheckbox').checked, oStart = document.getElementById('otStart').value, oEnd = document.getElementById('otEnd').value;
-                const netHrs = getActualWorkMinutes(tIn, tOut) / 60;
-                let isLate = false, fLateMins = 0;
-                if (dType === 'normal') { fLateMins = getLateMins(tIn, status === 'morning' ? STANDARD_MORNING_START : STANDARD_NIGHT_START); if (fLateMins > 0) isLate = true; }
-                attendanceData[selectedDateStr] = { status, dayType: dType, timeIn: tIn, timeOut: tOut, didOt, otStart: oStart, otEnd: oEnd, explicitOtHrs: didOt ? calcMinutesDiff(oStart, oEnd) / 60 : 0, builtInOtHrs: Math.max(0, netHrs - 9), isLate, finalLateMins: fLateMins };
-            } else if (status === 'leave') {
-                let lType = 'absent'; document.getElementsByName('leaveTypeOpt').forEach(r => { if (r.checked) lType = r.value; });
-                attendanceData[selectedDateStr] = { status: 'leave', leaveType: lType };
-            }
-
-            if (isSp) specialHolidays[selectedDateStr] = hName || 'วันหยุดพิเศษ'; else delete specialHolidays[selectedDateStr];
-            if (isApt) appointments[selectedDateStr] = { icon: document.getElementById('aptIcon').value || '📌', title: document.getElementById('aptTitle').value || 'นัดหมาย', desc: document.getElementById('aptDesc').value || '' }; else delete appointments[selectedDateStr];
-
-            window.closeModal(); syncDataToCloud();
-        };
-
-        window.calculateSalary = function () {
-            const bSal = parseFloat(document.getElementById('baseSalary').value) || 0, dRate = bSal / 30, hRate = dRate / 9, mRate = hRate / 60;
+        // ==========================================
+        // คำนวณยอดรวม (SALARY CALC)
+        // ==========================================
+        function calculateSalary() {
+            const bSal = parseFloat($('baseSalary').value) || 0;
+            const dRate = bSal / 30, hRate = dRate / 9, mRate = hRate / 60;
             let tOtN = 0, tOtW = 0, tOtH = 0, tTrav = 0, tLateD = 0, unpLeave = 0, yrP = 0, yrS = 0, yrV = 0, dNight = 0;
-            const [y, m] = (document.getElementById('currentMonth').value || new Date().toISOString().slice(0, 7)).split('-').map(Number);
+
+            const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
+            const [y, m] = monthVal.split('-').map(Number);
             const sDate = new Date(y, m - 2, 25), eDate = new Date(y, m - 1, 24);
 
-            for (let k in attendanceData) if (k.startsWith(String(y)) && attendanceData[k].status === 'leave') {
-                if (attendanceData[k].leaveType === 'personal') yrP++; if (attendanceData[k].leaveType === 'sick') yrS++; if (attendanceData[k].leaveType === 'vacation') yrV++;
+            for (let k in attendanceData) {
+                if (k.startsWith(String(y)) && attendanceData[k].status === 'leave') {
+                    if (attendanceData[k].leaveType === 'personal') yrP++;
+                    if (attendanceData[k].leaveType === 'sick') yrS++;
+                    if (attendanceData[k].leaveType === 'vacation') yrV++;
+                }
             }
 
             for (let d = new Date(sDate); d <= eDate; d.setDate(d.getDate() + 1)) {
                 let dStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
                 let dt = attendanceData[dStr];
-                if (dt) {
-                    if (['morning', 'night'].includes(dt.status)) {
-                        tTrav += 35; if (dt.status === 'night') dNight++;
-                        let nHrs = getActualWorkMinutes(dt.timeIn, dt.timeOut) / 60, eOt = dt.explicitOtHrs || 0, tHrs = nHrs + eOt;
+                if (!dt) continue;
 
-                        if (dt.dayType === 'special') {
-                            tOtH += tHrs * (hRate * 2);
-                        } else if (dt.dayType === 'normal') {
-                            tLateD += getDeductMins(dt.finalLateMins || 0) * mRate;
-                            tOtN += ((dt.builtInOtHrs || 0) + eOt) * (hRate * 1.5);
-                        } else if (dt.dayType === 'weekend') {
-                            tOtW += Math.min(9, tHrs) * (hRate * 2) + Math.max(0, tHrs - 9) * (hRate * 3);
+                if (['morning', 'night'].includes(dt.status)) {
+                    tTrav += 35;
+                    if (dt.status === 'night') dNight++;
+                    let nHrs = getActualWorkMinutes(dt.timeIn, dt.timeOut) / 60;
+                    let eOt = dt.explicitOtHrs || 0;
+                    let tHrs = nHrs + eOt;
+
+                    if (dt.dayType === 'normal') {
+                        tLateD += getDeductMins(dt.finalLateMins || 0) * mRate;
+                        tOtN += ((dt.builtInOtHrs || 0) + eOt) * (hRate * 1.5);
+                    } else if (dt.dayType === 'weekend') {
+                        // วันหยุด ส.-อา. คิด 9 ชม.แรก x1 (ได้ 766.67), ส่วนที่เกินคิด x3
+                        tOtW += Math.min(9, tHrs) * (hRate * 1) + Math.max(0, tHrs - 9) * (hRate * 3);
+                    } else if (dt.dayType === 'special') {
+                        // วันหยุดพิเศษ คิด x2 ตั้งแต่ชั่วโมงแรก
+                        tOtH += tHrs * (hRate * 2);
+                    }
+                } else if (dt.status === 'leave') {
+                    if (dt.leaveType === 'absent') {
+                        unpLeave++;
+                    } else if (dt.leaveType === 'personal') {
+                        let cnt = 0;
+                        for (let k in attendanceData) {
+                            if (k.startsWith(String(y)) && attendanceData[k].status === 'leave' && attendanceData[k].leaveType === 'personal' && new Date(k) <= new Date(dStr)) cnt++;
                         }
-                    } else if (dt.status === 'leave') {
-                        if (dt.leaveType === 'absent') unpLeave++;
-                        else if (dt.leaveType === 'personal') {
-                            let cnt = 0; for (let k in attendanceData) if (k.startsWith(String(y)) && attendanceData[k].status === 'leave' && attendanceData[k].leaveType === 'personal' && new Date(k) <= new Date(dStr)) cnt++;
-                            if (cnt > 3) unpLeave++;
-                        }
+                        if (cnt > 3) unpLeave++;
                     }
                 }
             }
 
-            const vCarry = parseFloat(document.getElementById('vacationCarryOver').value) || 0, vQuota = parseFloat(document.getElementById('vacationQuota').value) || 0;
-            document.getElementById('statPersonal').innerText = `${yrP} / 15 วัน`; document.getElementById('statSick').innerText = `${yrS} / 30 วัน`; document.getElementById('statVacation').innerText = `${yrV} / ${vCarry + vQuota} วัน`;
+            const vCarry = parseFloat($('vacationCarryOver').value) || 0;
+            const vQuota = parseFloat($('vacationQuota').value) || 0;
+            $('statPersonal').innerText = `${yrP} / 15 วัน`;
+            $('statSick').innerText = `${yrS} / 30 วัน`;
+            $('statVacation').innerText = `${yrV} / ${vCarry + vQuota} วัน`;
 
-            let tAbsD = unpLeave * dRate, cOut = (parseFloat(document.getElementById('vacationCashOutDays').value) || 0) * dRate;
-            let aTrav = document.getElementById('hasTravel').checked ? tTrav : 0, aLang = document.getElementById('hasLanguage').checked ? (parseFloat(document.getElementById('languageAllowance').value) || 0) : 0;
-            let oth = parseFloat(document.getElementById('otherIncome').value) || 0, soc = parseFloat(document.getElementById('socialSecurity').value) || 0;
+            let tAbsD = unpLeave * dRate;
+            let cOut = (parseFloat($('vacationCashOutDays').value) || 0) * dRate;
+            let aTrav = $('hasTravel').checked ? tTrav : 0;
+            let aLang = $('hasLanguage').checked ? (parseFloat($('languageAllowance').value) || 0) : 0;
+            let oth = parseFloat($('otherIncome').value) || 0;
+            let soc = parseFloat($('socialSecurity').value) || 0;
 
-            let totalCustomDeductions = 0;
-            const items = document.querySelectorAll('.deduction-item');
-            items.forEach(el => {
-                totalCustomDeductions += parseFloat(el.querySelector('.deduct-val').value) || 0;
-            });
+            // นำยอดรวมรายการหักแบบ Dynamic มาคิดด้วย
+            let otherDedTotal = 0;
+            customDeductions.forEach(d => otherDedTotal += parseFloat(d.amount) || 0);
 
-            let tDed = soc + tLateD + tAbsD + totalCustomDeductions;
+            let tDed = soc + tLateD + tAbsD + otherDedTotal;
             let tEarn = (bSal + tOtN + tOtW + tOtH + aTrav + aLang + (dNight * 50) + oth + cOut) - tDed;
 
-            document.getElementById('showOtNormal').innerText = `${tOtN.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`; document.getElementById('showOtWeekend').innerText = `${tOtW.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`; document.getElementById('showOtHoliday').innerText = `${tOtH.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('showTravel').innerText = `${tTrav.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`; document.getElementById('showNightShift').innerText = `${(dNight * 50).toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('showAutoLate').innerText = `${tLateD.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`; document.getElementById('labelAbsentDeduct').innerText = `12. หัก ขาดงาน/ลากิจเกิน (${unpLeave} วัน)`; document.getElementById('showAbsentDeduct').innerText = `${tAbsD.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`; document.getElementById('showTotalDeduction').innerText = `${tDed.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-            document.getElementById('showVacationCash').innerText = `${cOut.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`; document.getElementById('totalEarnings').innerText = `${tEarn.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
-        };
+            const fmt = v => v.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            $('showOtNormal').innerText = `${fmt(tOtN)} ฿`;
+            $('showOtWeekend').innerText = `${fmt(tOtW)} ฿`;
+            $('showOtHoliday').innerText = `${fmt(tOtH)} ฿`;
+            $('showTravel').innerText = `${fmt(tTrav)} ฿`;
+            $('showNightShift').innerText = `${fmt(dNight * 50)} ฿`;
+            $('showAutoLate').innerText = `${fmt(tLateD)} ฿`;
+            $('labelAbsentDeduct').innerText = `12. หัก ขาดงาน/ลากิจเกิน (${unpLeave} วัน)`;
+            $('showAbsentDeduct').innerText = `${fmt(tAbsD)} ฿`;
+
+            $('showOtherDeductions').innerText = `${fmt(otherDedTotal)} ฿`; // อัปเดตตัวเลขแสดงผลยอดหักจุกจิก
+            $('showTotalDeduction').innerText = `${fmt(tDed)} ฿`;
+            $('showVacationCash').innerText = `${fmt(cOut)} ฿`;
+            $('totalEarnings').innerText = `${fmt(tEarn)} ฿`;
+        }
+
+        function syncSidebar() { calculateSalary(); syncDataToCloud(); }
+
+        // ==========================================
+        // EVENTS (เชื่อมต่อปุ่มกดทั้งหมด)
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const now = new Date();
+            $('currentMonth').value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+        });
+
+        $('loginBtn').addEventListener('click', () => {
+            signInWithPopup(auth, provider).catch(err => alert("เกิดข้อผิดพลาดในการล็อกอิน: " + err.message));
+        });
+        $('logoutBtn').addEventListener('click', () => {
+            signOut(auth).then(() => location.reload());
+        });
+
+        $('currentMonth').addEventListener('change', () => { applySeasonalGimmick(); initCalendar(); });
+        $('themeSelect').addEventListener('change', changeTheme);
+        $('colorBg').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
+        $('colorCard').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
+        $('colorPrimary').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
+        $('colorText').addEventListener('input', () => { applyCustomColors(); syncDataToCloud(); });
+
+        ['baseSalary', 'languageAllowance', 'otherIncome', 'socialSecurity', 'vacationCarryOver', 'vacationQuota', 'vacationCashOutDays'].forEach(id => {
+            $(id).addEventListener('change', syncSidebar);
+        });
+        $('hasTravel').addEventListener('change', syncSidebar);
+        $('hasLanguage').addEventListener('change', syncSidebar);
+
+        // Calendar Modal
+        document.getElementsByName('dayStatusOpt').forEach(r => r.addEventListener('change', () => toggleDayStatus(true)));
+        $('dayType').addEventListener('change', updateCalculations);
+        $('timeIn').addEventListener('change', updateCalculations);
+        $('timeOut').addEventListener('change', updateCalculations);
+        $('otCheckbox').addEventListener('change', toggleOtFields);
+        $('otStart').addEventListener('change', updateCalculations);
+        $('otEnd').addEventListener('change', updateCalculations);
+        $('chkSpecial').addEventListener('change', toggleSpecialHolidayUI);
+        $('chkAppointment').addEventListener('change', toggleAppointmentUI);
+        $('btnModalCancel').addEventListener('click', closeModal);
+        $('btnModalSave').addEventListener('click', saveDayData);
+        $('modal').addEventListener('click', (e) => { if (e.target === $('modal')) closeModal(); });
+
+        // Deduction Modal
+        $('btnOpenDeduct').addEventListener('click', window.openDeductionModal);
+        $('btnAddDeduct').addEventListener('click', window.addDeductionSlot);
+        $('btnDeductCancel').addEventListener('click', window.closeDeductionModal);
+        $('btnDeductSave').addEventListener('click', window.saveDeductions);
+        $('deductionModal').addEventListener('click', (e) => { if (e.target === $('deductionModal')) window.closeDeductionModal(); });
     </script>
 </body>
 
