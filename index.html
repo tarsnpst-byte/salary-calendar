@@ -5,1074 +5,202 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Seasonal Salary Calendar</title>
-
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ปฏิทินเงินเดือน">
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
-    <link rel="apple-touch-icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --bg-body: #f3f4f6;
-            --text-main: #374151;
-            --bg-card: #ffffff;
-            --bg-header: #f9fafb;
-            --border-cell: #e5e7eb;
-            --modal-bg: #ffffff;
-            --tag-work-bg: #dcfce7;
-            --tag-work-text: #166534;
-            --tag-late-bg: #fee2e2;
-            --tag-late-text: #991b1b;
+            --bg-body: #f3f4f6; --text-main: #374151; --bg-card: #ffffff;
+            --bg-header: #f9fafb; --border-cell: #e5e7eb; --modal-bg: #ffffff;
+            --tag-work-bg: #dcfce7; --tag-work-text: #166534; --tag-late-bg: #fee2e2; --tag-late-text: #991b1b;
             --primary-color: #0284c7;
         }
-
         [data-theme="dark"] {
-            --bg-body: #111827;
-            --text-main: #f3f4f6;
-            --bg-card: #1f2937;
-            --bg-header: #111827;
-            --border-cell: #374151;
-            --modal-bg: #1f2937;
-            --tag-work-bg: rgba(34, 197, 94, 0.2);
-            --tag-work-text: #4ade80;
-            --tag-late-bg: rgba(239, 68, 68, 0.2);
-            --tag-late-text: #f87171;
+            --bg-body: #111827; --text-main: #f3f4f6; --bg-card: #1f2937;
+            --bg-header: #111827; --border-cell: #374151; --modal-bg: #1f2937;
+            --tag-work-bg: rgba(34, 197, 94, 0.2); --tag-work-text: #4ade80; 
+            --tag-late-bg: rgba(239, 68, 68, 0.2); --tag-late-text: #f87171;
         }
-
         [data-theme="custom"] {
-            --bg-body: var(--custom-bg, #f3f4f6);
-            --bg-card: var(--custom-card, #ffffff);
-            --bg-header: var(--custom-card, #ffffff);
-            --modal-bg: var(--custom-card, #ffffff);
-            --text-main: var(--custom-text, #374151);
-            --primary-color: var(--custom-primary, #0284c7);
-            --border-color: #d1d5db;
-            --border-cell: #e5e7eb;
-            --bg-weekend: rgba(0, 0, 0, 0.03);
-            --bg-outmonth: rgba(0, 0, 0, 0.05);
-        }
-
-        [data-theme="light"][data-month="1"] {
-            --primary-color: #0284c7;
-            --border-color: #bae6fd;
-            --bg-weekend: #f0f9ff;
-            --bg-hover: #e0f2fe;
-            --bg-outmonth: #f8fafc;
-        }
-
-        [data-theme="dark"][data-month="1"] {
-            --primary-color: #38bdf8;
-            --border-color: #0369a1;
-            --bg-weekend: #0f172a;
-            --bg-hover: #1e293b;
-            --bg-outmonth: #020617;
-        }
-
-        [data-theme="light"][data-month="2"] {
-            --primary-color: #dc2626;
-            --border-color: #fca5a5;
-            --bg-weekend: #fef2f2;
-            --bg-hover: #fee2e2;
-            --bg-outmonth: #fef2f2;
-        }
-
-        [data-theme="dark"][data-month="2"] {
-            --primary-color: #f87171;
-            --border-color: #991b1b;
-            --bg-weekend: #2a0a0a;
-            --bg-hover: #450a0a;
-            --bg-outmonth: #000000;
-        }
-
-        [data-theme="light"][data-month="3"] {
-            --primary-color: #ea580c;
-            --border-color: #fdba74;
-            --bg-weekend: #fff7ed;
-            --bg-hover: #ffedd5;
-            --bg-outmonth: #fff7ed;
-        }
-
-        [data-theme="dark"][data-month="3"] {
-            --primary-color: #fb923c;
-            --border-color: #9a3412;
-            --bg-weekend: #2a1505;
-            --bg-hover: #431407;
-            --bg-outmonth: #000000;
-        }
-
-        [data-theme="light"][data-month="4"] {
-            --primary-color: #0891b2;
-            --border-color: #67e8f9;
-            --bg-weekend: #ecfeff;
-            --bg-hover: #cffafe;
-            --bg-outmonth: #f8fafc;
-        }
-
-        [data-theme="dark"][data-month="4"] {
-            --primary-color: #22d3ee;
-            --border-color: #0891b2;
-            --bg-weekend: #082f49;
-            --bg-hover: #164e63;
-            --bg-outmonth: #000000;
-        }
-
-        [data-theme="light"][data-month="5"] {
-            --primary-color: #059669;
-            --border-color: #6ee7b7;
-            --bg-weekend: #ecfdf5;
-            --bg-hover: #d1fae5;
-            --bg-outmonth: #f0fdf4;
-        }
-
-        [data-theme="dark"][data-month="5"] {
-            --primary-color: #34d399;
-            --border-color: #059669;
-            --bg-weekend: #064e3b;
-            --bg-hover: #065f46;
-            --bg-outmonth: #000000;
-        }
-
-        [data-theme="light"][data-month="6"] {
-            --primary-color: #4f46e5;
-            --border-color: #a5b4fc;
-            --bg-weekend: #eef2ff;
-            --bg-hover: #e0e7ff;
-            --bg-outmonth: #f8fafc;
-        }
-
-        [data-theme="dark"][data-month="6"] {
-            --primary-color: #818cf8;
-            --border-color: #4338ca;
-            --bg-weekend: #1e1b4b;
-            --bg-hover: #312e81;
-            --bg-outmonth: #000000;
-        }
-
-        [data-theme="light"][data-month="7"] {
-            --primary-color: #0d9488;
-            --border-color: #5eead4;
-            --bg-weekend: #f0fdfa;
-            --bg-hover: #ccfbf1;
-            --bg-outmonth: #f8fafc;
-        }
-
-        [data-theme="dark"][data-month="7"] {
-            --primary-color: #2dd4bf;
-            --border-color: #0f766e;
-            --bg-weekend: #042f2e;
-            --bg-hover: #134e4a;
-            --bg-outmonth: #000000;
-        }
-
-        [data-theme="light"][data-month="8"] {
-            --primary-color: #16a34a;
-            --border-color: #86efac;
-            --bg-weekend: #f0fdf4;
-            --bg-hover: #dcfce7;
-            --bg-outmonth: #f8fafc;
-        }
-
-        [data-theme="dark"][data-month="8"] {
-            --primary-color: #4ade80;
-            --border-color: #15803d;
-            --bg-weekend: #052e16;
-            --bg-hover: #14532d;
-            --bg-outmonth: #000000;
-        }
-
-        [data-theme="light"][data-month="9"] {
-            --primary-color: #d97706;
-            --border-color: #fcd34d;
-            --bg-weekend: #fffbeb;
-            --bg-hover: #fef3c7;
-            --bg-outmonth: #fffbeb;
-        }
-
-        [data-theme="dark"][data-month="9"] {
-            --primary-color: #fbbf24;
-            --border-color: #b45309;
-            --bg-weekend: #451a03;
-            --bg-hover: #78350f;
-            --bg-outmonth: #000000;
-        }
-
-        [data-theme="light"][data-month="10"] {
-            --primary-color: #9333ea;
-            --border-color: #d8b4fe;
-            --bg-weekend: #faf5ff;
-            --bg-hover: #f3e8ff;
-            --bg-outmonth: #faf5ff;
-        }
-
-        [data-theme="dark"][data-month="10"] {
-            --primary-color: #c084fc;
-            --border-color: #7e22ce;
-            --bg-weekend: #2e1065;
-            --bg-hover: #3b0764;
-            --bg-outmonth: #000000;
-        }
-
-        [data-theme="light"][data-month="11"] {
-            --primary-color: #4338ca;
-            --border-color: #a5b4fc;
-            --bg-weekend: #eef2ff;
-            --bg-hover: #e0e7ff;
-            --bg-outmonth: #f8fafc;
-        }
-
-        [data-theme="dark"][data-month="11"] {
-            --primary-color: #818cf8;
-            --border-color: #4338ca;
-            --bg-weekend: #1e1b4b;
-            --bg-hover: #312e81;
-            --bg-outmonth: #000000;
-        }
-
-        [data-theme="light"][data-month="12"] {
-            --primary-color: #e11d48;
-            --border-color: #fda4af;
-            --bg-weekend: #fff1f2;
-            --bg-hover: #ffe4e6;
-            --bg-outmonth: #fff1f2;
-        }
-
-        [data-theme="dark"][data-month="12"] {
-            --primary-color: #fb7185;
-            --border-color: #be123c;
-            --bg-weekend: #4c0519;
-            --bg-hover: #881337;
-            --bg-outmonth: #000000;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Sarabun', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            padding: 20px;
-            line-height: 1.5;
-            transition: all 0.5s ease;
-        }
-
-        .container {
-            max-width: 1350px;
-            margin: 0 auto;
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-            align-items: flex-start;
-        }
-
-        .login-screen {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-        }
-
-        .login-card {
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            background: #ffffff;
-            padding: 40px 24px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e5e7eb;
-        }
-
-        .auth-input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-family: 'Sarabun', sans-serif;
-            font-size: 15px;
-        }
-
-        .auth-btn {
-            width: 100%;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 8px;
-        }
-
-        .auth-btn:hover {
-            filter: brightness(0.9);
-        }
-
-        .card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--border-color);
-            transition: all 0.5s ease;
-        }
-
-        .main-panel {
-            flex: 2.5;
-            min-width: 320px;
-        }
-
-        .side-panel {
-            flex: 1.2;
-            min-width: 320px;
-            position: sticky;
-            top: 24px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        h1 {
-            font-size: 26px;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-            transition: color 0.5s;
-        }
-
-        .season-emoji {
-            font-size: 32px;
-            animation: pop 0.5s ease-out;
-        }
-
-        @keyframes pop {
-            0% {
-                transform: scale(0.5) rotate(-10deg);
-                opacity: 0;
-            }
-
-            100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-        }
-
-        .controls-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .control-box {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-header);
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            transition: all 0.5s ease;
-        }
-
-        .control-box select,
-        .control-box input {
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 4px 8px;
-            font-family: inherit;
-            background: var(--bg-card);
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        .color-picker-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 11px;
-        }
-
-        .color-picker-wrapper input[type="color"] {
-            width: 22px;
-            height: 22px;
-            padding: 0;
-            border: none;
-            cursor: pointer;
-            background: none;
-        }
-
-        .calendar-wrapper {
-            position: relative;
-            border-top: 1px solid var(--border-color);
-            border-left: 1px solid var(--border-color);
-            border-radius: 4px;
-            overflow: hidden;
-            background: var(--bg-card);
-            transition: border-color 0.5s;
-        }
-
-        .watermark-bg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 250px;
-            opacity: 0.5;
-            pointer-events: none;
-            user-select: none;
-            z-index: 0;
-            filter: grayscale(20%);
-            transition: all 0.5s ease;
-        }
-
-        .grid-row {
-            display: grid;
-            grid-template-columns: repeat(7, minmax(0, 1fr));
-            position: relative;
-            z-index: 1;
-        }
-
-        .day-header {
-            background: var(--bg-header);
-            padding: 12px 0;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 600;
-            border-right: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-main);
-            transition: all 0.5s;
-        }
-
-        .day-header.sunday {
-            color: #ef4444;
-        }
-
-        .day-header.saturday {
-            color: var(--primary-color);
-        }
-
-        .day-cell {
-            min-height: 120px;
-            padding: 8px;
-            border-right: 1px solid var(--border-cell);
-            border-bottom: 1px solid var(--border-cell);
-            cursor: pointer;
-            transition: background 0.2s;
-            display: flex;
-            flex-direction: column;
-            background: transparent;
-            overflow: hidden;
-        }
-
-        .day-cell:hover {
-            background: var(--bg-hover);
-            backdrop-filter: blur(2px);
-        }
-
-        .day-cell.out-month {
-            background: var(--bg-outmonth);
-            opacity: 0.6;
-        }
-
-        .day-cell.weekend {
-            background: var(--bg-weekend);
-        }
-
-        .date-num {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 4px;
-        }
-
-        .date-num.sunday {
-            color: #ef4444;
-        }
-
-        .tags-area {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .tag {
-            font-size: 11px;
-            padding: 4px;
-            border-radius: 6px;
-            border: 1px solid;
-            text-align: left;
-            font-weight: 600;
-            line-height: 1.2;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            overflow: hidden;
-        }
-
-        .tag span {
-            font-size: 13px;
-            flex-shrink: 0;
-        }
-
-        .tag-text {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .day-cell.special-holiday {
-            background: #e9d5ff !important;
-            border: 2px solid #a855f7 !important;
-        }
-
-        [data-theme="dark"] .day-cell.special-holiday {
-            background: #581c87 !important;
-        }
-
-        .tag-work {
-            color: var(--tag-work-text);
-            border-color: var(--tag-work-text);
-            background: var(--tag-work-bg);
-        }
-
-        .tag-night {
-            color: #4338ca;
-            border-color: #6366f1;
-            background: #eef2ff;
-        }
-
-        .tag-late {
-            color: var(--tag-late-text);
-            border-color: var(--tag-late-text);
-            background: var(--tag-late-bg);
-        }
-
-        .tag-ot {
-            color: #b45309;
-            border-color: #f59e0b;
-            background: var(--bg-card);
-            justify-content: center;
-        }
-
-        .tag-absent {
-            background: #fee2e2;
-            color: #991b1b;
-            border-color: #ef4444;
-            justify-content: center;
-        }
-
-        .tag-personal {
-            background: #fef3c7;
-            color: #b45309;
-            border-color: #f59e0b;
-            justify-content: center;
-        }
-
-        .tag-sick {
-            background: #e0f2fe;
-            color: #0369a1;
-            border-color: #38bdf8;
-            justify-content: center;
-        }
-
-        .tag-vacation {
-            background: #ecfdf5;
-            color: #047857;
-            border-color: #10b981;
-            justify-content: center;
-        }
-
-        .tag-apt {
-            background: #fff7ed;
-            color: #d97706;
-            border-color: #fcd34d;
-            justify-content: flex-start;
-        }
-
-        [data-theme="dark"] .tag-night {
-            color: #818cf8;
-            border-color: #6366f1;
-            background: rgba(99, 102, 241, 0.2);
-        }
-
-        [data-theme="dark"] .tag-ot {
-            color: #fbbf24;
-            background: rgba(245, 158, 11, 0.15);
-            border-color: #fbbf24;
-        }
-
-        [data-theme="dark"] .tag-absent {
-            background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            border-color: #ef4444;
-        }
-
-        [data-theme="dark"] .tag-personal {
-            background: rgba(245, 158, 11, 0.2);
-            color: #fbbf24;
-            border-color: #f59e0b;
-        }
-
-        [data-theme="dark"] .tag-sick {
-            background: rgba(14, 165, 233, 0.2);
-            color: #38bdf8;
-            border-color: #0ea5e9;
-        }
-
-        [data-theme="dark"] .tag-vacation {
-            background: rgba(16, 185, 129, 0.2);
-            color: #34d399;
-            border-color: #10b981;
-        }
-
-        [data-theme="dark"] .tag-apt {
-            background: rgba(245, 158, 11, 0.15);
-            color: #fbbf24;
-            border-color: #f59e0b;
-        }
-
-        .summary-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 6px;
-        }
-
-        .sum-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 16px;
-        }
-
-        .sum-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-header);
-            padding: 6px 10px;
-            border-radius: 6px;
-            border: 1px solid var(--border-cell);
-            transition: all 0.5s;
-        }
-
-        .sum-row input[type="number"] {
-            width: 70px;
-            text-align: right;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 2px 4px;
-            background: var(--bg-card);
-            color: var(--text-main);
-            font-weight: bold;
-            transition: opacity 0.3s;
-        }
-
-        .sum-row input[type="number"]:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .sum-row input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-            accent-color: var(--primary-color);
-        }
-
-        .sum-label {
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .total-box {
-            background: var(--bg-header);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 14px;
-            text-align: center;
-            transition: all 0.5s;
-        }
-
-        .total-box span {
-            display: block;
-            font-size: 13px;
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .total-box strong {
-            font-size: 26px;
-            color: var(--text-main);
-        }
-
-        .leave-stats-box {
-            background: var(--bg-header);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px dashed var(--border-color);
-            margin-bottom: 16px;
-            font-size: 12px;
-        }
-
-        .leave-stat-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 6px;
-            border-bottom: 1px solid var(--border-cell);
-            padding-bottom: 4px;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-content {
-            background: var(--modal-bg);
-            border-radius: 12px;
-            padding: 24px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            max-height: 95vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-header h3 {
-            font-size: 18px;
-            color: var(--text-main);
-            margin: 0;
-        }
-
-        .badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            display: none;
-        }
-
-        .badge-green {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .badge-red {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .option-card {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px;
-            border-radius: 8px;
-            border: 2px solid;
-            cursor: pointer;
-            margin-bottom: 10px;
-            transition: all 0.2s;
-            background: var(--bg-card);
-        }
-
-        .option-card:hover {
-            filter: brightness(0.95);
-        }
-
-        .option-card input[type="radio"],
-        .option-card input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .option-card strong {
-            font-size: 15px;
-            display: block;
-            line-height: 1.2;
-        }
-
-        .option-card span {
-            font-size: 11px;
-            opacity: 0.8;
-        }
-
-        .opt-morning {
-            border-color: #86efac;
-        }
-
-        .opt-night {
-            border-color: #a5b4fc;
-        }
-
-        .opt-leave {
-            border-color: #fca5a5;
-        }
-
-        .opt-reset {
-            border-color: #d1d5db;
-        }
-
-        .opt-morning.active {
-            background: #f0fdf4;
-            border-width: 3px;
-        }
-
-        .opt-night.active {
-            background: #eef2ff;
-            border-width: 3px;
-        }
-
-        .opt-leave.active {
-            background: #fef2f2;
-            border-width: 3px;
-        }
-
-        .opt-reset.active {
-            background: #f9fafb;
-            border-width: 3px;
-        }
-
-        .time-box {
-            background: var(--bg-header);
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            margin-top: 12px;
-            margin-bottom: 12px;
-        }
-
-        .time-title {
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-main);
-        }
-
-        .time-row {
-            display: flex;
-            gap: 12px;
-        }
-
-        .time-col {
-            flex: 1;
-        }
-
-        .time-col label {
-            font-size: 11px;
-            opacity: 0.8;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .time-col input {
-            width: 100%;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 6px;
-            background: var(--bg-card);
-            color: var(--text-main);
-            font-family: inherit;
-        }
-
-        .btn-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-            position: sticky;
-            bottom: 0;
-            background: var(--modal-bg);
-            padding-top: 10px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            font-family: inherit;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
-            font-size: 15px;
-        }
-
-        .btn-cancel {
-            background: var(--border-color);
-            color: var(--text-main);
-        }
-
-        .btn-save {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .radio-leave-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .radio-leave-group label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            cursor: pointer;
-        }
+            --bg-body: var(--custom-bg, #f3f4f6); --bg-card: var(--custom-card, #ffffff);
+            --bg-header: var(--custom-card, #ffffff); --modal-bg: var(--custom-card, #ffffff);
+            --text-main: var(--custom-text, #374151); --primary-color: var(--custom-primary, #0284c7);
+            --border-color: #d1d5db; --border-cell: #e5e7eb; 
+            --bg-weekend: rgba(0,0,0,0.03); --bg-outmonth: rgba(0,0,0,0.05);
+        }
+
+        [data-theme="light"][data-month="1"] { --primary-color: #0284c7; --border-color: #bae6fd; --bg-weekend: #f0f9ff; --bg-hover: #e0f2fe; --bg-outmonth: #f8fafc; }
+        [data-theme="dark"][data-month="1"] { --primary-color: #38bdf8; --border-color: #0369a1; --bg-weekend: #0f172a; --bg-hover: #1e293b; --bg-outmonth: #020617; }
+        [data-theme="light"][data-month="2"] { --primary-color: #dc2626; --border-color: #fca5a5; --bg-weekend: #fef2f2; --bg-hover: #fee2e2; --bg-outmonth: #fef2f2; }
+        [data-theme="dark"][data-month="2"] { --primary-color: #f87171; --border-color: #991b1b; --bg-weekend: #2a0a0a; --bg-hover: #450a0a; --bg-outmonth: #000000; }
+        [data-theme="light"][data-month="3"] { --primary-color: #ea580c; --border-color: #fdba74; --bg-weekend: #fff7ed; --bg-hover: #ffedd5; --bg-outmonth: #fff7ed; }
+        [data-theme="dark"][data-month="3"] { --primary-color: #fb923c; --border-color: #9a3412; --bg-weekend: #2a1505; --bg-hover: #431407; --bg-outmonth: #000000; }
+        [data-theme="light"][data-month="4"] { --primary-color: #0891b2; --border-color: #67e8f9; --bg-weekend: #ecfeff; --bg-hover: #cffafe; --bg-outmonth: #f8fafc; }
+        [data-theme="dark"][data-month="4"] { --primary-color: #22d3ee; --border-color: #0891b2; --bg-weekend: #082f49; --bg-hover: #164e63; --bg-outmonth: #000000; }
+        [data-theme="light"][data-month="5"] { --primary-color: #059669; --border-color: #6ee7b7; --bg-weekend: #ecfdf5; --bg-hover: #d1fae5; --bg-outmonth: #f0fdf4; }
+        [data-theme="dark"][data-month="5"] { --primary-color: #34d399; --border-color: #059669; --bg-weekend: #064e3b; --bg-hover: #065f46; --bg-outmonth: #000000; }
+        [data-theme="light"][data-month="6"] { --primary-color: #4f46e5; --border-color: #a5b4fc; --bg-weekend: #eef2ff; --bg-hover: #e0e7ff; --bg-outmonth: #f8fafc; }
+        [data-theme="dark"][data-month="6"] { --primary-color: #818cf8; --border-color: #4338ca; --bg-weekend: #1e1b4b; --bg-hover: #312e81; --bg-outmonth: #000000; }
+        [data-theme="light"][data-month="7"] { --primary-color: #0d9488; --border-color: #5eead4; --bg-weekend: #f0fdfa; --bg-hover: #ccfbf1; --bg-outmonth: #f8fafc; }
+        [data-theme="dark"][data-month="7"] { --primary-color: #2dd4bf; --border-color: #0f766e; --bg-weekend: #042f2e; --bg-hover: #134e4a; --bg-outmonth: #000000; }
+        [data-theme="light"][data-month="8"] { --primary-color: #16a34a; --border-color: #86efac; --bg-weekend: #f0fdf4; --bg-hover: #dcfce7; --bg-outmonth: #f8fafc; }
+        [data-theme="dark"][data-month="8"] { --primary-color: #4ade80; --border-color: #15803d; --bg-weekend: #052e16; --bg-hover: #14532d; --bg-outmonth: #000000; }
+        [data-theme="light"][data-month="9"] { --primary-color: #d97706; --border-color: #fcd34d; --bg-weekend: #fffbeb; --bg-hover: #fef3c7; --bg-outmonth: #fffbeb; }
+        [data-theme="dark"][data-month="9"] { --primary-color: #fbbf24; --border-color: #b45309; --bg-weekend: #451a03; --bg-hover: #78350f; --bg-outmonth: #000000; }
+        [data-theme="light"][data-month="10"] { --primary-color: #9333ea; --border-color: #d8b4fe; --bg-weekend: #faf5ff; --bg-hover: #f3e8ff; --bg-outmonth: #faf5ff; }
+        [data-theme="dark"][data-month="10"] { --primary-color: #c084fc; --border-color: #7e22ce; --bg-weekend: #2e1065; --bg-hover: #3b0764; --bg-outmonth: #000000; }
+        [data-theme="light"][data-month="11"] { --primary-color: #4338ca; --border-color: #a5b4fc; --bg-weekend: #eef2ff; --bg-hover: #e0e7ff; --bg-outmonth: #f8fafc; }
+        [data-theme="dark"][data-month="11"] { --primary-color: #818cf8; --border-color: #4338ca; --bg-weekend: #1e1b4b; --bg-hover: #312e81; --bg-outmonth: #000000; }
+        [data-theme="light"][data-month="12"] { --primary-color: #e11d48; --border-color: #fda4af; --bg-weekend: #fff1f2; --bg-hover: #ffe4e6; --bg-outmonth: #fff1f2; }
+        [data-theme="dark"][data-month="12"] { --primary-color: #fb7185; --border-color: #be123c; --bg-weekend: #4c0519; --bg-hover: #881337; --bg-outmonth: #000000; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Sarabun', sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-main); padding: 20px; line-height: 1.5; transition: all 0.5s ease; }
+        .container { max-width: 1350px; margin: 0 auto; display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+        
+        .login-screen { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
+        .login-card { text-align: center; max-width: 400px; width: 100%; background: #ffffff; padding: 40px 24px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e5e7eb;}
+        
+        .auth-input { width: 100%; padding: 12px; margin-bottom: 16px; border: 1px solid #d1d5db; border-radius: 8px; font-family: 'Sarabun', sans-serif; font-size: 15px;}
+        .auth-btn { width: 100%; background: var(--primary-color); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 16px; margin-top: 8px;}
+        .auth-btn:hover { filter: brightness(0.9); }
+
+        .card { background: var(--bg-card); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid var(--border-color); transition: all 0.5s ease; }
+        .main-panel { flex: 2.5; min-width: 320px; }
+        .side-panel { flex: 1.2; min-width: 320px; position: sticky; top: 24px; }
+        
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 10px; }
+        h1 { font-size: 26px; color: var(--text-main); display: flex; align-items: center; gap: 8px; font-weight: 700; transition: color 0.5s; }
+        .season-emoji { font-size: 32px; animation: pop 0.5s ease-out; }
+        @keyframes pop { 0% { transform: scale(0.5) rotate(-10deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+        
+        .controls-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center;}
+        .control-box { display: flex; align-items: center; gap: 8px; background: var(--bg-header); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); transition: all 0.5s ease; }
+        .control-box select, .control-box input { border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; font-family: inherit; background: var(--bg-card); color: var(--text-main); font-weight: 500;}
+        
+        .color-picker-wrapper { display: flex; align-items: center; gap: 4px; font-size: 11px; }
+        .color-picker-wrapper input[type="color"] { width: 22px; height: 22px; padding: 0; border: none; cursor: pointer; background: none;}
+
+        .calendar-wrapper { position: relative; border-top: 1px solid var(--border-color); border-left: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; background: var(--bg-card); transition: border-color 0.5s; }
+        .watermark-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 250px; opacity: 0.5; pointer-events: none; user-select: none; z-index: 0; filter: grayscale(20%); transition: all 0.5s ease; }
+        .grid-row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); position: relative; z-index: 1; }
+        .day-header { background: var(--bg-header); padding: 12px 0; text-align: center; font-size: 14px; font-weight: 600; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); color: var(--text-main); transition: all 0.5s; }
+        .day-header.sunday { color: #ef4444; }
+        .day-header.saturday { color: var(--primary-color); }
+        
+        .day-cell { min-height: 120px; padding: 8px; border-right: 1px solid var(--border-cell); border-bottom: 1px solid var(--border-cell); cursor: pointer; transition: background 0.2s; display: flex; flex-direction: column; background: transparent; overflow: hidden; }
+        .day-cell:hover { background: var(--bg-hover); backdrop-filter: blur(2px); }
+        .day-cell.out-month { background: var(--bg-outmonth); opacity: 0.6; }
+        .day-cell.weekend { background: var(--bg-weekend); }
+        .date-num { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+        .date-num.sunday { color: #ef4444; }
+        
+        .tags-area { margin-top: auto; display: flex; flex-direction: column; gap: 4px; }
+        .tag { font-size: 11px; padding: 4px; border-radius: 6px; border: 1px solid; text-align: left; font-weight: 600; line-height: 1.2; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); display: flex; align-items: center; gap: 4px; overflow: hidden;}
+        .tag span { font-size: 13px; flex-shrink: 0;}
+        .tag-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .day-cell.special-holiday { background: #e9d5ff !important; border: 2px solid #a855f7 !important; }
+        [data-theme="dark"] .day-cell.special-holiday { background: #581c87 !important; }
+        
+        .tag-work { color: var(--tag-work-text); border-color: var(--tag-work-text); background: var(--tag-work-bg); }
+        .tag-night { color: #4338ca; border-color: #6366f1; background: #eef2ff; }
+        .tag-late { color: var(--tag-late-text); border-color: var(--tag-late-text); background: var(--tag-late-bg); }
+        .tag-ot { color: #b45309; border-color: #f59e0b; background: var(--bg-card); justify-content: center;}
+        
+        .tag-absent { background: #fee2e2; color: #991b1b; border-color: #ef4444; justify-content: center;}
+        .tag-personal { background: #fef3c7; color: #b45309; border-color: #f59e0b; justify-content: center;}
+        .tag-sick { background: #e0f2fe; color: #0369a1; border-color: #38bdf8; justify-content: center;}
+        .tag-vacation { background: #ecfdf5; color: #047857; border-color: #10b981; justify-content: center;}
+        .tag-apt { background: #fff7ed; color: #d97706; border-color: #fcd34d; justify-content: flex-start;}
+
+        [data-theme="dark"] .tag-night { color: #818cf8; border-color: #6366f1; background: rgba(99, 102, 241, 0.2); }
+        [data-theme="dark"] .tag-ot { color: #fbbf24; background: rgba(245, 158, 11, 0.15); border-color: #fbbf24; }
+        [data-theme="dark"] .tag-absent { background: rgba(239, 68, 68, 0.2); color: #f87171; border-color: #ef4444; }
+        [data-theme="dark"] .tag-personal { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border-color: #f59e0b; }
+        [data-theme="dark"] .tag-sick { background: rgba(14, 165, 233, 0.2); color: #38bdf8; border-color: #0ea5e9; }
+        [data-theme="dark"] .tag-vacation { background: rgba(16, 185, 129, 0.2); color: #34d399; border-color: #10b981; }
+        [data-theme="dark"] .tag-apt { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: #f59e0b; }
+
+        .summary-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+        .sum-list { display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 500; margin-bottom: 16px; }
+        .sum-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-header); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-cell); transition: all 0.5s; }
+        .sum-row input[type="number"] { width: 70px; text-align: right; border: 1px solid var(--border-color); border-radius: 4px; padding: 2px 4px; background: var(--bg-card); color: var(--text-main); font-weight: bold; transition: opacity 0.3s;}
+        .sum-row input[type="number"]:disabled { opacity: 0.4; cursor: not-allowed; }
+        .sum-row input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: var(--primary-color); }
+        .sum-label { font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        
+        .total-box { background: var(--bg-header); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; text-align: center; transition: all 0.5s;}
+        .total-box span { display: block; font-size: 13px; color: var(--primary-color); font-weight: 600; margin-bottom: 2px; }
+        .total-box strong { font-size: 26px; color: var(--text-main); }
+        
+        .leave-stats-box { background: var(--bg-header); padding: 12px; border-radius: 8px; border: 1px dashed var(--border-color); margin-bottom: 16px; font-size: 12px;}
+        .leave-stat-row { display: flex; justify-content: space-between; margin-bottom: 6px; border-bottom: 1px solid var(--border-cell); padding-bottom: 4px;}
+
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal-content { background: var(--modal-bg); border-radius: 12px; padding: 24px; width: 100%; max-width: 420px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); max-height: 95vh; overflow-y: auto;}
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modal-header h3 { font-size: 18px; color: var(--text-main); margin: 0; }
+        
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; display: none; }
+        .badge-green { background: #dcfce7; color: #166534; }
+        .badge-red { background: #fee2e2; color: #991b1b; }
+        
+        .option-card { display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 8px; border: 2px solid; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; background: var(--bg-card); }
+        .option-card:hover { filter: brightness(0.95); }
+        .option-card input[type="radio"], .option-card input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; }
+        .option-card strong { font-size: 15px; display: block; line-height: 1.2;}
+        .option-card span { font-size: 11px; opacity: 0.8; }
+        
+        .opt-morning { border-color: #86efac; }
+        .opt-night { border-color: #a5b4fc; }
+        .opt-leave { border-color: #fca5a5; }
+        .opt-reset { border-color: #d1d5db; }
+        
+        .opt-morning.active { background: #f0fdf4; border-width: 3px; }
+        .opt-night.active { background: #eef2ff; border-width: 3px; }
+        .opt-leave.active { background: #fef2f2; border-width: 3px; }
+        .opt-reset.active { background: #f9fafb; border-width: 3px; }
+
+        .time-box { background: var(--bg-header); padding: 16px; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 12px; margin-bottom: 12px; }
+        .time-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
+        .time-row { display: flex; gap: 12px; }
+        .time-col { flex: 1; }
+        .time-col label { font-size: 11px; opacity: 0.8; display: block; margin-bottom: 4px; }
+        .time-col input { width: 100%; border: 1px solid var(--border-color); border-radius: 6px; padding: 6px; background: var(--bg-card); color: var(--text-main); font-family: inherit; }
+        
+        .btn-row { display: flex; gap: 12px; margin-top: 24px; position: sticky; bottom: 0; background: var(--modal-bg); padding-top: 10px; border-top: 1px solid var(--border-color);}
+        .btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-family: inherit; font-weight: 600; cursor: pointer; transition: opacity 0.2s; font-size: 15px;}
+        .btn-cancel { background: var(--border-color); color: var(--text-main); }
+        .btn-save { background: var(--primary-color); color: white; }
+        
+        .radio-leave-group { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+        .radio-leave-group label { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
 
         /* Dynamic Deductions List UI */
-        .deduction-item {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            margin-bottom: 6px;
-            background: var(--bg-card);
-            padding: 4px 8px;
-            border-radius: 6px;
-            border: 1px solid var(--border-cell);
-        }
-
-        .deduction-item input[type="text"] {
-            flex: 1;
-            padding: 4px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 12px;
-            background: transparent;
-            color: var(--text-main);
-        }
-
-        .deduction-item input[type="number"] {
-            width: 80px;
-            padding: 4px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 12px;
-            text-align: right;
-            background: transparent;
-            color: var(--text-main);
-        }
-
-        .btn-del-deduct {
-            background: #ef4444;
-            color: white;
-            border: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        .deduction-item { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; background: var(--bg-card); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border-cell); }
+        .deduction-item input[type="text"] { flex: 1; padding: 4px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 12px; background: transparent; color: var(--text-main); }
+        .deduction-item input[type="number"] { width: 80px; padding: 4px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 12px; text-align: right; background: transparent; color: var(--text-main); }
+        .btn-del-deduct { background: #ef4444; color: white; border: none; width: 24px; height: 24px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; display: flex; justify-content: center; align-items: center; }
 
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .container {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .main-panel,
-            .side-panel {
-                width: 100%;
-                min-width: 100%;
-                flex: none;
-                position: static;
-            }
-
-            .header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
-            }
-
-            .controls-row {
-                justify-content: space-between;
-            }
-
-            h1 {
-                font-size: 22px;
-                justify-content: center;
-            }
-
-            .calendar-wrapper {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .grid-row {
-                min-width: 600px;
-            }
-
-            .day-cell {
-                min-height: 100px;
-            }
-
-            .modal-content {
-                width: 95%;
-                padding: 16px;
-            }
-
-            .time-row,
-            .btn-row {
-                flex-direction: column;
-                gap: 8px;
-            }
+            body { padding: 10px; }
+            .container { flex-direction: column; gap: 16px; }
+            .main-panel, .side-panel { width: 100%; min-width: 100%; flex: none; position: static; }
+            .header { flex-direction: column; align-items: stretch; gap: 12px; }
+            .controls-row { justify-content: space-between; }
+            h1 { font-size: 22px; justify-content: center; }
+            .calendar-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .grid-row { min-width: 600px; }
+            .day-cell { min-height: 100px; }
+            .modal-content { width: 95%; padding: 16px; }
+            .time-row, .btn-row { flex-direction: column; gap: 8px; }
         }
     </style>
 </head>
@@ -1083,17 +211,16 @@
         <div class="login-card">
             <h2 style="font-size: 22px; margin-bottom: 8px;">📊 Smart Salary Calendar</h2>
             <p style="font-size: 13px; color: #6b7280; margin-bottom: 20px;" id="authToggleText">
-                เข้าสู่ระบบ หรือ <a href="#" onclick="toggleAuthMode()"
-                    style="color:var(--primary-color); font-weight:bold; text-decoration:none;">สมัครสมาชิกใหม่</a>
+                เข้าสู่ระบบ หรือ <a href="#" onclick="toggleAuthMode()" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">สมัครสมาชิกใหม่</a>
             </p>
-
+            
             <div style="text-align: left;">
                 <label style="font-size: 13px; font-weight: bold; color: var(--text-main);">อีเมล</label>
                 <input type="email" id="authEmail" class="auth-input" placeholder="your@email.com">
-
+                
                 <label style="font-size: 13px; font-weight: bold; color: var(--text-main);">รหัสผ่าน</label>
                 <input type="password" id="authPassword" class="auth-input" placeholder="••••••••">
-
+                
                 <button class="auth-btn" id="authSubmitBtn" onclick="handleAuth()">เข้าสู่ระบบ</button>
             </div>
         </div>
@@ -1104,8 +231,7 @@
             <div class="header">
                 <div>
                     <h1>ปฏิทินเงินเดือน <span class="season-emoji" id="seasonEmoji">✨</span></h1>
-                    <p class="subtitle" style="opacity: 0.7;">คลิกที่วันที่เพื่อลงเวลา <span id="seasonText"
-                            style="color: var(--primary-color); font-weight: bold; margin-left: 8px;"></span></p>
+                    <p class="subtitle" style="opacity: 0.7;">คลิกที่วันที่เพื่อลงเวลา <span id="seasonText" style="color: var(--primary-color); font-weight: bold; margin-left: 8px;"></span></p>
                 </div>
                 <div class="controls-row">
                     <div class="control-box">
@@ -1121,33 +247,21 @@
                         </select>
                     </div>
                     <div class="control-box" id="customColorBox" style="display: none;">
-                        <label class="color-picker-wrapper">พื้นหลัง <input type="color" id="colorBg" value="#f3f4f6"
-                                onchange="applyCustomColors()"></label>
-                        <label class="color-picker-wrapper">ปฏิทิน <input type="color" id="colorCard" value="#ffffff"
-                                onchange="applyCustomColors()"></label>
-                        <label class="color-picker-wrapper">สีหลัก <input type="color" id="colorPrimary" value="#0284c7"
-                                onchange="applyCustomColors()"></label>
-                        <label class="color-picker-wrapper">อักษร <input type="color" id="colorText" value="#374151"
-                                onchange="applyCustomColors()"></label>
+                        <label class="color-picker-wrapper">พื้นหลัง <input type="color" id="colorBg" value="#f3f4f6" onchange="applyCustomColors()"></label>
+                        <label class="color-picker-wrapper">ปฏิทิน <input type="color" id="colorCard" value="#ffffff" onchange="applyCustomColors()"></label>
+                        <label class="color-picker-wrapper">สีหลัก <input type="color" id="colorPrimary" value="#0284c7" onchange="applyCustomColors()"></label>
+                        <label class="color-picker-wrapper">อักษร <input type="color" id="colorText" value="#374151" onchange="applyCustomColors()"></label>
                     </div>
-                    <button onclick="logout()"
-                        style="padding:8px 12px; border-radius:8px; border:1px solid #ef4444; background:transparent; color:#ef4444; font-weight:bold; cursor:pointer; font-size:12px;">ออกจากระบบ</button>
+                    <button onclick="logout()" style="padding:8px 12px; border-radius:8px; border:1px solid #ef4444; background:transparent; color:#ef4444; font-weight:bold; cursor:pointer; font-size:12px;">ออกจากระบบ</button>
                 </div>
             </div>
 
             <div class="calendar-wrapper">
                 <div class="watermark-bg" id="watermarkBg">🏙️</div>
                 <div class="grid-row day-header">
-                    <div class="sunday">อาทิตย์</div>
-                    <div>จันทร์</div>
-                    <div>อังคาร</div>
-                    <div>พุธ</div>
-                    <div>พฤหัสบดี</div>
-                    <div>ศุกร์</div>
-                    <div class="saturday">เสาร์</div>
+                    <div class="sunday">อาทิตย์</div><div>จันทร์</div><div>อังคาร</div><div>พุธ</div><div>พฤหัสบดี</div><div>ศุกร์</div><div class="saturday">เสาร์</div>
                 </div>
-                <div id="calendarDays" class="grid-row" style="display: grid; grid-template-columns: repeat(7, 1fr);">
-                </div>
+                <div id="calendarDays" class="grid-row" style="display: grid; grid-template-columns: repeat(7, 1fr);"></div>
             </div>
         </div>
 
@@ -1166,12 +280,11 @@
                     <span style="color:#047857;">🏖️ ลาพักร้อน (ใช้สิทธิ์แล้ว)</span>
                     <strong id="statVacation">0 (0 ชม.) / 0 วัน</strong>
                 </div>
-
+                
                 <div style="margin-top:10px; padding-top:10px; border-top:1px dashed var(--border-color);">
                     <div class="sum-row" style="margin-bottom:4px; border:none; padding:2px 0; background:transparent;">
                         <span class="sum-label" style="font-size:11px;">+ พักร้อนยกยอด:</span>
-                        <input type="number" id="vacationCarryOver" value="0" onchange="syncSidebar()"
-                            style="width:50px;">
+                        <input type="number" id="vacationCarryOver" value="0" onchange="syncSidebar()" style="width:50px;">
                     </div>
                     <div class="sum-row" style="margin-bottom:4px; border:none; padding:2px 0; background:transparent;">
                         <span class="sum-label" style="font-size:11px;">+ พักร้อนได้สิทธิ์:</span>
@@ -1180,8 +293,7 @@
                     <div class="sum-row" style="border:none; padding:2px 0; background:transparent;">
                         <span class="sum-label" style="font-size:11px; color:#10b981;">💰 แปลงพักร้อนเป็นเงิน:</span>
                         <div style="display:flex; align-items:center; gap:4px;">
-                            <input type="number" id="vacationCashOutDays" value="0" onchange="syncSidebar()"
-                                style="width:40px; border-color:#10b981;">
+                            <input type="number" id="vacationCashOutDays" value="0" onchange="syncSidebar()" style="width:40px; border-color:#10b981;">
                             <span style="font-size:11px;">วัน</span>
                         </div>
                     </div>
@@ -1189,9 +301,8 @@
             </div>
 
             <h2 class="summary-title">📊 สรุปยอดเงิน (ระบบใหม่)</h2>
-            <div style="font-size:11px; font-weight:bold; opacity:0.6; margin-bottom:12px;">รอบคำนวณ: วันที่ 25 - 24
-            </div>
-
+            <div style="font-size:11px; font-weight:bold; opacity:0.6; margin-bottom:12px;">รอบคำนวณ: วันที่ 25 - 24</div>
+            
             <div class="sum-list">
                 <div class="sum-row">
                     <span>1. เงินเดือนปกติ</span>
@@ -1223,8 +334,7 @@
                 <div class="sum-row">
                     <span>7. ค่าภาษา</span>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <input type="number" id="languageAllowance" value="2000" onchange="syncSidebar()"
-                            style="width:70px;">
+                        <input type="number" id="languageAllowance" value="2000" onchange="syncSidebar()" style="width:70px;">
                         <input type="checkbox" id="hasLanguage" checked onchange="syncSidebar()">
                     </div>
                 </div>
@@ -1237,12 +347,10 @@
                     <span id="showVacationCash" style="font-weight:bold;">0 ฿</span>
                 </div>
 
-                <div class="sum-row"
-                    style="color:#b91c1c; flex-direction:column; align-items:stretch; gap:6px; padding-top:12px; margin-top:8px;">
+                <div class="sum-row" style="color:#b91c1c; flex-direction:column; align-items:stretch; gap:6px; padding-top:12px; margin-top:8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span>10. หัก ประกันสังคม (-)</span>
-                        <input type="number" id="socialSecurity" value="825" onchange="syncSidebar()"
-                            style="width:70px;">
+                        <input type="number" id="socialSecurity" value="825" onchange="syncSidebar()" style="width:70px;">
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-top:4px;">
                         <span>11. หัก มาสาย (Auto)</span>
@@ -1252,23 +360,18 @@
                         <span id="labelAbsentDeduct" style="font-size:12px;">12. หัก ขาดงาน/ลากิจเกิน (0 วัน)</span>
                         <span id="showAbsentDeduct" style="font-weight:bold;">0 ฿</span>
                     </div>
-
-                    <!-- ส่วนหักเงินรวมแบบ Dynamic -->
-                    <div
-                        style="display:flex; justify-content:space-between; align-items:center; margin-top:4px; border-top:1px dashed var(--border-cell); padding-top:8px;">
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px; border-top:1px dashed var(--border-cell); padding-top:8px;">
                         <span>13. รายการหักเงินอื่นๆ</span>
                         <div style="display:flex; align-items:center; gap:8px;">
                             <span id="showOtherDeductions" style="font-weight:bold; color:#991b1b;">0 ฿</span>
-                            <button id="btnOpenDeduct" onclick="openDeductionModal()"
-                                style="padding: 4px 8px; font-size: 11px; background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 4px; cursor: pointer;">จัดการ</button>
+                            <button id="btnOpenDeduct" onclick="openDeductionModal()" style="padding: 4px 8px; font-size: 11px; background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 4px; cursor: pointer;">จัดการ</button>
                         </div>
                     </div>
 
-                    <div
-                        style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:8px; border-top:1px solid var(--border-cell);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:8px; border-top:1px solid var(--border-cell);">
                         <span style="font-weight:bold; color:#991b1b;">🔴 รวมหักทั้งหมด:</span>
-                        <span id="showTotalDeduction" style="font-size:16px; font-weight:bold; color:#991b1b;">0
-                            ฿</span>
+                        <span id="showTotalDeduction" style="font-size:16px; font-weight:bold; color:#991b1b;">0 ฿</span>
                     </div>
                 </div>
             </div>
@@ -1280,13 +383,11 @@
         </div>
     </div>
 
-    <!-- Modal Form (ลงเวลา) -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitle">ลงเวลา / แจ้งสถานะ</h3>
-                <span id="lateBadge" class="badge badge-red">🔴 <span id="lateTextDisplay"
-                        style="font-weight:normal; margin-left:4px;"></span></span>
+                <span id="lateBadge" class="badge badge-red">🔴 <span id="lateTextDisplay" style="font-weight:normal; margin-left:4px;"></span></span>
                 <span id="onTimeBadge" class="badge badge-green">🟢 ตรงเวลา</span>
             </div>
 
@@ -1311,7 +412,7 @@
                     <span style="color:#b91c1c;">ขาดงาน, ลากิจ, ลาป่วย, พักร้อน (ระบุเวลาได้)</span>
                 </div>
             </label>
-
+            
             <label class="option-card opt-reset" id="cardReset">
                 <input type="radio" name="dayStatusOpt" value="reset" onchange="toggleDayStatus(true)">
                 <div>
@@ -1320,18 +421,16 @@
                 </div>
             </label>
 
-            <!-- ส่วนลงเวลาปกติ -->
             <div id="workFields" style="display:none;">
                 <div class="form-group" style="margin-bottom:12px; margin-top:16px;">
                     <label style="font-size:13px; font-weight:bold;">ประเภทวัน (สำหรับคิด OT):</label>
-                    <select id="dayType" onchange="updateCalculations()"
-                        style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-color); margin-top:4px;">
+                    <select id="dayType" onchange="updateCalculations()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-color); margin-top:4px;">
                         <option value="normal">💼 วันธรรมดาปกติ (OT x1.5)</option>
                         <option value="weekend">🏝️ วันเสาร์-อาทิตย์ (ทำงานได้ x1, OT x3)</option>
                         <option value="special">🎊 วันหยุดพิเศษ/นักขัตฤกษ์ (คิด x2 ตั้งแต่ ชม. แรก!)</option>
                     </select>
                 </div>
-
+                
                 <div class="time-box">
                     <div class="time-title">🕒 เวลางานปกติ</div>
                     <div class="time-row">
@@ -1344,12 +443,10 @@
                             <input type="time" id="timeOut" value="18:00" onchange="updateCalculations()">
                         </div>
                     </div>
-                    <div style="font-size:11px; text-align:center; opacity:0.7; margin-top:8px;" id="normalHoursText">
-                        ทำงานสุทธิ: 0 ชม.</div>
+                    <div style="font-size:11px; text-align:center; opacity:0.7; margin-top:8px;" id="normalHoursText">ทำงานสุทธิ: 0 ชม.</div>
                 </div>
 
-                <label
-                    style="display:flex; align-items:center; gap:8px; margin-bottom:12px; padding:8px 12px; background:var(--bg-header); border:1px solid var(--border-color); border-radius:8px; cursor:pointer;">
+                <label style="display:flex; align-items:center; gap:8px; margin-bottom:12px; padding:8px 12px; background:var(--bg-header); border:1px solid var(--border-color); border-radius:8px; cursor:pointer;">
                     <input type="checkbox" id="otCheckbox" onchange="toggleOtFields()" style="width:16px; height:16px;">
                     <div><strong style="font-size:14px;">ทำล่วงเวลา (OT) ในวันนี้</strong></div>
                 </label>
@@ -1366,25 +463,17 @@
                             <input type="time" id="otEnd" value="21:30" onchange="updateCalculations()">
                         </div>
                     </div>
-                    <div style="font-size:13px; font-weight:bold; text-align:center; color:#b45309; margin-top:8px;"
-                        id="otHoursText">รวม OT: 0 ชั่วโมง</div>
+                    <div style="font-size:13px; font-weight:bold; text-align:center; color:#b45309; margin-top:8px;" id="otHoursText">รวม OT: 0 ชั่วโมง</div>
                 </div>
             </div>
 
-            <!-- ส่วนการลาหยุด (อัปเดตระบบระบุชั่วโมง) -->
-            <div id="leaveFieldsBox"
-                style="display:none; background:#fef2f2; padding:16px; border-radius:8px; border:1px dashed #fca5a5; margin-top:16px;">
-                <strong
-                    style="color:#991b1b; display:block; margin-bottom:8px; font-size:14px;">เลือกประเภทการหยุด:</strong>
+            <div id="leaveFieldsBox" style="display:none; background:#fef2f2; padding:16px; border-radius:8px; border:1px dashed #fca5a5; margin-top:16px;">
+                <strong style="color:#991b1b; display:block; margin-bottom:8px; font-size:14px;">เลือกประเภทการหยุด:</strong>
                 <div class="radio-leave-group">
-                    <label style="color:#991b1b;"><input type="radio" name="leaveTypeOpt" value="absent" checked> ❌
-                        ขาดงาน (หักเงิน 100%)</label>
-                    <label style="color:#b45309;"><input type="radio" name="leaveTypeOpt" value="personal"> 📝 ลากิจ
-                        (หักเงินตั้งแต่วันที่ 4 ของปี)</label>
-                    <label style="color:#0369a1;"><input type="radio" name="leaveTypeOpt" value="sick"> 💊 ลาป่วย
-                        (ไม่หักเงิน ไม่เกิน 30 วัน)</label>
-                    <label style="color:#047857;"><input type="radio" name="leaveTypeOpt" value="vacation"> 🏖️
-                        ลาพักร้อน (หักจากโควตา)</label>
+                    <label style="color:#991b1b;"><input type="radio" name="leaveTypeOpt" value="absent" checked> ❌ ขาดงาน (หักเงิน 100%)</label>
+                    <label style="color:#b45309;"><input type="radio" name="leaveTypeOpt" value="personal"> 📝 ลากิจ (หักเงินตั้งแต่วันที่ 4 ของปี)</label>
+                    <label style="color:#0369a1;"><input type="radio" name="leaveTypeOpt" value="sick"> 💊 ลาป่วย (ไม่หักเงิน ไม่เกิน 30 วัน)</label>
+                    <label style="color:#047857;"><input type="radio" name="leaveTypeOpt" value="vacation"> 🏖️ ลาพักร้อน (หักจากโควตา)</label>
                 </div>
 
                 <hr style="border-top:1px solid #fca5a5; border-bottom:none; margin:14px 0;">
@@ -1392,35 +481,27 @@
                 <strong style="color:#991b1b; display:block; margin-bottom:8px; font-size:14px;">ระยะเวลาการลา:</strong>
                 <div style="display:flex; gap:16px; align-items:center;">
                     <label style="color:#991b1b; font-size:13px; cursor:pointer;">
-                        <input type="radio" name="leaveDurationMode" value="full" checked onchange="toggleLeaveHours()">
-                        เต็มวัน (9 ชม.)
+                        <input type="radio" name="leaveDurationMode" value="full" checked onchange="toggleLeaveHours()"> เต็มวัน (9 ชม.)
                     </label>
                     <label style="color:#991b1b; font-size:13px; cursor:pointer;">
-                        <input type="radio" name="leaveDurationMode" value="hourly" onchange="toggleLeaveHours()">
-                        ระบุชั่วโมง
+                        <input type="radio" name="leaveDurationMode" value="hourly" onchange="toggleLeaveHours()"> ระบุชั่วโมง
                     </label>
                 </div>
-
-                <div id="leaveHoursDiv"
-                    style="display:none; margin-top:10px; background: white; padding: 12px; border-radius: 6px; border: 1px solid #fca5a5;">
-                    <input type="number" id="leaveHoursInput" placeholder="จำนวนชั่วโมงที่ลา (เช่น 4)"
-                        style="width:100%; padding:8px; border-radius:4px; border:1px solid #fca5a5; margin-bottom: 10px; font-family:inherit;">
-
-                    <strong
-                        style="color:#991b1b; font-size:13px; display:block; margin-bottom:6px;">สถานะการมาทำงาน:</strong>
+                
+                <div id="leaveHoursDiv" style="display:none; margin-top:10px; background: white; padding: 12px; border-radius: 6px; border: 1px solid #fca5a5;">
+                    <input type="number" id="leaveHoursInput" placeholder="จำนวนชั่วโมงที่ลา (เช่น 4)" style="width:100%; padding:8px; border-radius:4px; border:1px solid #fca5a5; margin-bottom: 10px; font-family:inherit;">
+                    
+                    <strong style="color:#991b1b; font-size:13px; display:block; margin-bottom:6px;">สถานะการมาทำงาน:</strong>
                     <div style="display:flex; flex-direction:column; gap:8px;">
                         <label style="font-size:13px; cursor:pointer;">
-                            <input type="radio" name="hourlyWorkStatus" value="none" checked
-                                onchange="toggleLeaveWork()"> ไม่มาทำงานเลย (หักเงินชั่วโมงส่วนที่เหลือ)
+                            <input type="radio" name="hourlyWorkStatus" value="none" checked onchange="toggleLeaveWork()"> ไม่มาทำงานเลย (หักเงินชั่วโมงส่วนที่เหลือ)
                         </label>
                         <label style="font-size:13px; cursor:pointer;">
-                            <input type="radio" name="hourlyWorkStatus" value="worked" onchange="toggleLeaveWork()">
-                            มาทำงานช่วงเวลาที่เหลือ
+                            <input type="radio" name="hourlyWorkStatus" value="worked" onchange="toggleLeaveWork()"> มาทำงานช่วงเวลาที่เหลือ
                         </label>
                     </div>
 
-                    <div id="leaveWorkFields"
-                        style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed #fca5a5;">
+                    <div id="leaveWorkFields" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed #fca5a5;">
                         <div class="time-row" style="margin-bottom:8px;">
                             <div class="time-col">
                                 <label>เวลาเข้างาน</label>
@@ -1432,8 +513,7 @@
                             </div>
                         </div>
                         <label style="display:flex; align-items:center; gap:8px; margin-bottom:8px; cursor:pointer;">
-                            <input type="checkbox" id="lvOtCheckbox" onchange="toggleLvOt()"> <strong
-                                style="font-size:13px; color:#b45309;">ทำ OT ต่อ (คิดเรท 1.5x)</strong>
+                            <input type="checkbox" id="lvOtCheckbox" onchange="toggleLvOt()"> <strong style="font-size:13px; color:#b45309;">ทำ OT ต่อ (คิดเรท 1.5x)</strong>
                         </label>
                         <div class="time-row" id="lvOtBox" style="display:none;">
                             <div class="time-col">
@@ -1450,36 +530,28 @@
             </div>
 
             <hr style="border:0; border-top:1px solid var(--border-color); margin:16px 0;">
-
-            <div id="holidaySection"
-                style="padding:10px; background:#f3e8ff; border-radius:8px; border:1px solid #d8b4fe; margin-bottom:12px;">
-                <label class="check-group"
-                    style="background:transparent; border:none; margin-bottom:5px; padding:0; display: flex; align-items: center; cursor: pointer;">
+            
+            <div id="holidaySection" style="padding:10px; background:#f3e8ff; border-radius:8px; border:1px solid #d8b4fe; margin-bottom:12px;">
+                <label class="check-group" style="background:transparent; border:none; margin-bottom:5px; padding:0; display: flex; align-items: center; cursor: pointer;">
                     <input type="checkbox" id="chkSpecial" onchange="toggleSpecialHolidayUI()">
                     <div style="margin-left:10px;">
                         <strong style="color:#6b21a8;">🎉 ตั้งเป็นวันหยุดพิเศษ</strong>
                     </div>
                 </label>
-                <input type="text" id="holidayName" placeholder="ชื่อเทศกาล (เช่น วันปีใหม่)"
-                    style="display:none; width:100%; padding:6px; border:1px solid #a855f7; border-radius:4px; margin-top:8px; font-size:13px;">
+                <input type="text" id="holidayName" placeholder="ชื่อเทศกาล (เช่น วันปีใหม่)" style="display:none; width:100%; padding:6px; border:1px solid #a855f7; border-radius:4px; margin-top:8px; font-size:13px;">
             </div>
 
-            <div id="appointmentSection"
-                style="padding:10px; background:#fffbeb; border-radius:8px; border:1px solid #fde68a;">
-                <label class="check-group"
-                    style="background:transparent; border:none; margin-bottom:5px; padding:0; display: flex; align-items: center; cursor: pointer;">
+            <div id="appointmentSection" style="padding:10px; background:#fffbeb; border-radius:8px; border:1px solid #fde68a;">
+                <label class="check-group" style="background:transparent; border:none; margin-bottom:5px; padding:0; display: flex; align-items: center; cursor: pointer;">
                     <input type="checkbox" id="chkAppointment" onchange="toggleAppointmentUI()">
                     <strong style="color:#d97706; margin-left:10px;">📌 บันทึกวันนัดหมาย / โน้ต</strong>
                 </label>
                 <div id="aptFields" style="display:none; margin-top:8px;">
                     <div style="display:flex; gap:8px; margin-bottom:8px;">
-                        <input type="text" id="aptIcon" placeholder="🏥"
-                            style="width:25%; padding:6px; border:1px solid #fcd34d; border-radius:4px; text-align:center;">
-                        <input type="text" id="aptTitle" placeholder="หัวข้อสั้นๆ"
-                            style="flex:1; padding:6px; border:1px solid #fcd34d; border-radius:4px;">
+                        <input type="text" id="aptIcon" placeholder="🏥" style="width:25%; padding:6px; border:1px solid #fcd34d; border-radius:4px; text-align:center;">
+                        <input type="text" id="aptTitle" placeholder="หัวข้อสั้นๆ" style="flex:1; padding:6px; border:1px solid #fcd34d; border-radius:4px;">
                     </div>
-                    <textarea id="aptDesc" placeholder="รายละเอียดเพิ่มเติม..." rows="3"
-                        style="width:100%; padding:6px; border:1px solid #fcd34d; border-radius:4px; resize:none; font-size:13px;"></textarea>
+                    <textarea id="aptDesc" placeholder="รายละเอียดเพิ่มเติม..." rows="3" style="width:100%; padding:6px; border:1px solid #fcd34d; border-radius:4px; resize:none; font-size:13px;"></textarea>
                 </div>
             </div>
 
@@ -1490,26 +562,20 @@
         </div>
     </div>
 
-    <!-- Modal Form (หน้าต่างเพิ่มรายการหักเงิน) -->
     <div class="modal-overlay" id="deductionModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 style="color:#991b1b;">🔴 รายการหักเงินอื่นๆ</h3>
             </div>
-
-            <p style="font-size:12px; color:#6b7280; margin-bottom:12px;">เพิ่มรายการหักเงิน เช่น ค่างวดรถ, หนี้สหกรณ์,
-                เงินกู้ ฯลฯ</p>
-
+            
+            <p style="font-size:12px; color:#6b7280; margin-bottom:12px;">เพิ่มรายการหักเงิน เช่น ค่างวดรถ, หนี้สหกรณ์, เงินกู้ ฯลฯ</p>
+            
             <div id="deductionModalList">
-                <!-- JS จะสร้างช่องกรอกข้อมูลตรงนี้ -->
-            </div>
-
-            <button onclick="addDeductionSlot()"
-                style="margin-top:10px; padding:6px 12px; border-radius:6px; border:1px dashed #991b1b; background:transparent; color:#991b1b; font-weight:bold; cursor:pointer; width:100%;">+
-                เพิ่มรายการใหม่</button>
-
-            <div
-                style="margin-top:16px; padding-top:10px; border-top:1px solid var(--border-cell); display:flex; justify-content:space-between; font-weight:bold;">
+                </div>
+            
+            <button onclick="addDeductionSlot()" style="margin-top:10px; padding:6px 12px; border-radius:6px; border:1px dashed #991b1b; background:transparent; color:#991b1b; font-weight:bold; cursor:pointer; width:100%;">+ เพิ่มรายการใหม่</button>
+            
+            <div style="margin-top:16px; padding-top:10px; border-top:1px solid var(--border-cell); display:flex; justify-content:space-between; font-weight:bold;">
                 <span>รวมยอดหักอื่นๆ:</span>
                 <span id="deductionModalTotal" style="color:#991b1b; font-size:18px;">0 ฿</span>
             </div>
@@ -1521,7 +587,6 @@
         </div>
     </div>
 
-    <!-- Firebase SDK และระบบ Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -1545,13 +610,13 @@
         let attendanceData = {};
         let specialHolidays = {};
         let appointments = {};
-        let isLoginMode = true;
-
+        let isLoginMode = true; 
+        
         let customDeductions = [
-            { name: '', amount: 0 },
-            { name: '', amount: 0 },
-            { name: '', amount: 0 },
-            { name: '', amount: 0 }
+            {name: '', amount: 0},
+            {name: '', amount: 0},
+            {name: '', amount: 0},
+            {name: '', amount: 0}
         ];
 
         let selectedDateStr = '';
@@ -1605,11 +670,11 @@
         }
 
         // ================= AUTH =================
-        window.toggleAuthMode = function () {
+        window.toggleAuthMode = function() {
             isLoginMode = !isLoginMode;
             const btn = $('authSubmitBtn');
             const text = $('authToggleText');
-            if (isLoginMode) {
+            if(isLoginMode) {
                 btn.innerText = "เข้าสู่ระบบ";
                 text.innerHTML = `เข้าสู่ระบบ หรือ <a href="#" onclick="toggleAuthMode()" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">สมัครสมาชิกใหม่</a>`;
             } else {
@@ -1618,19 +683,19 @@
             }
         };
 
-        window.handleAuth = function () {
+        window.handleAuth = function() {
             const email = $('authEmail').value;
             const password = $('authPassword').value;
-            if (!email || !password) return alert("กรุณากรอกอีเมลและรหัสผ่านให้ครบถ้วน");
-
-            if (isLoginMode) {
+            if(!email || !password) return alert("กรุณากรอกอีเมลและรหัสผ่านให้ครบถ้วน");
+            
+            if(isLoginMode) {
                 signInWithEmailAndPassword(auth, email, password).catch(err => alert("เข้าสู่ระบบไม่สำเร็จ: " + err.message));
             } else {
                 createUserWithEmailAndPassword(auth, email, password).catch(err => alert("สมัครสมาชิกไม่สำเร็จ: " + err.message));
             }
         };
 
-        window.logout = function () { signOut(auth).then(() => location.reload()); };
+        window.logout = function() { signOut(auth).then(() => location.reload()); };
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -1646,9 +711,9 @@
         });
 
         // ================= DEDUCTION MODAL =================
-        window.openDeductionModal = function () { window.renderDeductionModal(); $('deductionModal').style.display = 'flex'; };
-        window.closeDeductionModal = function () { $('deductionModal').style.display = 'none'; };
-        window.renderDeductionModal = function () {
+        window.openDeductionModal = function() { window.renderDeductionModal(); $('deductionModal').style.display = 'flex'; };
+        window.closeDeductionModal = function() { $('deductionModal').style.display = 'none'; };
+        window.renderDeductionModal = function() {
             const list = $('deductionModalList');
             list.innerHTML = '';
             let total = 0;
@@ -1663,16 +728,16 @@
                     </div>
                 `;
             });
-            $('deductionModalTotal').innerText = `${total.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
+            $('deductionModalTotal').innerText = `${total.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿`;
         };
-        window.addDeductionSlot = function () { customDeductions.push({ name: '', amount: 0 }); window.renderDeductionModal(); };
-        window.removeDeductionSlot = function (idx) { customDeductions.splice(idx, 1); window.renderDeductionModal(); };
-        window.calcDeductionModalTotal = function () {
+        window.addDeductionSlot = function() { customDeductions.push({name: '', amount: 0}); window.renderDeductionModal(); };
+        window.removeDeductionSlot = function(idx) { customDeductions.splice(idx, 1); window.renderDeductionModal(); };
+        window.calcDeductionModalTotal = function() {
             let total = 0;
             customDeductions.forEach((_, idx) => { total += parseFloat($(`dedAmt_${idx}`).value) || 0; });
-            $('deductionModalTotal').innerText = `${total.toLocaleString(undefined, { minimumFractionDigits: 2 })} ฿`;
+            $('deductionModalTotal').innerText = `${total.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿`;
         };
-        window.saveDeductions = function () {
+        window.saveDeductions = function() {
             customDeductions = customDeductions.map((_, idx) => ({ name: $(`dedName_${idx}`).value, amount: parseFloat($(`dedAmt_${idx}`).value) || 0 }));
             window.closeDeductionModal();
             window.syncSidebar();
@@ -1688,8 +753,16 @@
                     attendanceData = cloudData.attendanceData || {};
                     specialHolidays = cloudData.specialHolidays || {};
                     appointments = cloudData.appointments || {};
-                    if (cloudData.customDeductions && cloudData.customDeductions.length > 0) customDeductions = cloudData.customDeductions;
-                    if (cloudData.sidebarData) {
+                    if(cloudData.customDeductions && cloudData.customDeductions.length > 0) customDeductions = cloudData.customDeductions;
+                    
+                    if(cloudData.customColors) {
+                        $('colorBg').value = cloudData.customColors.bg || "#f3f4f6";
+                        $('colorCard').value = cloudData.customColors.card || "#ffffff";
+                        $('colorPrimary').value = cloudData.customColors.primary || "#0284c7";
+                        $('colorText').value = cloudData.customColors.text || "#374151";
+                    }
+
+                    if(cloudData.sidebarData) {
                         const d = cloudData.sidebarData;
                         if (d.baseSalary !== undefined) $('baseSalary').value = d.baseSalary;
                         if (d.hasTravel !== undefined) $('hasTravel').checked = d.hasTravel;
@@ -1722,13 +795,29 @@
                 vacationCashOutDays: $('vacationCashOutDays').value,
                 themeMode: $('themeSelect').value
             };
-            await setDoc(userDocRef, { attendanceData, specialHolidays, appointments, sidebarData, customDeductions }, { merge: true });
+            const customColors = {
+                bg: $('colorBg').value,
+                card: $('colorCard').value,
+                primary: $('colorPrimary').value,
+                text: $('colorText').value
+            };
+            
+            // ลบคำสั่ง { merge: true } ออก เพื่อบังคับแทนที่ข้อมูลเดิม
+            // จะทำให้ข้อมูลที่ถูกสั่งลบ (เช่น วันที่ล้างสถานะ) ลบออกไปจริงๆ
+            await setDoc(userDocRef, { 
+                attendanceData, 
+                specialHolidays, 
+                appointments, 
+                sidebarData, 
+                customDeductions, 
+                customColors 
+            });
         }
 
-        window.syncSidebar = function () { window.calculateSalary(); syncDataToCloud(); };
+        window.syncSidebar = function() { window.calculateSalary(); syncDataToCloud(); };
 
         // ================= THEME =================
-        window.applySeasonalGimmick = function () {
+        window.applySeasonalGimmick = function() {
             const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const month = parseInt(monthVal.split('-')[1]);
             const themeMode = $('themeSelect').value;
@@ -1741,15 +830,15 @@
             if (themeMode !== 'custom') document.body.setAttribute('data-theme', themeMode);
         };
 
-        window.changeTheme = function () {
+        window.changeTheme = function() {
             const theme = $('themeSelect').value;
-            if (theme === 'custom') { $('customColorBox').style.display = 'flex'; window.applyCustomColors(); }
+            if(theme === 'custom') { $('customColorBox').style.display = 'flex'; window.applyCustomColors(); } 
             else { $('customColorBox').style.display = 'none'; }
             window.initCalendar();
             syncDataToCloud();
         };
 
-        window.applyCustomColors = function () {
+        window.applyCustomColors = function() {
             const root = document.documentElement;
             root.style.setProperty('--custom-bg', $('colorBg').value);
             root.style.setProperty('--custom-card', $('colorCard').value);
@@ -1759,43 +848,43 @@
         };
 
         // ================= CALENDAR MODAL =================
-        window.toggleAppointmentUI = function () { $('aptFields').style.display = $('chkAppointment').checked ? 'block' : 'none'; };
-        window.toggleSpecialHolidayUI = function () {
+        window.toggleAppointmentUI = function() { $('aptFields').style.display = $('chkAppointment').checked ? 'block' : 'none'; };
+        window.toggleSpecialHolidayUI = function() {
             const on = $('chkSpecial').checked;
             $('holidayName').style.display = on ? 'block' : 'none';
             $('dayType').value = on ? 'special' : 'normal';
             window.updateCalculations();
         };
-        window.toggleOtFields = function () { $('otFieldsBox').style.display = $('otCheckbox').checked ? 'block' : 'none'; window.updateCalculations(); };
-
-        window.toggleLeaveHours = function () {
+        window.toggleOtFields = function() { $('otFieldsBox').style.display = $('otCheckbox').checked ? 'block' : 'none'; window.updateCalculations(); };
+        
+        window.toggleLeaveHours = function() {
             const isHourly = document.querySelector('input[name="leaveDurationMode"][value="hourly"]').checked;
             $('leaveHoursDiv').style.display = isHourly ? 'block' : 'none';
         };
 
-        window.toggleLeaveWork = function () {
+        window.toggleLeaveWork = function() {
             const isWorked = document.querySelector('input[name="hourlyWorkStatus"][value="worked"]').checked;
             $('leaveWorkFields').style.display = isWorked ? 'block' : 'none';
         };
 
-        window.toggleLvOt = function () {
+        window.toggleLvOt = function() {
             $('lvOtBox').style.display = $('lvOtCheckbox').checked ? 'flex' : 'none';
         };
 
-        window.toggleDayStatus = function (isClick = false) {
+        window.toggleDayStatus = function(isClick = false) {
             const status = getActiveStatus();
-            ['cardMorning', 'cardNight', 'cardLeave', 'cardReset'].forEach(id => $(id).classList.remove('active'));
+            ['cardMorning','cardNight','cardLeave','cardReset'].forEach(id => $(id).classList.remove('active'));
             $('workFields').style.display = 'none';
             $('leaveFieldsBox').style.display = 'none';
 
             if (status === 'morning') {
                 $('cardMorning').classList.add('active'); $('workFields').style.display = 'block';
                 $('lblTimeIn').innerText = 'เข้างาน (ปกติ 08:00)';
-                if (isClick) { $('timeIn').value = '08:00'; $('timeOut').value = '18:00'; $('otStart').value = '18:30'; $('otEnd').value = '21:30'; }
+                if (isClick) { $('timeIn').value='08:00'; $('timeOut').value='18:00'; $('otStart').value = '18:30'; $('otEnd').value = '21:30'; }
             } else if (status === 'night') {
                 $('cardNight').classList.add('active'); $('workFields').style.display = 'block';
                 $('lblTimeIn').innerText = 'เข้างาน (ปกติ 20:00)';
-                if (isClick) { $('timeIn').value = '20:00'; $('timeOut').value = '06:00'; $('otStart').value = '06:30'; $('otEnd').value = '09:30'; }
+                if (isClick) { $('timeIn').value='20:00'; $('timeOut').value='06:00'; $('otStart').value = '06:30'; $('otEnd').value = '09:30'; }
             } else if (status === 'leave') {
                 $('cardLeave').classList.add('active'); $('leaveFieldsBox').style.display = 'block';
             } else if (status === 'reset') {
@@ -1806,7 +895,7 @@
             else { $('lateBadge').style.display = 'none'; $('onTimeBadge').style.display = 'none'; }
         };
 
-        window.updateCalculations = function () {
+        window.updateCalculations = function() {
             const status = getActiveStatus();
             if (!['morning', 'night'].includes(status)) return;
             const tIn = $('timeIn').value, tOut = $('timeOut').value;
@@ -1840,7 +929,7 @@
             }
         };
 
-        window.openModal = function (dStr) {
+        window.openModal = function(dStr) {
             selectedDateStr = dStr;
             const curr = new Date(dStr + 'T00:00:00');
             const defType = (curr.getDay() === 0 || curr.getDay() === 6) ? 'weekend' : 'normal';
@@ -1850,7 +939,7 @@
                 status: null, dayType: defType, timeIn: '08:00', timeOut: '18:00',
                 didOt: false, otStart: '18:30', otEnd: '21:30', leaveType: 'absent'
             };
-
+            
             for (let r of document.getElementsByName('dayStatusOpt')) r.checked = (r.value === data.status);
             $('dayType').value = data.dayType;
             $('timeIn').value = data.timeIn;
@@ -1870,7 +959,7 @@
                     $('leaveHoursInput').value = data.leaveHours || 4;
                     let wStat = data.hourlyWorkStatus || 'none';
                     document.querySelector(`input[name="hourlyWorkStatus"][value="${wStat}"]`).checked = true;
-                    if (wStat === 'worked') {
+                    if(wStat === 'worked') {
                         $('lvTimeIn').value = data.timeIn || '13:00';
                         $('lvTimeOut').value = data.timeOut || '18:00';
                         $('lvOtCheckbox').checked = data.didOt || false;
@@ -1907,14 +996,16 @@
             $('modal').style.display = 'flex';
         }
 
-        window.closeModal = function () { $('modal').style.display = 'none'; }
+        window.closeModal = function() { $('modal').style.display = 'none'; }
 
-        window.saveDayData = function () {
+        window.saveDayData = function() {
             const isSp = $('chkSpecial').checked, hName = $('holidayName').value;
             const isApt = $('chkAppointment').checked, status = getActiveStatus();
 
             if (status === 'reset') {
                 delete attendanceData[selectedDateStr];
+                // ปลดล็อค radio ปุ่มเลือกสถานะด้วย
+                document.getElementsByName('dayStatusOpt').forEach(r => r.checked = false);
             } else if (['morning', 'night'].includes(status)) {
                 const tIn = $('timeIn').value, tOut = $('timeOut').value, dType = $('dayType').value;
                 const didOt = $('otCheckbox').checked, oStart = $('otStart').value, oEnd = $('otEnd').value;
@@ -1935,7 +1026,7 @@
             } else if (status === 'leave') {
                 let lType = 'absent';
                 for (let r of document.getElementsByName('leaveTypeOpt')) if (r.checked) lType = r.value;
-
+                
                 let durMode = document.querySelector('input[name="leaveDurationMode"]:checked').value;
                 if (durMode === 'full') {
                     attendanceData[selectedDateStr] = { status: 'leave', leaveType: lType, leaveDurationMode: 'full' };
@@ -1943,12 +1034,12 @@
                     let lHrs = parseFloat($('leaveHoursInput').value) || 9;
                     let wStat = document.querySelector('input[name="hourlyWorkStatus"]:checked').value;
                     let lData = { status: 'leave', leaveType: lType, leaveDurationMode: 'hourly', leaveHours: lHrs, hourlyWorkStatus: wStat };
-
-                    if (wStat === 'worked') {
+                    
+                    if(wStat === 'worked') {
                         lData.timeIn = $('lvTimeIn').value;
                         lData.timeOut = $('lvTimeOut').value;
                         lData.didOt = $('lvOtCheckbox').checked;
-                        if (lData.didOt) {
+                        if(lData.didOt) {
                             lData.otStart = $('lvOtStart').value;
                             lData.otEnd = $('lvOtEnd').value;
                             lData.explicitOtHrs = calcMinutesDiff(lData.otStart, lData.otEnd) / 60;
@@ -1956,6 +1047,9 @@
                     }
                     attendanceData[selectedDateStr] = lData;
                 }
+            } else {
+                // กรณีผู้ใช้กดบันทึกโดยที่ไม่ได้เลือกสถานะอะไรเลย
+                delete attendanceData[selectedDateStr];
             }
 
             if (isSp) specialHolidays[selectedDateStr] = hName || 'วันหยุดพิเศษ';
@@ -1965,11 +1059,12 @@
             else delete appointments[selectedDateStr];
 
             window.closeModal();
+            window.initCalendar(); // เรียกให้ปฏิทินรีเฟรชทันทีก่อนขึ้น Cloud
             syncDataToCloud();
         }
 
         // ================= CALENDAR =================
-        window.initCalendar = function () {
+        window.initCalendar = function() {
             window.applySeasonalGimmick();
             const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const [year, month] = monthVal.split('-').map(Number);
@@ -2007,14 +1102,14 @@
                     } else if (savedData.status === 'leave') {
                         const leaveMap = { absent: 'tag tag-absent', personal: 'tag tag-personal', sick: 'tag tag-sick', vacation: 'tag tag-vacation' };
                         const leaveIcon = { absent: '❌ ขาดงาน', personal: '📝 ลากิจ', sick: '💊 ลาป่วย', vacation: '🏖️ ลาพักร้อน' };
-
+                        
                         let lHrs = savedData.leaveDurationMode === 'hourly' ? (savedData.leaveHours || 0) : 9;
                         let hrText = (savedData.leaveDurationMode === 'hourly') ? ` (${lHrs}ชม.)` : '';
                         html += `<div class="${leaveMap[savedData.leaveType] || 'tag tag-absent'}">${leaveIcon[savedData.leaveType] || '❌ ขาดงาน'}${hrText}</div>`;
-
-                        if (savedData.leaveDurationMode === 'hourly' && savedData.hourlyWorkStatus === 'worked') {
+                        
+                        if(savedData.leaveDurationMode === 'hourly' && savedData.hourlyWorkStatus === 'worked') {
                             html += `<div class="tag tag-work"><span>💼</span><span class="tag-text">${savedData.timeIn}-${savedData.timeOut}</span></div>`;
-                            if (savedData.didOt && savedData.explicitOtHrs > 0) {
+                            if(savedData.didOt && savedData.explicitOtHrs > 0) {
                                 html += `<div class="tag tag-ot">⏱️ <span class="tag-text">OT: ${savedData.explicitOtHrs.toFixed(1)}h</span></div>`;
                             }
                         }
@@ -2039,11 +1134,11 @@
         }
 
         // ================= CALCULATE =================
-        window.calculateSalary = function () {
+        window.calculateSalary = function() {
             const bSal = parseFloat($('baseSalary').value) || 0;
             const dRate = bSal / 30, hRate = dRate / 9, mRate = hRate / 60;
             let tOtN = 0, tOtW = 0, tOtH = 0, tTrav = 0, tLateD = 0, dNight = 0;
-
+            
             let yrP_hrs = 0, yrS_hrs = 0, yrV_hrs = 0, unpLeave_hrs = 0;
 
             const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
@@ -2083,7 +1178,7 @@
                     let durMode = dt.leaveDurationMode || 'full';
                     let lHrs = durMode === 'hourly' ? (dt.leaveHours || 0) : 9;
                     let lType = dt.leaveType;
-
+                    
                     let unpaid_this_leave = 0;
                     if (lType === 'absent') {
                         unpaid_this_leave = lHrs;
@@ -2135,7 +1230,7 @@
             let aLang = $('hasLanguage').checked ? (parseFloat($('languageAllowance').value) || 0) : 0;
             let oth = parseFloat($('otherIncome').value) || 0;
             let soc = parseFloat($('socialSecurity').value) || 0;
-
+            
             let otherDedTotal = 0;
             customDeductions.forEach(d => otherDedTotal += parseFloat(d.amount) || 0);
 
@@ -2149,11 +1244,11 @@
             $('showTravel').innerText = `${fmt(tTrav)} ฿`;
             $('showNightShift').innerText = `${fmt(dNight * 50)} ฿`;
             $('showAutoLate').innerText = `${fmt(tLateD)} ฿`;
-
-            $('labelAbsentDeduct').innerText = `12. หัก ขาดงาน/ลากิจเกิน (${(unpLeave_hrs / 9).toFixed(2)} วัน)`;
+            
+            $('labelAbsentDeduct').innerText = `12. หัก ขาดงาน/ลากิจเกิน (${(unpLeave_hrs/9).toFixed(2)} วัน)`;
             $('showAbsentDeduct').innerText = `${fmt(tAbsD)} ฿`;
-
-            $('showOtherDeductions').innerText = `${fmt(otherDedTotal)} ฿`;
+            
+            $('showOtherDeductions').innerText = `${fmt(otherDedTotal)} ฿`; 
             $('showTotalDeduction').innerText = `${fmt(tDed)} ฿`;
             $('showVacationCash').innerText = `${fmt(cOut)} ฿`;
             $('totalEarnings').innerText = `${fmt(tEarn)} ฿`;
@@ -2163,7 +1258,7 @@
             const now = new Date();
             $('currentMonth').value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
         });
-
+        
         $('deductionModal').addEventListener('click', (e) => { if (e.target === $('deductionModal')) window.closeDeductionModal(); });
     </script>
 </body>
