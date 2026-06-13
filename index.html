@@ -1197,18 +1197,20 @@
                     <span>1. เงินเดือนปกติ</span>
                     <input type="number" id="baseSalary" value="23000" onchange="syncSidebar()" style="width:90px;">
                 </div>
-                <div class="sum-row" style="color:var(--primary-color);">
-                    <span id="labelOtNormal">2. OT ปกติ (x1.5 = 0 ชม.)</span>
+
+                <div class="sum-row" style="color:var(--primary-color); align-items:center;">
+                    <span id="labelOtNormal">2. OT ปกติ (x1.5)</span>
                     <span id="showOtNormal" style="font-weight:bold;">0 ฿</span>
                 </div>
-                <div class="sum-row" style="color:#ef4444;">
-                    <span id="labelOtWeekend">3. งานวันหยุด ส.-อา. (x1=0 ชม. | x3=0 ชม.)</span>
+                <div class="sum-row" style="color:#ef4444; align-items:center;">
+                    <span id="labelOtWeekend">3. งานวันหยุด ส.-อา.</span>
                     <span id="showOtWeekend" style="font-weight:bold;">0 ฿</span>
                 </div>
-                <div class="sum-row" style="color:#9333ea;">
-                    <span>4. งานวันหยุดพิเศษ (x2 จาก ชม.แรก)</span>
+                <div class="sum-row" style="color:#9333ea; align-items:center;">
+                    <span id="labelOtHoliday">4. งานวันหยุดพิเศษ</span>
                     <span id="showOtHoliday" style="font-weight:bold;">0 ฿</span>
                 </div>
+
                 <div class="sum-row" style="color:#10b981;">
                     <span>5. ค่าเดินทาง (เข้างาน)</span>
                     <div style="display:flex; align-items:center; gap:8px;">
@@ -2061,12 +2063,10 @@
         window.calculateSalary = function () {
             const bSal = parseFloat($('baseSalary').value) || 0;
             const dRate = bSal / 30, hRate = dRate / 9, mRate = hRate / 60;
-            let tOtN = 0, tOtW = 0, tOtH = 0, tTrav = 0, tLateD = 0, dNight = 0;
 
+            let tOtN = 0, tOtW1 = 0, tOtW3 = 0, tOtH = 0, tTrav = 0, tLateD = 0, dNight = 0;
             let yrP_hrs = 0, yrS_hrs = 0, yrV_hrs = 0, unpLeave_hrs = 0;
-
-            // ตัวแปรสะสมจำนวนชั่วโมง OT (เพิ่มใหม่ตามคำขอ)
-            let hrsOtN = 0, hrsWkX1 = 0, hrsWkX3 = 0;
+            let hrsOtN = 0, hrsWkX1 = 0, hrsWkX3 = 0, hrsOtH = 0;
 
             const monthVal = $('currentMonth').value || new Date().toISOString().slice(0, 7);
             const [y, m] = monthVal.split('-').map(Number);
@@ -2096,15 +2096,17 @@
                     if (dt.dayType === 'normal') {
                         tLateD += getDeductMins(dt.finalLateMins || 0) * mRate;
                         let otH = (dt.builtInOtHrs || 0) + eOt;
-                        hrsOtN += otH; // สะสมชั่วโมง
+                        hrsOtN += otH;
                         tOtN += otH * (hRate * 1.5);
                     } else if (dt.dayType === 'weekend') {
                         let w1 = Math.min(9, tHrs);
                         let w3 = Math.max(0, tHrs - 9);
-                        hrsWkX1 += w1; // สะสมชั่วโมง
-                        hrsWkX3 += w3; // สะสมชั่วโมง
-                        tOtW += w1 * (hRate * 1) + w3 * (hRate * 3);
+                        hrsWkX1 += w1;
+                        hrsWkX3 += w3;
+                        tOtW1 += w1 * (hRate * 1);
+                        tOtW3 += w3 * (hRate * 3);
                     } else if (dt.dayType === 'special') {
+                        hrsOtH += tHrs;
                         tOtH += tHrs * (hRate * 2);
                     }
                 } else if (dt.status === 'leave') {
@@ -2137,7 +2139,7 @@
                             unpLeave_hrs += deficit;
 
                             if (dt.didOt && dt.explicitOtHrs > 0) {
-                                hrsOtN += dt.explicitOtHrs; // สะสมชั่วโมงโอที
+                                hrsOtN += dt.explicitOtHrs;
                                 tOtN += dt.explicitOtHrs * (hRate * 1.5);
                             }
                         }
@@ -2152,8 +2154,8 @@
                 return `${dStr} (${hStr} ชม.) / ${quotaDays} วัน`;
             };
 
-            // ช่วยปัดเศษให้สวยงาม เช่น 18.00 จะแสดง 18 แต่ถ้า 18.5 จะแสดง 18.5
             const fmtHr = h => h % 1 === 0 ? h : h.toFixed(2);
+            const fmt = v => v.toLocaleString(undefined, { minimumFractionDigits: 2 });
 
             const vCarry = parseFloat($('vacationCarryOver').value) || 0;
             const vQuota = parseFloat($('vacationQuota').value) || 0;
@@ -2171,15 +2173,16 @@
             let otherDedTotal = 0;
             customDeductions.forEach(d => otherDedTotal += parseFloat(d.amount) || 0);
 
+            let tOtW = tOtW1 + tOtW3;
             let tDed = soc + tLateD + tAbsD + otherDedTotal;
             let tEarn = (bSal + tOtN + tOtW + tOtH + aTrav + aLang + (dNight * 50) + oth + cOut) - tDed;
 
-            const fmt = v => v.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            // -------- แสดงผลจำนวนชั่วโมงที่ข้อ 2, 3, และ 4 --------
+            $('labelOtNormal').innerHTML = `2. OT ปกติ <span style="font-size:12px; font-weight:normal; opacity:0.8;">(x1.5 = ${fmtHr(hrsOtN)} ชม.)</span>`;
+            $('labelOtWeekend').innerHTML = `3. งานวันหยุด ส.-อา. <span style="font-size:12px; font-weight:normal; opacity:0.8;">(x1 = ${fmtHr(hrsWkX1)} ชม. | x3 = ${fmtHr(hrsWkX3)} ชม.)</span>`;
+            $('labelOtHoliday').innerHTML = `4. งานวันหยุดพิเศษ <span style="font-size:12px; font-weight:normal; opacity:0.8;">(x2 = ${fmtHr(hrsOtH)} ชม.)</span>`;
 
-            // อัปเดตข้อความแสดงจำนวนชั่วโมง
-            $('labelOtNormal').innerText = `2. OT ปกติ (x1.5 = ${fmtHr(hrsOtN)} ชม.)`;
-            $('labelOtWeekend').innerText = `3. งานวันหยุด ส.-อา. (x1=${fmtHr(hrsWkX1)} ชม. | x3=${fmtHr(hrsWkX3)} ชม.)`;
-
+            // อัปเดตยอดเงินรวม
             $('showOtNormal').innerText = `${fmt(tOtN)} ฿`;
             $('showOtWeekend').innerText = `${fmt(tOtW)} ฿`;
             $('showOtHoliday').innerText = `${fmt(tOtH)} ฿`;
