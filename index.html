@@ -1188,6 +1188,32 @@
                 </div>
             </div>
 
+            <h2 class="summary-title">⏱️ สรุปชั่วโมงล่วงเวลา (OT)</h2>
+            <div class="leave-stats-box" style="border-color: #fcd34d; background: #fffbeb;">
+                <div class="leave-stat-row">
+                    <span style="color:#d97706;">⏱️ งานวันหยุด (เรท x1)</span>
+                    <strong id="sumOtX1" style="color:#d97706;">0 ชม.</strong>
+                </div>
+                <div class="leave-stat-row">
+                    <span style="color:#d97706;">⏱️ OT วันปกติ (เรท x1.5)</span>
+                    <strong id="sumOtX15" style="color:#d97706;">0 ชม.</strong>
+                </div>
+                <div class="leave-stat-row">
+                    <span style="color:#d97706;">⏱️ งานวันหยุดพิเศษ (เรท x2)</span>
+                    <strong id="sumOtX2" style="color:#d97706;">0 ชม.</strong>
+                </div>
+                <div class="leave-stat-row">
+                    <span style="color:#d97706;">⏱️ OT วันหยุด (เรท x3)</span>
+                    <strong id="sumOtX3" style="color:#d97706;">0 ชม.</strong>
+                </div>
+
+                <div class="leave-stat-row"
+                    style="border-top:1px solid #fcd34d; border-bottom:none; padding-top:8px; margin-top:4px;">
+                    <span style="color:#b45309; font-weight:bold;">รวมชั่วโมง OT ทั้งหมด</span>
+                    <strong id="sumOtTotal" style="color:#b45309; font-size:14px;">0 ชม.</strong>
+                </div>
+            </div>
+
             <h2 class="summary-title">📊 สรุปยอดเงิน (ระบบใหม่)</h2>
             <div style="font-size:11px; font-weight:bold; opacity:0.6; margin-bottom:12px;">รอบคำนวณ: วันที่ 25 - 24
             </div>
@@ -2210,6 +2236,26 @@
             $('showTotalDeduction').innerText = `${fmt(tDed)} ฿`;
             $('showVacationCash').innerText = `${fmt(cOut)} ฿`;
             $('totalEarnings').innerText = `${fmt(tEarn)} ฿`;
+
+            $('showTotalDeduction').innerText = `${fmt(tDed)} ฿`;
+            $('showVacationCash').innerText = `${fmt(cOut)} ฿`;
+            $('totalEarnings').innerText = `${fmt(tEarn)} ฿`;
+
+            // ----------------------------------------------------
+            // โค้ดที่เพิ่มใหม่: อัปเดตข้อมูลกล่องสรุปชั่วโมง OT
+            // ----------------------------------------------------
+            let totalOtX1 = hrsWkX1;             // เรท x1 (ชั่วโมงงานปกติในวันหยุด)
+            let totalOtX15 = hrsOtN;             // เรท x1.5 (OT วันธรรมดา)
+            let totalOtX2 = hrsSpX2;             // เรท x2 (ชั่วโมงงานปกติในวันหยุดพิเศษ)
+            let totalOtX3 = hrsWkX3 + hrsSpX3;   // เรท x3 (OT วันหยุด + OT วันหยุดพิเศษ)
+            let grandTotalOtHours = totalOtX1 + totalOtX15 + totalOtX2 + totalOtX3; // รวมทั้งหมด
+
+            // ใส่ค่าลงใน HTML ที่เราสร้างไว้ (ป้องกัน error กรณีลืมวาง HTML)
+            if ($('sumOtX1')) $('sumOtX1').innerText = `${fmtHr(totalOtX1)} ชม.`;
+            if ($('sumOtX15')) $('sumOtX15').innerText = `${fmtHr(totalOtX15)} ชม.`;
+            if ($('sumOtX2')) $('sumOtX2').innerText = `${fmtHr(totalOtX2)} ชม.`;
+            if ($('sumOtX3')) $('sumOtX3').innerText = `${fmtHr(totalOtX3)} ชม.`;
+            if ($('sumOtTotal')) $('sumOtTotal').innerText = `${fmtHr(grandTotalOtHours)} ชม.`;
         }
 
         document.addEventListener('DOMContentLoaded', () => {
